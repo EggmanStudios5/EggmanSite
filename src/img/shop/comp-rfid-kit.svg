@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 220" width="100%" height="100%">
+  <rect width="360" height="220" fill="#f8fafc"/>
+  <pattern id="grid-comp-rfid-kit" width="24" height="24" patternUnits="userSpaceOnUse">
+    <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+  </pattern>
+  <rect width="360" height="220" fill="url(#grid-comp-rfid-kit)"/>
+
+  <!-- Placeholder Tag -->
+  <rect x="14" y="14" width="96" height="20" rx="4" fill="#e2e8f0"/>
+  <text x="62" y="27" font-family="ui-monospace, monospace" font-size="9" font-weight="600" fill="#475569" text-anchor="middle">PLACEHOLDER</text>
+
+  <!-- Component Category Tag -->
+  <rect x="220" y="14" width="126" height="20" rx="4" fill="#f0fdfa" stroke="#0f766e" stroke-width="0.8"/>
+  <text x="283" y="27" font-family="ui-monospace, monospace" font-size="9" font-weight="700" fill="#0f766e" text-anchor="middle">PROJECT KITS</text>
+
+  <!-- Hardware Component Schematic Graphic -->
+  <rect x="105" y="54" width="150" height="104" rx="12" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <!-- Gold PCB Pads -->
+  <circle cx="122" cy="70" r="4" fill="#fbbf24"/>
+  <circle cx="238" cy="70" r="4" fill="#fbbf24"/>
+  <circle cx="122" cy="142" r="4" fill="#fbbf24"/>
+  <circle cx="238" cy="142" r="4" fill="#fbbf24"/>
+  <!-- Center IC / Part Outline -->
+  <rect x="145" y="76" width="70" height="60" rx="6" fill="#1e293b" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="180" y="110" font-family="ui-monospace, monospace" font-size="10" font-weight="700" fill="#2dd4bf" text-anchor="middle">DIY PART</text>
+
+  <!-- Bottom Label -->
+  <text x="180" y="196" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#475569" text-anchor="middle">
+    2× ESP Boards + MFRC522 + Relay + 3 Cards
+  </text>
+</svg>

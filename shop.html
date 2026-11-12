@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware & Parts Shop — Eggman Studios</title>
+    <meta name="description" content="Shop pre-built Mateo solar weather stations, assembled Macro Pads, or individual DIY switches, rotary encoders, and starter kits.">
+    <link rel="icon" type="image/svg+xml" href="./src/img/eggmanlogo.svg">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .font-mono-code {
+            font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900">
+    
+    <!-- Clean Sticky Navigation (Component: Navbar) -->
+    <header data-component="Navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <!-- Brand Identity -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <img src="./src/img/eggmanlogo.svg" alt="Eggman Studios Logo"
+                    class="w-9 h-9 rounded-lg shadow-2xs border border-slate-200/80 object-contain bg-slate-900">
+                <div>
+                    <span class="font-bold text-base tracking-tight text-slate-900 block leading-none">Eggman Studios</span>
+                    <span class="text-[11px] font-medium text-slate-500 tracking-wide block mt-0.5">Open Hardware & Software</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-7 text-sm font-medium" aria-label="Main Navigation">
+                <a href="index.html#about" class="text-slate-600 hover:text-slate-900 transition-colors">Our Story</a>
+                <a href="projects.html" class="text-slate-600 hover:text-slate-900 transition-colors">Projects</a>
+                <a href="shop.html" class="text-teal-700 font-semibold transition-colors">Shop</a>
+                <a href="tutorials.html" class="text-slate-600 hover:text-slate-900 transition-colors">Tutorials</a>
+                <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
+            </nav>
+
+            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <div class="hidden md:flex items-center gap-2.5">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span>Cart</span>
+                    <span id="nav-cart-count" data-nav-cart-count
+                        class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
+                </a>
+                <a href="projects.html"
+                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors shadow-2xs">
+                    Browse Projects
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="flex md:hidden items-center gap-2">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                    <span>Cart</span>
+                    <span data-nav-cart-count
+                        class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
+                </a>
+                <button id="mobile-menu-btn" type="button" aria-label="Toggle Menu" aria-expanded="false"
+                    class="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-2">
+            <a href="index.html#about"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Our Story</a>
+            <a href="projects.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
+            <a href="shop.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
+            <a href="tutorials.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
+            <a href="forum.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+        </div>
+    </header>
+
+    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <div id="app-error-boundary" role="alert" aria-live="polite"
+        class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
+        <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <span id="app-error-boundary-msg">We encountered a temporary issue completing that action. Please refresh the page or try again in a moment.</span>
+            <button type="button" id="app-error-boundary-close"
+                class="text-amber-800 hover:text-slate-900 font-bold cursor-pointer">
+                Dismiss
+            </button>
+        </div>
+    </div>
+
+    <main id="main-content">
+
+        <!-- Storefront Header with Clean Cart Status Bar -->
+        <section class="bg-white border-b border-slate-200/80 py-14">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block">
+                            Eggman Studios Hardware Store
+                        </span>
+                        <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
+                            Pre-built devices &amp; DIY parts.
+                        </h1>
+                        <p class="text-base text-slate-600 leading-relaxed max-w-2xl">
+                            Pick up a fully calibrated solar <strong>Mateo Weather Station</strong>, a ready-to-plug <strong>Macro Pad</strong>, or grab raw switches, sensors, and controllers to solder your own build at home.
+                        </p>
+                    </div>
+
+                    <!-- Dedicated Cart Summary Card (Links to cart.html) -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="space-y-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-bold uppercase tracking-wider text-teal-400">Shopping Cart</span>
+                                    <span id="cart-count-badge" class="px-2 py-0.5 rounded bg-teal-600 text-white text-xs font-mono font-bold">0</span>
+                                </div>
+                                <p class="text-xs text-slate-300">
+                                    Subtotal: <strong id="cart-total-price" class="text-white font-mono">0.00 Kč</strong>
+                                </p>
+                            </div>
+                            <a href="cart.html"
+                                class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors">
+                                View Cart &amp; Checkout &rarr;
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Filter Pills -->
+                <div class="mt-8 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex flex-wrap gap-2" role="group" aria-label="Filter shop catalog">
+                        <button type="button" data-shop-filter="all"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white transition-colors cursor-pointer">
+                            All Items (22)
+                        </button>
+                        <button type="button" data-shop-filter="weather-station"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            Weather Stations (3)
+                        </button>
+                        <button type="button" data-shop-filter="assembled"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            Assembled Macro Pads (13)
+                        </button>
+                        <button type="button" data-shop-filter="bluetooth"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            Wireless / Bluetooth
+                        </button>
+                        <button type="button" data-shop-filter="encoder"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            With Rotary Knob / Lever
+                        </button>
+                        <button type="button" data-shop-filter="component"
+                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            DIY Parts &amp; Kits (6)
+                        </button>
+                    </div>
+
+                    <a href="tutorials.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">
+                        Need installation or wiring help? View Setup Tutorials &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 0: Pre-Built Mateo Solar Weather Stations -->
+        <section id="weather-stations" class="py-16 bg-slate-900 text-slate-200 border-b border-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block mb-1">
+                            Ready for Outdoor Deployment &middot; Solar + Li-Ion Powered
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                            Pre-Built Mateo Weather Stations
+                        </h2>
+                        <p class="text-sm text-slate-300 mt-1 max-w-2xl">
+                            Complete, weather-sealed outdoor stations built with genuine Bosch BME280 barometric sensors, MOSFET-gated MQ-135 air quality heaters, tempered-glass solar panels, and protected Li-Ion / LiFePO4 battery packs.
+                        </p>
+                    </div>
+                    <a href="mateo.html" class="text-xs font-semibold text-teal-400 hover:text-white shrink-0">
+                        Learn how the Mateo network works &rarr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Modular ShopCard: Mateo Urban Station (Pre-Built · Wi-Fi + Air Quality) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="weather-station"
+                        data-shop-tags="weather-station wired no-encoder"
+                        data-item-id="station-mateo-urban"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/station-mateo-urban.svg" alt="Mateo Urban Station (Pre-Built · Wi-Fi + Air Quality) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Pre-Built Weather Station
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Mateo Urban Station (Pre-Built · Wi-Fi + Air Quality)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Fully assembled and factory-calibrated balcony or rooftop weather station. Combines a Bosch BME280 atmospheric sensor, MOSFET-isolated MQ-135 air quality sensor, 3000mAh rechargeable battery pack, and tempered 2W solar panel inside a breathable UV-stabilized radiation shield.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Solar &amp; Battery</span>
+                                    <span class="font-semibold text-slate-800">2W Solar + 3000mAh Li-ion / LiFePO4</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Sensors</span>
+                                    <span class="font-semibold text-teal-700">Bosch BME280 + MQ-135 Air Quality</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Radio / Link:</span>
+                                    <span class="font-mono font-semibold text-slate-700">Wi-Fi 6 (802.11ax) + Deep-Sleep</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">3499.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="station-mateo-urban"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Mateo Long-Range Field Mast + Indoor Home Deck (Pre-Built) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="weather-station"
+                        data-shop-tags="weather-station wired no-encoder"
+                        data-item-id="station-mateo-suburban-lora"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/station-mateo-suburban-lora.svg" alt="Mateo Long-Range Field Mast + Indoor Home Deck (Pre-Built) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Pre-Built Weather Station
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Mateo Long-Range Field Mast + Indoor Home Deck (Pre-Built)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Complete two-unit long-range weather system for gardens, orchards, and farms. Includes the solar-powered outdoor sensor mast (with BME280, air quality sensor, and 6000mAh battery) plus an indoor OLED receiver deck that logs data to microSD even when internet is down.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Solar &amp; Battery</span>
+                                    <span class="font-semibold text-slate-800">5W Solar + 6000mAh Dual Battery Pack</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Sensors</span>
+                                    <span class="font-semibold text-teal-700">BME280 + Air Quality + Soil / Frost Probe</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Radio / Link:</span>
+                                    <span class="font-mono font-semibold text-slate-700">SX1262 LoRa (2 km) + OLED Indoor Hub</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">4899.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="station-mateo-suburban-lora"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Mateo Off-Grid Autonomous Mesh Station & Solar Kiosk (Pre-Built) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="weather-station"
+                        data-shop-tags="weather-station wired no-encoder"
+                        data-item-id="station-mateo-offgrid-pro"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/station-mateo-offgrid-pro.svg" alt="Mateo Off-Grid Autonomous Mesh Station & Solar Kiosk (Pre-Built) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Pre-Built Weather Station
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Mateo Off-Grid Autonomous Mesh Station & Solar Kiosk (Pre-Built)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Our flagship autonomous field station built for remote valleys, off-grid homesteads, and community hubs. Features redundant Bosch BME280 sensors, particulate/gas air-quality sensing, heavy-duty solar + LiFePO4 battery bank, and a built-in offline Wi-Fi weather portal.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Solar &amp; Battery</span>
+                                    <span class="font-semibold text-slate-800">10W Solar Array + 12000mAh LiFePO4 Bank</span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Sensors</span>
+                                    <span class="font-semibold text-teal-700">Dual BME280 + Air Quality + Tipping Rain + Wind</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Radio / Link:</span>
+                                    <span class="font-mono font-semibold text-slate-700">LoRa Mesh Relay + Local Wi-Fi Portal</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">6899.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="station-mateo-offgrid-pro"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Assembled Macro Pads -->
+        <section id="assembled-devices" class="py-16 bg-slate-50 border-b border-slate-200/80">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">
+                            Ready to Plug &amp; Play
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                            Assembled Macro Pads
+                        </h2>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Fully soldered, flashed with our open-source EEPROM firmware, and ready for your desk.
+                        </p>
+                    </div>
+                    <a href="macro.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900 shrink-0">
+                        See how the Macro Pad works &rarr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Modular ShopCard: Macro simple -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired no-encoder"
+                        data-item-id="pad-macro-simple"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-simple.svg" alt="Macro simple Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro simple</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Our classic 3×3 9-key shortcut pad. Plug it in via USB, set your 9 shortcuts once, and use it anywhere.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">9 keys <span class="font-mono text-slate-500">(3*3)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">749.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-simple"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro simpleBT -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled bluetooth no-encoder"
+                        data-item-id="pad-macro-simplebt"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-simplebt.svg" alt="Macro simpleBT Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    <span class="text-[11px] font-semibold bg-teal-50 text-teal-800 px-2 py-0.5 rounded">Bluetooth</span>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro simpleBT</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    The 3×3 9-key pad upgraded with wireless Bluetooth and a modern USB-C port.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">9 keys <span class="font-mono text-slate-500">(3*3)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">Bluetooth + USB C</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">799.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-simplebt"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro S -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired no-encoder"
+                        data-item-id="pad-macro-s"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-s.svg" alt="Macro S Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro S</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Compact 6-key (3×2) pad for essential everyday shortcuts without taking up desk space.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">6 keys <span class="font-mono text-slate-500">(3*2)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">499.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-s"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro S BT -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled bluetooth no-encoder"
+                        data-item-id="pad-macro-s-bt"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-s-bt.svg" alt="Macro S BT Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    <span class="text-[11px] font-semibold bg-teal-50 text-teal-800 px-2 py-0.5 rounded">Bluetooth</span>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro S BT</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Wireless Bluetooth + USB-C version of the compact 6-key (3×2) pad.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">6 keys <span class="font-mono text-slate-500">(3*2)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">Bluetooth + USB C</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">599.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-s-bt"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro M -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired no-encoder"
+                        data-item-id="pad-macro-m"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-m.svg" alt="Macro M Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro M</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Mid-size 8-key (4×2) layout—great for window management, media controls, or CAD tools.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">8 keys <span class="font-mono text-slate-500">(4*2)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">749.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-m"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro M BT -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled bluetooth no-encoder"
+                        data-item-id="pad-macro-m-bt"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-m-bt.svg" alt="Macro M BT Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    <span class="text-[11px] font-semibold bg-teal-50 text-teal-800 px-2 py-0.5 rounded">Bluetooth</span>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro M BT</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Wireless Bluetooth + USB-C 8-key (4×2) pad for clean, cable-free setups.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">8 keys <span class="font-mono text-slate-500">(4*2)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">Bluetooth + USB C</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">799.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-m-bt"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro L -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired no-encoder"
+                        data-item-id="pad-macro-l"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-l.svg" alt="Macro L Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro L</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Full 16-key (4×4) grid for power users, streamers, and complex shortcut workflows.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">16 keys <span class="font-mono text-slate-500">(4*4)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">999.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-l"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro gamer -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired no-encoder"
+                        data-item-id="pad-macro-gamer"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-gamer.svg" alt="Macro gamer Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro gamer</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Low-profile 1×4 4-key strip for quickone-handed actions and gaming binds.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">4 keys <span class="font-mono text-slate-500">(1*4)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">499.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-gamer"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro gamerBT -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled bluetooth no-encoder"
+                        data-item-id="pad-macro-gamerbt"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-gamerbt.svg" alt="Macro gamerBT Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    <span class="text-[11px] font-semibold bg-teal-50 text-teal-800 px-2 py-0.5 rounded">Bluetooth</span>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro gamerBT</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Wireless Bluetooth + USB-C 4-key strip you can place anywhere on your desk.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">4 keys <span class="font-mono text-slate-500">(1*4)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">Bluetooth + USB C</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-slate-500">
+                                        Standard Keys
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">749.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-gamerbt"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro office -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired encoder"
+                        data-item-id="pad-macro-office"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-office.svg" alt="Macro office Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro office</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    3 shortcut keys paired with a tactile rotary encoder dial for volume, scrolling, or zoom.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">3 keys <span class="font-mono text-slate-500">(1*3+1*1)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-teal-700">
+                                        encoder
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">499.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-office"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro office BT -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled bluetooth encoder"
+                        data-item-id="pad-macro-office-bt"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-office-bt.svg" alt="Macro office BT Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    <span class="text-[11px] font-semibold bg-teal-50 text-teal-800 px-2 py-0.5 rounded">Bluetooth</span>
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro office BT</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Wireless Bluetooth + USB-C 3-key + rotary dial pad for everyday office and media control.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">3 keys <span class="font-mono text-slate-500">(1*3+1*1)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">Bluetooth + USB C</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-teal-700">
+                                        encoder
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">749.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-office-bt"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro producer -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired encoder"
+                        data-item-id="pad-macro-producer"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-producer.svg" alt="Macro producer Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro producer</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Built for audio & synth workflows: 9 keys (3×3) plus 3 independent rotary encoder knobs.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">9 keys <span class="font-mono text-slate-500">(3*3+2*1+1*1)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-teal-700">
+                                        3*encoder
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">999.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-producer"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Macro Editor -->
+                    <article data-component="ShopCard"
+                        data-shop-category="assembled"
+                        data-shop-tags="assembled wired encoder"
+                        data-item-id="pad-macro-editor"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/macro-editor.svg" alt="Macro Editor Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Assembled Macro Pad
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Macro Editor</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Designed for video & photo timelines: 6 shortcut keys (2×3) paired with a dedicated jog/scrub encoder.
+                                </p>
+
+                                
+                            <div class="grid grid-cols-2 gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4">
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Buttons / Matrix</span>
+                                    <span class="font-semibold text-slate-800">6 keys <span class="font-mono text-slate-500">(2*3+1*1)</span></span>
+                                </div>
+                                <div>
+                                    <span class="text-[11px] text-slate-400 block">Connection</span>
+                                    <span class="font-semibold text-slate-800">USB Micro</span>
+                                </div>
+                                <div class="col-span-2 pt-1.5 border-t border-slate-200/60 flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Special Hardware:</span>
+                                    <span class="font-mono font-semibold text-teal-700">
+                                        encoder
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">1499.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="pad-macro-editor"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: DIY Components & Project Kits -->
+        <section id="diy-components" class="py-16 bg-white border-b border-slate-200/80">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">
+                            Build or Repair Your Own
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                            Individual Components &amp; DIY Kits
+                        </h2>
+                        <p class="text-sm text-slate-600 mt-1">
+                            Have a 3D printer and a soldering iron? Grab the exact microcontrollers, switches, and sensors used in our projects.
+                        </p>
+                    </div>
+                    <a href="cart.html"
+                        class="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                        Proceed to Cart &amp; Checkout &rarr;
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Modular ShopCard: Tactile Mechanical Switches + Keycaps (10× Pack) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-switches-pack"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-switches-pack.svg" alt="Tactile Mechanical Switches + Keycaps (10× Pack) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Switches & Keycaps
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Tactile Mechanical Switches + Keycaps (10× Pack)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    A 10-pack of crisp tactile mechanical switches paired with blank matte keycaps—enough to populate a 3×3 pad with one spare.
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">10× switches + 10× blank PBT keycaps</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">Fits all Macro Pad sizes</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">189.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-switches-pack"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: EC11 Rotary Encoder + Machined Knob -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-rotary-encoder"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-rotary-encoder.svg" alt="EC11 Rotary Encoder + Machined Knob Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Encoders & Dials
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">EC11 Rotary Encoder + Machined Knob</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Smooth detented rotary encoder with integrated push-button click and a knurled aluminum cap for volume, brush size, or timeline scrubbing.
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">Detented 360° dial + push switch</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">Macro office / producer / Editor</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">89.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-rotary-encoder"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: USB HID Microcontroller Board (Pre-Flashed) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-hid-mcu"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-hid-mcu.svg" alt="USB HID Microcontroller Board (Pre-Flashed) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Microcontrollers
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">USB HID Microcontroller Board (Pre-Flashed)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Comes pre-flashed with our open-source Macro EEPROM firmware so you can solder your switch matrix to pins 4–9 and start binding keys right away.
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">ATmega32U4 / RP2040 · EEPROM Ready</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">USB Wired & DIY Matrix Builds</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">219.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-hid-mcu"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Bluetooth + USB-C Controller Module -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-ble-mcu"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-ble-mcu.svg" alt="Bluetooth + USB-C Controller Module Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Microcontrollers
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Bluetooth + USB-C Controller Module</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Drop-in USB-C microcontroller with built-in Bluetooth Low Energy HID support and battery charging circuit for wireless macro pads.
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">Wireless BLE HID + LiPo Charger</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">Macro BT Series & Wireless Builds</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">279.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-ble-mcu"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: RFID Door Access Starter Kit (Reader + Relay Pair) -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-rfid-kit"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-rfid-kit.svg" alt="RFID Door Access Starter Kit (Reader + Relay Pair) Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Project Kits
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">RFID Door Access Starter Kit (Reader + Relay Pair)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Everything needed on the bench to prototype our split-perimeter door system: exterior 13.56MHz reader, two ESP controllers, opto-isolated relay, and 3 blank student badges.
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">2× ESP Boards + MFRC522 + Relay + 3 Cards</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">RFID Student Access System</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">449.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-rfid-kit"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+
+                    <!-- Modular ShopCard: Mateo Solar Weather Sensor DIY Bundle -->
+                    <article data-component="ShopCard"
+                        data-shop-category="component"
+                        data-shop-tags="component wired no-encoder"
+                        data-item-id="comp-mateo-sensor-kit"
+                        class="shop-item-card bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:border-slate-300 transition-all duration-200 flex flex-col justify-between">
+                        <div>
+                            <!-- Placeholder Product Image -->
+                            <div class="border-b border-slate-100 bg-slate-50">
+                                <img src="./src/img/shop/comp-mateo-sensor-kit.svg" alt="Mateo Solar Weather Sensor DIY Bundle Placeholder"
+                                    class="w-full h-44 object-contain p-2">
+                            </div>
+
+                            <!-- Card Body -->
+                            <div class="p-6 pb-4">
+                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700">
+                                        Project Kits
+                                    </span>
+                                    
+                                </div>
+
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">Mateo Solar Weather Sensor DIY Bundle</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                                    Unassembled electronics bundle for builders who want to 3D-print their own enclosure and solder a Mateo weather node from scratch (includes Bosch BME280, MQ-135 air quality sensor, solar charger, and 2W panel).
+                                </p>
+
+                                
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-xs mb-4 space-y-1">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-[11px] text-slate-400">Includes:</span>
+                                    <span class="font-semibold text-slate-800">ESP32-C6 + BME280 + MQ-135 + TP5000 + Solar</span>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 border-t border-slate-200/60">
+                                    <span class="text-[11px] text-slate-400">Fits:</span>
+                                    <span class="text-slate-600">Mateo Weather Network (DIY Build)</span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <!-- Price & Add to Cart Footer -->
+                        <div class="px-6 py-4 bg-slate-50/60 border-t border-slate-100 flex items-center justify-between gap-3">
+                            <div>
+                                <span class="text-[11px] text-slate-400 block">Price</span>
+                                <span class="text-lg font-bold text-slate-900">899.99 Kč</span>
+                            </div>
+                            <button type="button"
+                                data-add-to-cart="comp-mateo-sensor-kit"
+                                class="shop-add-btn inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
+                                + Add to Cart
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sanitized Catalog Summary for Canonical Client Cart Lookup -->
+        <script type="application/json" id="catalog-summary-data">[{"id":"station-mateo-urban","name":"Mateo Urban Station (Pre-Built · Wi-Fi + Air Quality)","categoryLabel":"Pre-Built Weather Station","price":3499.99,"image":"src/img/shop/station-mateo-urban.svg"},{"id":"station-mateo-suburban-lora","name":"Mateo Long-Range Field Mast + Indoor Home Deck (Pre-Built)","categoryLabel":"Pre-Built Weather Station","price":4899.99,"image":"src/img/shop/station-mateo-suburban-lora.svg"},{"id":"station-mateo-offgrid-pro","name":"Mateo Off-Grid Autonomous Mesh Station & Solar Kiosk (Pre-Built)","categoryLabel":"Pre-Built Weather Station","price":6899.99,"image":"src/img/shop/station-mateo-offgrid-pro.svg"},{"id":"pad-macro-simple","name":"Macro simple","categoryLabel":"Assembled Macro Pad","price":749.99,"image":"src/img/shop/macro-simple.svg"},{"id":"pad-macro-simplebt","name":"Macro simpleBT","categoryLabel":"Assembled Macro Pad","price":799.99,"image":"src/img/shop/macro-simplebt.svg"},{"id":"pad-macro-s","name":"Macro S","categoryLabel":"Assembled Macro Pad","price":499.99,"image":"src/img/shop/macro-s.svg"},{"id":"pad-macro-s-bt","name":"Macro S BT","categoryLabel":"Assembled Macro Pad","price":599.99,"image":"src/img/shop/macro-s-bt.svg"},{"id":"pad-macro-m","name":"Macro M","categoryLabel":"Assembled Macro Pad","price":749.99,"image":"src/img/shop/macro-m.svg"},{"id":"pad-macro-m-bt","name":"Macro M BT","categoryLabel":"Assembled Macro Pad","price":799.99,"image":"src/img/shop/macro-m-bt.svg"},{"id":"pad-macro-l","name":"Macro L","categoryLabel":"Assembled Macro Pad","price":999.99,"image":"src/img/shop/macro-l.svg"},{"id":"pad-macro-gamer","name":"Macro gamer","categoryLabel":"Assembled Macro Pad","price":499.99,"image":"src/img/shop/macro-gamer.svg"},{"id":"pad-macro-gamerbt","name":"Macro gamerBT","categoryLabel":"Assembled Macro Pad","price":749.99,"image":"src/img/shop/macro-gamerbt.svg"},{"id":"pad-macro-office","name":"Macro office","categoryLabel":"Assembled Macro Pad","price":499.99,"image":"src/img/shop/macro-office.svg"},{"id":"pad-macro-office-bt","name":"Macro office BT","categoryLabel":"Assembled Macro Pad","price":749.99,"image":"src/img/shop/macro-office-bt.svg"},{"id":"pad-macro-producer","name":"Macro producer","categoryLabel":"Assembled Macro Pad","price":999.99,"image":"src/img/shop/macro-producer.svg"},{"id":"pad-macro-editor","name":"Macro Editor","categoryLabel":"Assembled Macro Pad","price":1499.99,"image":"src/img/shop/macro-editor.svg"},{"id":"comp-switches-pack","name":"Tactile Mechanical Switches + Keycaps (10× Pack)","categoryLabel":"Switches & Keycaps","price":189.99,"image":"src/img/shop/comp-switches-pack.svg"},{"id":"comp-rotary-encoder","name":"EC11 Rotary Encoder + Machined Knob","categoryLabel":"Encoders & Dials","price":89.99,"image":"src/img/shop/comp-rotary-encoder.svg"},{"id":"comp-hid-mcu","name":"USB HID Microcontroller Board (Pre-Flashed)","categoryLabel":"Microcontrollers","price":219.99,"image":"src/img/shop/comp-hid-mcu.svg"},{"id":"comp-ble-mcu","name":"Bluetooth + USB-C Controller Module","categoryLabel":"Microcontrollers","price":279.99,"image":"src/img/shop/comp-ble-mcu.svg"},{"id":"comp-rfid-kit","name":"RFID Door Access Starter Kit (Reader + Relay Pair)","categoryLabel":"Project Kits","price":449.99,"image":"src/img/shop/comp-rfid-kit.svg"},{"id":"comp-mateo-sensor-kit","name":"Mateo Solar Weather Sensor DIY Bundle","categoryLabel":"Project Kits","price":899.99,"image":"src/img/shop/comp-mateo-sensor-kit.svg"}]</script>
+    </main>
+
+    
+    <!-- Clean Footer (Component: Footer) -->
+    <footer data-component="Footer" class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-xs">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-6 border-b border-slate-800">
+                <div>
+                    <div class="flex items-center gap-3 mb-3">
+                        <img src="./src/img/eggmanlogo.svg" alt="Eggman Studios Logo"
+                            class="w-7 h-7 rounded bg-slate-800">
+                        <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed max-w-sm">
+                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Source Repositories</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="https://github.com/FilipVastl005/WEB-Projekt" target="_blank" rel="noopener noreferrer"
+                                class="hover:text-white transition-colors">Mateo Weather Network &nearr;</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/FilipVastl005/RFID-student-acces-system" target="_blank" rel="noopener noreferrer"
+                                class="hover:text-white transition-colors">RFID Student Access &nearr;</a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/FilipVastl005/Macro" target="_blank" rel="noopener noreferrer"
+                                class="hover:text-white transition-colors">Macro 3×3 Pad &nearr;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p>&copy; 2026 Eggman Studios. Released under permissive Open-Source Licenses (MIT & CERN-OHL).</p>
+                <p class="text-slate-400">Built for people who like hardware they can actually own.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./src/app.js" defer></script>
+</body>
+
+</html>

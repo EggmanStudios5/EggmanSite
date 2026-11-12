@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 550" width="100%" height="100%">
+  <!-- Solid Clean Background matching Mateo WEB-Projekt Design System -->
+  <rect width="500" height="550" fill="#E4ECF2" />
+
+  <g transform="translate(0, 30)">
+    <!-- Icon Mark -->
+    <g transform="translate(100, 30)">
+      <mask id="eggman-cutout-mask">
+        <!-- Base Squircle -->
+        <rect x="0" y="0" width="300" height="300" rx="64" fill="#FFFFFF" />
+        
+        <!-- Sovereign Terminal / Circuit Slashes -->
+        <polygon points="-20,85 195,-130 235,-90 20,125" fill="#000000" />
+        <polygon points="65,255 290,30 330,70 105,295" fill="#000000" />
+        <!-- Center Core Node Cutout -->
+        <rect x="110" y="110" width="80" height="80" rx="18" fill="#000000" />
+      </mask>
+
+      <rect x="0" y="0" width="300" height="300" rx="64" fill="#0F172A" mask="url(#eggman-cutout-mask)" />
+      <rect x="126" y="126" width="48" height="48" rx="10" fill="#0F766E" />
+    </g>
+
+    <!-- Wordmark: EGGMAN -->
+    <text x="250" y="410" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="58" 
+          font-weight="900" 
+          letter-spacing="4" 
+          text-anchor="middle" 
+          fill="#0F172A">EGGMAN</text>
+
+    <!-- Subtitle: STUDIOS -->
+    <text x="250" y="460" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="26" 
+          font-weight="700" 
+          letter-spacing="14" 
+          text-anchor="middle" 
+          fill="#0F766E">STUDIOS</text>
+  </g>
+</svg>
+

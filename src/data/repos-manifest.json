@@ -1,0 +1,107 @@
+{
+  "generatedAt": "2026-11-11T04:55:00+01:00",
+  "organization": {
+    "name": "Eggman Studios",
+    "tagline": "Open-source hardware and software you actually own.",
+    "license": "MIT & Permissive Open Source",
+    "githubProfile": "https://github.com/FilipVastl005"
+  },
+  "projects": [
+    {
+      "id": "rfid-student-access-system",
+      "slug": "rfid",
+      "number": "01",
+      "folderName": "RFID-student-acces-system",
+      "title": "RFID Student Access",
+      "tagline": "Local-first door access for schools and makerspaces.",
+      "category": "hardware",
+      "categoryLabel": "Physical Access & Hardware",
+      "accentColor": "teal",
+      "githubUrl": "https://github.com/FilipVastl005/RFID-student-acces-system",
+      "overviewPage": "rfid.html",
+      "summary": "A self-hosted badge access system for classrooms, labs, and student workshops—built on inexpensive ESP microcontrollers with zero monthly cloud fees.",
+      "whatItSolves": "Most commercial door systems lock schools into pricey subscriptions and put the door relay right behind the outside plastic reader where it can be tampered with. We split the reader and the lock controller into two separate boards and run the dashboard right on the local network.",
+      "highlights": [
+        "Two-part hardware: the reader stays outside, the lock switch stays safely inside",
+        "Works 100% on your local network—doors still open even if the internet goes down",
+        "Simple web dashboard for adding student cards and checking lab attendance"
+      ],
+      "setupSteps": [
+        {
+          "title": "Flash the two controller boards",
+          "detail": "Upload `esp/InputNode.ino` to the exterior reader board and `esp/OutputNode.ino` to the interior relay board.",
+          "command": "git clone https://github.com/FilipVastl005/RFID-student-acces-system.git"
+        },
+        {
+          "title": "Start the local dashboard",
+          "detail": "Open `server/frontend/index.html` on any local machine or Raspberry Pi to manage student cards and room access.",
+          "command": "python3 -m http.server 8080 --directory server/frontend"
+        }
+      ]
+    },
+    {
+      "id": "macro-pad-utility",
+      "slug": "macro",
+      "number": "02",
+      "folderName": "Macro",
+      "title": "Macro 3×3 Pad",
+      "tagline": "A 9-key shortcut pad that remembers your keys on the chip.",
+      "category": "utility",
+      "categoryLabel": " Everyday Hardware & Desktop Tool",
+      "accentColor": "indigo",
+      "githubUrl": "https://github.com/FilipVastl005/Macro",
+      "overviewPage": "macro.html",
+      "summary": "A compact 3×3 mechanical keypad that saves your shortcuts directly to onboard memory—so you never need bloated background software running on your PC.",
+      "whatItSolves": "Big keyboard brands force you to install 500MB apps and sign into cloud accounts just to bind a shortcut key—and the moment you plug into another computer, your bindings disappear. Macro saves your 9 shortcuts right on the microcontroller.",
+      "highlights": [
+        "Set your keys once with a lightweight Python app, then close it forever",
+        "Shortcuts live on the hardware chip (EEPROM)—plug into any Linux, Mac, or Windows machine",
+        "Acts as a standard USB keyboard out of the box with zero drivers"
+      ],
+      "setupSteps": [
+        {
+          "title": "Upload the Arduino sketch",
+          "detail": "Flash `3x3/simple/usb/simple.ino` onto your microcontroller wired to a 3×3 switch grid.",
+          "command": "git clone https://github.com/FilipVastl005/Macro.git"
+        },
+        {
+          "title": "Bind your keys in seconds",
+          "detail": "Run `macro_pad_config.py`, click any of the 9 buttons, press your shortcut combo, and hit Save to Device.",
+          "command": "pip install pyserial keyboard && python3 macro_pad_config.py"
+        }
+      ]
+    },
+    {
+      "id": "mateo-web-projekt",
+      "slug": "mateo",
+      "number": "03",
+      "folderName": "WEB-Projekt",
+      "title": "Mateo Weather Network",
+      "tagline": "Community weather stations for cities, farms, and off-grid valleys.",
+      "category": "infrastructure",
+      "categoryLabel": "Community Infrastructure & Web",
+      "accentColor": "emerald",
+      "githubUrl": "https://github.com/FilipVastl005/WEB-Projekt",
+      "overviewPage": "mateo.html",
+      "summary": "An open-source, solar-powered weather network that brings accurate local forecasts to places commercial stations ignore—and the visual foundation for Eggman Studios.",
+      "whatItSolves": "Professional weather stations cost thousands of dollars, while cheap home sensors give false readings whenever the sun hits them. Mateo pairs sub-$100 solar hardware with automatic neighbor cross-checking to filter out bad data.",
+      "highlights": [
+        "Three station setups for city balconies, rural farms, and off-grid villages",
+        "Automatic quality checks spot and ignore sensor spikes before they skew the map",
+        "Solar-powered design that runs for months without direct sunlight"
+      ],
+      "setupSteps": [
+        {
+          "title": "Clone the Mateo & WEB-Projekt repo",
+          "detail": "Explore the station manual (`templates/stationinfo.html`), web platform (`templates/index.html`), and Tailwind CSS design system.",
+          "command": "git clone https://github.com/FilipVastl005/WEB-Projekt.git"
+        },
+        {
+          "title": "Build or customize the web interface",
+          "detail": "Recompile the stylesheet whenever you tweak the layout or color tokens.",
+          "command": "npm run build:css"
+        }
+      ]
+    }
+  ]
+}
