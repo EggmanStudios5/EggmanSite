@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Forum & Issue Board — Eggman Studios</title>
-    <meta name="description" content="Interactive community troubleshooting board for Eggman Studios hardware: reply to open problems, mark fixes as solved, and share builds.">
+    <meta name="description" content="Interactive community troubleshooting board for Eggman Studios hardware: post questions, share replies, and mark verified solutions.">
     <link rel="icon" type="image/svg+xml" href="../src/img/eggmanlogo.svg">
     <link rel="stylesheet" href="../src/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-teal-700 font-semibold transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -112,35 +112,38 @@
 
     <main id="main-content">
 
-        <!-- Distinct Forum & Issue Tracker Header -->
+        <!-- Forum & Issue Tracker Header -->
         <section class="bg-white border-b border-slate-200/80 py-14">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
                     <div class="lg:col-span-7 space-y-3">
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block">
-                            Interactive Troubleshooting &amp; Builders Board
+                            Interactive Troubleshooting & Builders Board
                         </span>
                         <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                             Solve hardware problems together.
                         </h1>
                         <p class="text-base text-slate-600 leading-relaxed">
-                            Jump into an open problem below to post a fix, upvote helpful answers, mark issues as solved, or open a new troubleshooting thread.
+                            Start a new troubleshooting topic or reply to open discussions below. You can upvote helpful answers and mark threads as solved once fixed.
                         </p>
                     </div>
 
                     <!-- Live Board Stats Box -->
                     <div class="lg:col-span-5 grid grid-cols-3 gap-3">
-                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-center">
+                        
+                        <div class="p-4 rounded-xl border bg-slate-50 border-slate-200 text-center">
                             <span class="text-xs text-slate-500 block">Total Topics</span>
-                            <span id="forum-stat-total" class="text-2xl font-bold text-slate-900 font-mono mt-0.5 block">5</span>
+                            <span id="forum-stat-total" class="text-2xl font-bold text-slate-900 font-mono mt-0.5 block">0</span>
                         </div>
-                        <div class="p-4 rounded-xl bg-amber-50/60 border border-amber-200/80 text-center">
+
+                        <div class="p-4 rounded-xl border bg-amber-50/60 border-amber-200/80 text-center">
                             <span class="text-xs text-slate-600 block">Open Problems</span>
-                            <span id="forum-stat-open" class="text-2xl font-bold text-amber-800 font-mono mt-0.5 block">2</span>
+                            <span id="forum-stat-open" class="text-2xl font-bold text-amber-800 font-mono mt-0.5 block">0</span>
                         </div>
-                        <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
+
+                        <div class="p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-center">
                             <span class="text-xs text-emerald-800 block">Solved Fixes</span>
-                            <span id="forum-stat-solved" class="text-2xl font-bold text-emerald-700 font-mono mt-0.5 block">3</span>
+                            <span id="forum-stat-solved" class="text-2xl font-bold text-emerald-700 font-mono mt-0.5 block">0</span>
                         </div>
                     </div>
                 </div>
@@ -163,524 +166,37 @@
                         <button type="button" data-forum-filter="show-and-tell" class="forum-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
           Show & Tell / Builds
         </button>
-                        <button type="button" data-forum-filter="open-only"
-                            class="forum-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/80 hover:bg-amber-100 transition-colors cursor-pointer">
+                        <button type="button" data-forum-filter="open-only" class="forum-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/80 hover:bg-amber-100 transition-colors cursor-pointer">
                             Needs Answer / Open
                         </button>
-                        <button type="button" data-forum-filter="solved-only"
-                            class="forum-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors cursor-pointer">
-                            &#10003; Solved Only
+                        <button type="button" data-forum-filter="solved-only" class="forum-filter-btn px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors cursor-pointer">
+                            ✓ Solved Only
                         </button>
                     </div>
 
                     <div class="w-full md:w-64">
                         <input type="search" id="forum-search-input"
-                            placeholder="Search COM port, BME280, dialout..."
+                            placeholder="Filter topics by keyword..."
                             class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-slate-50">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Forum Main Layout: Interactive Thread Feed + Sidebar Form -->
+        <!-- Forum Main Layout: Dynamic Thread Feed + Sidebar Form -->
         <section class="py-14 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <!-- Left: Discussion Threads (7 cols) -->
                     <div id="forum-threads-list" class="lg:col-span-7 space-y-5">
                         
-                        <!-- Interactive Forum Thread: thread-open-bme280-addr -->
-                        <article id="thread-open-bme280-addr"
-                            data-thread-id="thread-open-bme280-addr"
-                            data-forum-category="weather-stations"
-                            data-forum-solved="false"
-                            class="forum-thread-card bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-                            <!-- Thread Top Meta Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded">
-                                        Mateo Weather Stations
-                                    </span>
-                                    <span data-thread-status-badge="thread-open-bme280-addr"
-                                        class="text-[11px] font-bold px-2.5 py-1 rounded text-amber-800 bg-amber-50">
-                                        Open Problem
-                                    </span>
-                                </div>
-                                <span class="text-xs text-slate-400">Posted by <strong class="text-slate-600">tomas_brno</strong> &middot; 3 hours ago</span>
-                            </div>
-
-                            <!-- Thread Title & Problem Description -->
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 mb-1.5">BME280 returning -999 on ESP32-C6 Urban build (GPIO 6 / GPIO 7) — I2C address 0x76 vs 0x77?</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">I soldered the DIY Mateo Solar Weather Sensor Bundle onto an ESP32-C6 following the pinout table (`SDA -> GPIO 6`, `SCL -> GPIO 7` with 4.7k pull-ups to 3.3V). The TP5000 LiFePO4 charger works great, but serial logs show `-999` for temperature. Did anyone else have to bridge the SDO pad on the Bosch BME280 breakout to switch from `0x76` to `0x77`?</p>
-                            </div>
-
-                            <!-- Interactive Action Bar: Upvote & Toggle Solved -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button"
-                                        data-upvote-thread="thread-open-bme280-addr"
-                                        class="forum-upvote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition-colors cursor-pointer">
-                                        <span>&uarr; Helpful</span>
-                                        <span data-upvote-count="thread-open-bme280-addr" class="font-mono font-bold">(6)</span>
-                                    </button>
-
-                                    <button type="button"
-                                        data-toggle-solved="thread-open-bme280-addr"
-                                        class="forum-solve-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                                        &#10003; Mark as Solved
-                                    </button>
-                                </div>
-
-                                <span data-reply-counter="thread-open-bme280-addr" class="text-xs font-semibold text-slate-500">
-                                    1 reply
-                                </span>
-                            </div>
-
-                            <!-- Expandable Replies + Inline Reply Form -->
-                            <details class="group pt-2 border-t border-slate-100" open>
-                                <summary class="flex items-center justify-between cursor-pointer select-none text-xs font-bold text-teal-700 hover:text-slate-900 py-1">
-                                    <span>Discussion &amp; Post a Reply / Fix</span>
-                                    <span class="faq-icon text-slate-400 transition-transform duration-200">&darr;</span>
-                                </summary>
-
-                                <div class="pt-3 space-y-3">
-                                    <div data-replies-container="thread-open-bme280-addr" class="space-y-3">
-                                        
-                                    <div class="forum-reply-item p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">mateo_hw</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">Contributor</span>
-                                            </div>
-                                            
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">Check the three tiny solder pads next to the BME280 chip on your breakout! Purple/GY-BME280 boards default to `0x76`, whereas Adafruit-style breakouts pull SDO high to `0x77`. Try running an `i2c_scanner` sketch on `Wire.begin(6, 7)` and post what address shows up.</p>
-                                    </div>
-                                    </div>
-
-                                    <!-- Inline Reply Form for This Problem -->
-                                    <form data-reply-form="thread-open-bme280-addr" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 mt-3">
-                                        <div class="text-xs font-bold text-slate-800">Add a Reply or Solution to This Thread</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <input type="text" name="replyAuthor" required maxlength="60" placeholder="Your handle (e.g. jan_hw)"
-                                                class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-white">
-                                            <label class="flex items-center gap-2 text-xs text-slate-700 font-medium px-2">
-                                                <input type="checkbox" name="markSolved" class="rounded border-slate-300">
-                                                <span>This reply solves the problem</span>
-                                            </label>
-                                        </div>
-                                        <textarea name="replyText" rows="2" required maxlength="1000"
-                                            placeholder="Write your troubleshooting step, pinout fix, or command..."
-                                            class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
-                                                Post Reply &rarr;
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </details>
-                        </article>
-
-                        <!-- Interactive Forum Thread: thread-open-macro-standalone-boot -->
-                        <article id="thread-open-macro-standalone-boot"
-                            data-thread-id="thread-open-macro-standalone-boot"
-                            data-forum-category="macro-python"
-                            data-forum-solved="true"
-                            class="forum-thread-card bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-                            <!-- Thread Top Meta Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded">
-                                        Macro Pads & Python
-                                    </span>
-                                    <span data-thread-status-badge="thread-open-macro-standalone-boot"
-                                        class="text-[11px] font-bold px-2.5 py-1 rounded text-emerald-700 bg-emerald-50">
-                                        &#10003; Solved
-                                    </span>
-                                </div>
-                                <span class="text-xs text-slate-400">Posted by <strong class="text-slate-600">kuba_dev</strong> &middot; 1 day ago</span>
-                            </div>
-
-                            <!-- Thread Title & Problem Description -->
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 mb-1.5">Fixed: Why `while (!Serial);` in `simple.ino` made my DIY Pro Micro wait after reboot</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">When I flashed an older copy of `3x3/simple/usb/simple.ino` onto my ATmega32U4 Pro Micro, the 9 keys wouldn't fire after plugging into a laptop until I opened Serial Monitor or `macro_pad_config.py` once. Also `CTRL+C` was acting like `CTRL+SHIFT+C` in my terminal!</p>
-                            </div>
-
-                            <!-- Interactive Action Bar: Upvote & Toggle Solved -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button"
-                                        data-upvote-thread="thread-open-macro-standalone-boot"
-                                        class="forum-upvote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition-colors cursor-pointer">
-                                        <span>&uarr; Helpful</span>
-                                        <span data-upvote-count="thread-open-macro-standalone-boot" class="font-mono font-bold">(14)</span>
-                                    </button>
-
-                                    <button type="button"
-                                        data-toggle-solved="thread-open-macro-standalone-boot"
-                                        class="forum-solve-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                                        Reopen Problem
-                                    </button>
-                                </div>
-
-                                <span data-reply-counter="thread-open-macro-standalone-boot" class="text-xs font-semibold text-slate-500">
-                                    2 replies
-                                </span>
-                            </div>
-
-                            <!-- Expandable Replies + Inline Reply Form -->
-                            <details class="group pt-2 border-t border-slate-100" >
-                                <summary class="flex items-center justify-between cursor-pointer select-none text-xs font-bold text-teal-700 hover:text-slate-900 py-1">
-                                    <span>Discussion &amp; Post a Reply / Fix</span>
-                                    <span class="faq-icon text-slate-400 transition-transform duration-200">&darr;</span>
-                                </summary>
-
-                                <div class="pt-3 space-y-3">
-                                    <div data-replies-container="thread-open-macro-standalone-boot" class="space-y-3">
-                                        
-                                    <div class="forum-reply-item p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">Filip (Eggman Studios)</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">Maintainer</span>
-                                            </div>
-                                            <span class="text-[11px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">&#10003; Verified Solution</span>
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">Great catch! Two things were happening in the original `simple.ino`:
-1) Line 126 had `while (!Serial);` which blocks forever on ATmega32U4 until a CDC serial terminal opens. We updated the repo to wait at most 2500ms (`while (!Serial && millis() - startWait < 2500)`).
-2) Arduino `Keyboard.press('C')` automatically holds `SHIFT` for uppercase ASCII letters! We wrapped `mainKey` in `tolower()` in `simple.ino` so `CTRL+C` sends pure `KEY_LEFT_CTRL + 'c'`. Pull the latest `Macro` repo and re-flash!</p>
-                                    </div>
-
-                                    <div class="forum-reply-item p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">kuba_dev</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">OP</span>
-                                            </div>
-                                            
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">Just pulled the updated `simple.ino` and flashed it—boots instantly on cold plug and `CTRL+C` works cleanly without injecting Shift!</p>
-                                    </div>
-                                    </div>
-
-                                    <!-- Inline Reply Form for This Problem -->
-                                    <form data-reply-form="thread-open-macro-standalone-boot" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 mt-3">
-                                        <div class="text-xs font-bold text-slate-800">Add a Reply or Solution to This Thread</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <input type="text" name="replyAuthor" required maxlength="60" placeholder="Your handle (e.g. jan_hw)"
-                                                class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-white">
-                                            <label class="flex items-center gap-2 text-xs text-slate-700 font-medium px-2">
-                                                <input type="checkbox" name="markSolved" class="rounded border-slate-300">
-                                                <span>This reply solves the problem</span>
-                                            </label>
-                                        </div>
-                                        <textarea name="replyText" rows="2" required maxlength="1000"
-                                            placeholder="Write your troubleshooting step, pinout fix, or command..."
-                                            class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
-                                                Post Reply &rarr;
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </details>
-                        </article>
-
-                        <!-- Interactive Forum Thread: thread-linux-ttyacm -->
-                        <article id="thread-linux-ttyacm"
-                            data-thread-id="thread-linux-ttyacm"
-                            data-forum-category="macro-python"
-                            data-forum-solved="true"
-                            class="forum-thread-card bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-                            <!-- Thread Top Meta Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded">
-                                        Macro Pads & Python
-                                    </span>
-                                    <span data-thread-status-badge="thread-linux-ttyacm"
-                                        class="text-[11px] font-bold px-2.5 py-1 rounded text-emerald-700 bg-emerald-50">
-                                        &#10003; Solved
-                                    </span>
-                                </div>
-                                <span class="text-xs text-slate-400">Posted by <strong class="text-slate-600">eliska_linux</strong> &middot; 2 days ago</span>
-                            </div>
-
-                            <!-- Thread Title & Problem Description -->
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 mb-1.5">Linux Ubuntu 24.04 / Wayland — Permission denied on /dev/ttyACM0 & keyboard hook tip</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">I got my Macro producer (9 keys + 3 rotary encoders) and ran `macro_pad_config.py` on Ubuntu 24.04 (Wayland). When I pick `/dev/ttyACM0` and click Connect, it says `PermissionError: [Errno 13] Permission denied`. Also how do I set shortcuts on Wayland without running the whole GUI as root?</p>
-                            </div>
-
-                            <!-- Interactive Action Bar: Upvote & Toggle Solved -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button"
-                                        data-upvote-thread="thread-linux-ttyacm"
-                                        class="forum-upvote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition-colors cursor-pointer">
-                                        <span>&uarr; Helpful</span>
-                                        <span data-upvote-count="thread-linux-ttyacm" class="font-mono font-bold">(11)</span>
-                                    </button>
-
-                                    <button type="button"
-                                        data-toggle-solved="thread-linux-ttyacm"
-                                        class="forum-solve-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                                        Reopen Problem
-                                    </button>
-                                </div>
-
-                                <span data-reply-counter="thread-linux-ttyacm" class="text-xs font-semibold text-slate-500">
-                                    1 reply
-                                </span>
-                            </div>
-
-                            <!-- Expandable Replies + Inline Reply Form -->
-                            <details class="group pt-2 border-t border-slate-100" >
-                                <summary class="flex items-center justify-between cursor-pointer select-none text-xs font-bold text-teal-700 hover:text-slate-900 py-1">
-                                    <span>Discussion &amp; Post a Reply / Fix</span>
-                                    <span class="faq-icon text-slate-400 transition-transform duration-200">&darr;</span>
-                                </summary>
-
-                                <div class="pt-3 space-y-3">
-                                    <div data-replies-container="thread-linux-ttyacm" class="space-y-3">
-                                        
-                                    <div class="forum-reply-item p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">Filip (Eggman Studios)</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">Maintainer</span>
-                                            </div>
-                                            <span class="text-[11px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">&#10003; Verified Solution</span>
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">Two quick steps for Linux:
-1) For `/dev/ttyACM0`, add your user to the `dialout` group (`sudo usermod -a -G dialout $USER`) and log out/in.
-2) We just updated `macro_pad_config.py` in the repo with a manual text Entry box inside the key assignment popup! That means on Wayland you can run `./.venv/bin/python macro_pad_config.py` as your normal user and simply type `CTRL+C` or `ALT+TAB` into the box without needing `sudo` for `/dev/input`.</p>
-                                    </div>
-                                    </div>
-
-                                    <!-- Inline Reply Form for This Problem -->
-                                    <form data-reply-form="thread-linux-ttyacm" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 mt-3">
-                                        <div class="text-xs font-bold text-slate-800">Add a Reply or Solution to This Thread</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <input type="text" name="replyAuthor" required maxlength="60" placeholder="Your handle (e.g. jan_hw)"
-                                                class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-white">
-                                            <label class="flex items-center gap-2 text-xs text-slate-700 font-medium px-2">
-                                                <input type="checkbox" name="markSolved" class="rounded border-slate-300">
-                                                <span>This reply solves the problem</span>
-                                            </label>
-                                        </div>
-                                        <textarea name="replyText" rows="2" required maxlength="1000"
-                                            placeholder="Write your troubleshooting step, pinout fix, or command..."
-                                            class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
-                                                Post Reply &rarr;
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </details>
-                        </article>
-
-                        <!-- Interactive Forum Thread: thread-rfid-uart-link -->
-                        <article id="thread-rfid-uart-link"
-                            data-thread-id="thread-rfid-uart-link"
-                            data-forum-category="rfid-access"
-                            data-forum-solved="false"
-                            class="forum-thread-card bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-                            <!-- Thread Top Meta Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded">
-                                        RFID Door Locks
-                                    </span>
-                                    <span data-thread-status-badge="thread-rfid-uart-link"
-                                        class="text-[11px] font-bold px-2.5 py-1 rounded text-amber-800 bg-amber-50">
-                                        Open Problem
-                                    </span>
-                                </div>
-                                <span class="text-xs text-slate-400">Posted by <strong class="text-slate-600">honza_lab</strong> &middot; 4 days ago</span>
-                            </div>
-
-                            <!-- Thread Title & Problem Description -->
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 mb-1.5">Wiring `InputNode.ino` to `OutputNode.ino` through a thick brick classroom wall + 1N4007 diode</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">We are installing the `RFID-student-acces-system` on our school robotics lab door. The hallway `InputNode.ino` (`MFRC522` on pins 10/9) talks to the interior `OutputNode.ino` (`RELAY_PIN 4`) at `115200` baud over a 1.5m CAT5e cable through the wall. What is the maximum cable length before we should drop the UART baud rate or use RS-485, and where exactly does the `1N4007` diode go?</p>
-                            </div>
-
-                            <!-- Interactive Action Bar: Upvote & Toggle Solved -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button"
-                                        data-upvote-thread="thread-rfid-uart-link"
-                                        class="forum-upvote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition-colors cursor-pointer">
-                                        <span>&uarr; Helpful</span>
-                                        <span data-upvote-count="thread-rfid-uart-link" class="font-mono font-bold">(9)</span>
-                                    </button>
-
-                                    <button type="button"
-                                        data-toggle-solved="thread-rfid-uart-link"
-                                        class="forum-solve-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                                        &#10003; Mark as Solved
-                                    </button>
-                                </div>
-
-                                <span data-reply-counter="thread-rfid-uart-link" class="text-xs font-semibold text-slate-500">
-                                    1 reply
-                                </span>
-                            </div>
-
-                            <!-- Expandable Replies + Inline Reply Form -->
-                            <details class="group pt-2 border-t border-slate-100" open>
-                                <summary class="flex items-center justify-between cursor-pointer select-none text-xs font-bold text-teal-700 hover:text-slate-900 py-1">
-                                    <span>Discussion &amp; Post a Reply / Fix</span>
-                                    <span class="faq-icon text-slate-400 transition-transform duration-200">&darr;</span>
-                                </summary>
-
-                                <div class="pt-3 space-y-3">
-                                    <div data-replies-container="thread-rfid-uart-link" class="space-y-3">
-                                        
-                                    <div class="forum-reply-item p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">Filip (Eggman Studios)</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">Maintainer</span>
-                                            </div>
-                                            
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">Through a standard doorway (under 3 meters of twisted-pair CAT5e with common `GND`), 3.3V UART at `115200` baud works reliably. If you run longer than 4 meters, drop `Serial.begin(9600)` in both `InputNode.ino` and `OutputNode.ino`. Put the `1N4007` flyback diode directly across the two screw terminals of the 12V electric door strike (silver cathode stripe pointing to the `+12V` wire).</p>
-                                    </div>
-                                    </div>
-
-                                    <!-- Inline Reply Form for This Problem -->
-                                    <form data-reply-form="thread-rfid-uart-link" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 mt-3">
-                                        <div class="text-xs font-bold text-slate-800">Add a Reply or Solution to This Thread</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <input type="text" name="replyAuthor" required maxlength="60" placeholder="Your handle (e.g. jan_hw)"
-                                                class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-white">
-                                            <label class="flex items-center gap-2 text-xs text-slate-700 font-medium px-2">
-                                                <input type="checkbox" name="markSolved" class="rounded border-slate-300">
-                                                <span>This reply solves the problem</span>
-                                            </label>
-                                        </div>
-                                        <textarea name="replyText" rows="2" required maxlength="1000"
-                                            placeholder="Write your troubleshooting step, pinout fix, or command..."
-                                            class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
-                                                Post Reply &rarr;
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </details>
-                        </article>
-
-                        <!-- Interactive Forum Thread: thread-mateo-winter-solar -->
-                        <article id="thread-mateo-winter-solar"
-                            data-thread-id="thread-mateo-winter-solar"
-                            data-forum-category="weather-stations"
-                            data-forum-solved="true"
-                            class="forum-thread-card bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
-                            <!-- Thread Top Meta Bar -->
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-teal-700 bg-teal-50 px-2.5 py-1 rounded">
-                                        Mateo Weather Stations
-                                    </span>
-                                    <span data-thread-status-badge="thread-mateo-winter-solar"
-                                        class="text-[11px] font-bold px-2.5 py-1 rounded text-emerald-700 bg-emerald-50">
-                                        &#10003; Solved
-                                    </span>
-                                </div>
-                                <span class="text-xs text-slate-400">Posted by <strong class="text-slate-600">marek_orchard</strong> &middot; 6 days ago</span>
-                            </div>
-
-                            <!-- Thread Title & Problem Description -->
-                            <div>
-                                <h3 class="text-lg font-bold text-slate-900 mb-1.5">Winter solar angle & MOSFET heater gating (`GPIO 15`) on Pre-Built Mateo Stations</h3>
-                                <p class="text-sm text-slate-600 leading-relaxed">We mounted the Pre-Built Mateo Long-Range Field Mast + Indoor Home Deck in our apple orchard. How does the station keep the `MQ-135` air quality heater (150mA) from draining the `LiFePO4` pack during 2 weeks of winter fog?</p>
-                            </div>
-
-                            <!-- Interactive Action Bar: Upvote & Toggle Solved -->
-                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <button type="button"
-                                        data-upvote-thread="thread-mateo-winter-solar"
-                                        class="forum-upvote-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-teal-50 hover:text-teal-800 transition-colors cursor-pointer">
-                                        <span>&uarr; Helpful</span>
-                                        <span data-upvote-count="thread-mateo-winter-solar" class="font-mono font-bold">(15)</span>
-                                    </button>
-
-                                    <button type="button"
-                                        data-toggle-solved="thread-mateo-winter-solar"
-                                        class="forum-solve-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                                        Reopen Problem
-                                    </button>
-                                </div>
-
-                                <span data-reply-counter="thread-mateo-winter-solar" class="text-xs font-semibold text-slate-500">
-                                    1 reply
-                                </span>
-                            </div>
-
-                            <!-- Expandable Replies + Inline Reply Form -->
-                            <details class="group pt-2 border-t border-slate-100" >
-                                <summary class="flex items-center justify-between cursor-pointer select-none text-xs font-bold text-teal-700 hover:text-slate-900 py-1">
-                                    <span>Discussion &amp; Post a Reply / Fix</span>
-                                    <span class="faq-icon text-slate-400 transition-transform duration-200">&darr;</span>
-                                </summary>
-
-                                <div class="pt-3 space-y-3">
-                                    <div data-replies-container="thread-mateo-winter-solar" class="space-y-3">
-                                        
-                                    <div class="forum-reply-item p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
-                                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
-                                            <div class="flex items-center gap-2">
-                                                <span class="font-bold text-slate-900">mateo_hw</span>
-                                                <span class="text-[11px] font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded">Contributor</span>
-                                            </div>
-                                            <span class="text-[11px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-200">&#10003; Verified Solution</span>
-                                        </div>
-                                        <p class="text-xs text-slate-700 leading-relaxed">On all Mateo boards, the `MQ-135` heater ground pin is switched by a `2N7002` N-Channel MOSFET (`GPIO 15` on ESP32-C6 / `GPIO 18` on ESP32-S3), while the 5V solar rail is monitored via a `100k/10k` divider on `ADC1`. When solar input drops or battery voltage falls below `3.20V`, the firmware leaves the MOSFET gate LOW so the station only samples the ultra-low-power `BME280` (`7 µA` sleep)!</p>
-                                    </div>
-                                    </div>
-
-                                    <!-- Inline Reply Form for This Problem -->
-                                    <form data-reply-form="thread-mateo-winter-solar" class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 mt-3">
-                                        <div class="text-xs font-bold text-slate-800">Add a Reply or Solution to This Thread</div>
-                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <input type="text" name="replyAuthor" required maxlength="60" placeholder="Your handle (e.g. jan_hw)"
-                                                class="w-full p-2 rounded-lg border border-slate-300 text-xs bg-white">
-                                            <label class="flex items-center gap-2 text-xs text-slate-700 font-medium px-2">
-                                                <input type="checkbox" name="markSolved" class="rounded border-slate-300">
-                                                <span>This reply solves the problem</span>
-                                            </label>
-                                        </div>
-                                        <textarea name="replyText" rows="2" required maxlength="1000"
-                                            placeholder="Write your troubleshooting step, pinout fix, or command..."
-                                            class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
-                                        <div class="flex justify-end">
-                                            <button type="submit"
-                                                class="px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer">
-                                                Post Reply &rarr;
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </details>
-                        </article>
+                        <div id="forum-empty-state" class="bg-white rounded-2xl border border-slate-200 p-8 text-center space-y-2 shadow-xs">
+                            <h2 class="text-base font-bold text-slate-900">No discussion threads yet</h2>
+                            <p class="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">Use the "Start a New Topic" form to post the first hardware question, troubleshooting log, or project build.</p>
+                        </div>
                     </div>
 
-                    <!-- Right: Start a New Topic Box + Quick Reference (5 cols) -->
+                    <!-- Right: Start a New Topic Box + Documentation Link (5 cols) -->
                     <div id="new-topic-box" class="lg:col-span-5 space-y-6">
                         <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
                             <div>
@@ -694,7 +210,7 @@
                             <form id="forum-new-topic-form" class="space-y-3">
                                 <div>
                                     <label for="forum-author" class="block text-xs font-bold text-slate-700 mb-1">Your Name / Handle</label>
-                                    <input type="text" id="forum-author" required maxlength="60" placeholder="e.g. martin_cz"
+                                    <input type="text" id="forum-author" required maxlength="60" placeholder="Enter display name"
                                         class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white">
                                 </div>
 
@@ -710,13 +226,13 @@
 
                                 <div>
                                     <label for="forum-title" class="block text-xs font-bold text-slate-700 mb-1">Problem / Topic Title</label>
-                                    <input type="text" id="forum-title" required maxlength="140" placeholder="e.g. Rotary encoder pins on Macro producer?"
+                                    <input type="text" id="forum-title" required maxlength="140" placeholder="Brief summary of your question or build"
                                         class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white">
                                 </div>
 
                                 <div>
                                     <label for="forum-body" class="block text-xs font-bold text-slate-700 mb-1">Details / Logs</label>
-                                    <textarea id="forum-body" rows="4" required maxlength="1200" placeholder="Include your OS, board (ATmega32U4 / ESP32), and any serial output..."
+                                    <textarea id="forum-body" rows="4" required maxlength="1200" placeholder="Describe your setup, operating system, and what you observed..."
                                         class="w-full p-2.5 rounded-lg border border-slate-300 text-xs bg-white"></textarea>
                                 </div>
 
@@ -728,15 +244,12 @@
                             </form>
                         </div>
 
-                        <div class="p-5 rounded-2xl bg-slate-900 text-slate-200 space-y-3">
-                            <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block font-mono">Common Quick Fixes</span>
-                            <ul class="text-xs text-slate-300 space-y-2 leading-relaxed">
-                                <li>&bull; <strong>Linux /dev/ttyACM0 error:</strong> Run <code class="text-teal-400 font-mono">sudo usermod -a -G dialout $USER</code> and log out/in.</li>
-                                <li>&bull; <strong>BME280 reads -999:</strong> Check 4.7k&Omega; pull-ups on SDA/SCL and verify I2C address (0x76 vs 0x77).</li>
-                                <li>&bull; <strong>RFID ESP resets on lock release:</strong> Add a 1N4007 flyback diode across the 12V strike terminals.</li>
-                            </ul>
+                        <div class="p-5 rounded-2xl bg-slate-900 text-slate-200 space-y-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block font-mono">Documentation & Setup</span>
+                            <h3 class="text-sm font-bold text-white">Looking for step-by-step wiring or installation instructions?</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed">Browse our OS-specific Python setup instructions and 4-step hardware assembly guides on the Tutorials page.</p>
                             <a href="tutorials.html" class="inline-block text-xs font-semibold text-teal-400 hover:text-white pt-1">
-                                Open Setup &amp; Assembly Guides &rarr;
+                                Open Setup & Assembly Guides →
                             </a>
                         </div>
                     </div>
@@ -757,18 +270,18 @@
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>

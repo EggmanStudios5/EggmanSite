@@ -1,18 +1,18 @@
 /**
  * Shared Document Layout Component — Eggman Studios (`src/components/Layout.js`)
- * Eliminates duplicated HTML `<head>`, typography, navigation, error boundary,
- * and footer boilerplate across all views.
+ * Driven dynamically by `SITE_COPY` with zero hardcoded strings.
  */
 
+import { SITE_COPY } from '../data/projects.js';
 import { Navbar } from './Navbar.js';
 import { Footer } from './Footer.js';
 
 export function Layout({
-  title,
-  description,
+  title = `${SITE_COPY.brand.name} — ${SITE_COPY.brand.subtitle}`,
+  description = SITE_COPY.hero.subtitle,
   activePage = 'home',
   assetPrefix = '.',
-  favicon = 'eggmanlogo.svg',
+  favicon = SITE_COPY.brand.logo,
   headScripts = '',
   bodyContent = ''
 } = {}) {
@@ -47,14 +47,14 @@ export function Layout({
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-teal-100 selection:text-teal-900">
     ${navbar}
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <span id="app-error-boundary-msg">We encountered a temporary issue completing that action. Please refresh the page or try again in a moment.</span>
+            <span id="app-error-boundary-msg">${SITE_COPY.errorBoundary.defaultMessage}</span>
             <button type="button" id="app-error-boundary-close"
                 class="text-amber-800 hover:text-slate-900 font-bold cursor-pointer">
-                Dismiss
+                ${SITE_COPY.errorBoundary.dismissLabel}
             </button>
         </div>
     </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mateo Weather Network — Eggman Studios</title>
-    <meta name="description" content="Community-driven, solar-powered weather stations for city balconies, rural farms, and off-grid communities.">
+    <meta name="description" content="An open-source, solar-powered weather network designed to bring reliable local forecasts to areas that commercial stations miss.">
     <link rel="icon" type="image/svg+xml" href="../src/img/mateologo.svg">
     <link rel="stylesheet" href="../src/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -112,7 +112,7 @@
 
     <main id="main-content">
 
-        <!-- Distinct Atmospheric Field-Guide Header -->
+        <!-- Atmospheric Field-Guide Header -->
         <section class="hero-banner border-b border-slate-200/80 py-16 md:py-24">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-6">
@@ -124,42 +124,32 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <div class="max-w-2xl space-y-4">
                         <div class="flex items-center gap-3">
-                            <img src="../src/img/mateologo.svg" alt="Mateo Logo"
+                            <img src="../src/img/mateologo.svg" alt="Mateo Weather Network Logo"
                                 class="w-10 h-10 rounded-lg border border-slate-200 shadow-2xs">
                             <span class="text-xs font-bold uppercase tracking-wider text-teal-700">
-                                Project 03 &middot; Community Weather &amp; Design Baseline
+                                Project 03 · Community Weather & Design Baseline
                             </span>
                         </div>
                         <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                             Local weather data where big forecasts miss.
                         </h1>
-                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
-                            Official weather stations cost thousands of dollars and are mostly placed near airports and big cities—leaving farms, valleys, and small towns guessing when frost or heavy rain will hit.
-                        </p>
-                        <p class="text-sm text-slate-600 leading-relaxed">
-                            <strong>Mateo</strong> is an open-source, solar-powered weather station project built to work anywhere, from an apartment balcony to a remote village with zero cell service.
-                        </p>
+                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">Official weather stations cost thousands of dollars and are mostly placed near airports and big cities—leaving farms, valleys, and small towns guessing when frost or heavy rain will hit.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Mateo is an open-source, solar-powered weather station project built to work anywhere, from an apartment balcony to a remote village with zero cell service.</p>
                     </div>
 
                     <div class="flex flex-col gap-3 shrink-0">
-                        <a href="shop.html"
-                            class="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors shadow-xs">
-                            Shop Pre-Built Stations &amp; Kits &rarr;
-                        </a>
-                        <a href="tutorials.html#setup-weather-station"
-                            class="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition-colors">
-                            How to Mount &amp; Connect &rarr;
-                        </a>
+                        <a href="shop.html" class="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors shadow-xs">Shop Pre-Built Stations & Kits →</a>
+                        <a href="tutorials.html#setup-weather-station" class="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 transition-colors">How to Mount & Connect →</a>
                         <a href="https://github.com/FilipVastl005/WEB-Projekt" target="_blank" rel="noopener noreferrer"
                             class="inline-flex items-center justify-center px-5 py-3 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors shadow-xs">
-                            Open WEB-Projekt on GitHub &nearr;
+                            Open Repository on GitHub ↗
                         </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 1: Three Places, Three Setups (Stacked Editorial Layout) -->
+        <!-- Topologies Section -->
         <section class="py-20 bg-white border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl mb-12">
@@ -172,54 +162,45 @@
                     </p>
                 </div>
 
-                <!-- Stacked Horizontal Rows -->
                 <div class="space-y-6">
-                    <!-- Place 1 -->
+                    
                     <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50/70 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                         <div class="md:col-span-4">
-                            <span class="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 01 &middot; City &amp; Balcony</span>
+                            <span class="text-xs font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 01 · City & Balcony</span>
                             <h3 class="text-xl font-bold text-slate-900">Home Wi-Fi Station</h3>
                             <p class="text-xs text-slate-500 mt-1">For apartments, rooftops, and city neighborhoods</p>
                         </div>
                         <div class="md:col-span-8 text-sm text-slate-600 leading-relaxed space-y-2">
-                            <p>
-                                Connects directly to your home Wi-Fi. To keep the small solar battery charged through dark winters, the chip stays asleep 99.9% of the time—waking up for just a fraction of a second every few minutes to take a reading and go right back to sleep.
-                            </p>
+                            <p>Connects directly to your home Wi-Fi. To keep the small solar battery charged through dark winters, the chip stays asleep 99.9% of the time—waking up for just a fraction of a second every few minutes to take a reading and go right back to sleep.</p>
                         </div>
                     </div>
 
-                    <!-- Place 2 -->
                     <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50/70 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                         <div class="md:col-span-4">
-                            <span class="text-xs font-bold text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 02 &middot; Countryside &amp; Farms</span>
+                            <span class="text-xs font-bold text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 02 · Countryside & Farms</span>
                             <h3 class="text-xl font-bold text-slate-900">Long-Range Garden Mast + Indoor Hub</h3>
                             <p class="text-xs text-slate-500 mt-1">When the sensor is too far for Wi-Fi</p>
                         </div>
                         <div class="md:col-span-8 text-sm text-slate-600 leading-relaxed space-y-2">
-                            <p>
-                                Places the solar weather sensor out in a field or orchard up to 2 km away, beaming readings over long-range radio (LoRa) to a small indoor display box in your house. Even if your home internet goes out, you can view live weather on your local network and everything saves to an SD card.
-                            </p>
+                            <p>Places the solar weather sensor out in a field or orchard up to 2 km away, beaming readings over long-range radio (LoRa) to a small indoor display box in your house. Even if your home internet goes out, you can view live weather on your local network and everything saves to an SD card.</p>
                         </div>
                     </div>
 
-                    <!-- Place 3 -->
                     <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-slate-50/70 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                         <div class="md:col-span-4">
-                            <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 03 &middot; Off-Grid Villages</span>
+                            <span class="text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md inline-block mb-2">Setup 03 · Off-Grid Villages</span>
                             <h3 class="text-xl font-bold text-slate-900">Solar Community Kiosk</h3>
                             <p class="text-xs text-slate-500 mt-1">Zero internet or cell towers required</p>
                         </div>
                         <div class="md:col-span-8 text-sm text-slate-600 leading-relaxed space-y-2">
-                            <p>
-                                Multiple solar sensors relay readings from hill to hill into a central village kiosk. The kiosk broadcasts a free local Wi-Fi page (<code class="bg-white px-1.5 py-0.5 rounded border border-slate-200 text-xs">http://community.weather</code>) so anyone nearby can check frost warnings and rainfall on their phone without needing mobile data.
-                            </p>
+                            <p>Multiple solar sensors relay readings from hill to hill into a central village kiosk. The kiosk broadcasts a free local Wi-Fi page (http://community.weather) so anyone nearby can check frost warnings and rainfall on their phone without needing mobile data.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: How Mateo Filters Out Bad Readings -->
+        <!-- Data Validation Steps Section -->
         <section class="py-16 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -234,6 +215,7 @@
                     </div>
 
                     <div class="lg:col-span-7 space-y-3">
+                        
                         <div class="bg-white p-5 rounded-xl border border-slate-200 flex items-start gap-4">
                             <span class="w-7 h-7 rounded-full bg-slate-900 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
                             <div>
@@ -262,24 +244,28 @@
             </div>
         </section>
 
-        <!-- Section 3: Link to Tutorials & Next Project -->
+        <!-- Link to Tutorials & Dynamic Adjacent Projects -->
         <section class="py-14 bg-white border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
                     <div>
-                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">Mounting &amp; Setup</span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">Mounting & Setup</span>
                         <h2 class="text-lg font-bold text-slate-900">Setting up a Pre-Built or DIY Mateo Station?</h2>
                         <p class="text-xs text-slate-600 mt-0.5">Read our step-by-step guide on turning on the internal battery switch, connecting to Wi-Fi, and aiming the solar panel.</p>
                     </div>
                     <a href="tutorials.html#setup-weather-station"
                         class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                        Open Station Setup Guide &rarr;
+                        Open Station Setup Guide →
                     </a>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-100">
-                    <a href="projects.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">&larr; Back to All Projects</a>
-                    <a href="rfid.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">Next: RFID Student Access &rarr;</a>
+                    <a href="macro.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">
+                        &larr; Previous: Macro 3×3 Pad
+                    </a>
+                    <a href="rfid.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">
+                        Next: RFID Student Access &rarr;
+                    </a>
                 </div>
             </div>
         </section>
@@ -297,18 +283,18 @@
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>

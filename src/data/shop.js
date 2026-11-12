@@ -258,6 +258,160 @@ export const ALL_SHOP_ITEMS = [
   ...DIY_COMPONENTS
 ];
 
+export const SHOP_PAGE_CONFIG = {
+  pageTitle: 'Hardware & Parts Shop',
+  pageDescription:
+    'Shop pre-built Mateo solar weather stations, assembled Macro Pads, or individual DIY switches, rotary encoders, and starter kits.',
+  header: {
+    eyebrow: 'Eggman Studios Hardware Store',
+    title: 'Pre-built devices & DIY parts.',
+    subtitle:
+      'Pick up a fully calibrated solar Mateo Weather Station, a ready-to-plug Macro Pad, or grab raw switches, sensors, and controllers to solder your own build at home.'
+  },
+  cartSummaryCard: {
+    eyebrow: 'Shopping Cart',
+    subtotalLabel: 'Subtotal:',
+    ctaLabel: 'View Cart & Checkout →',
+    ctaHref: 'cart.html'
+  },
+  tutorialsPrompt: {
+    label: 'Need installation or wiring help? View Setup Tutorials →',
+    href: 'tutorials.html'
+  }
+};
+
+export const SHOP_FILTERS = [
+  { id: 'all', label: 'All Items', countFn: (items) => items.length },
+  {
+    id: 'weather-station',
+    label: 'Weather Stations',
+    countFn: (items) => items.filter((i) => i.category === 'weather-station').length
+  },
+  {
+    id: 'assembled',
+    label: 'Assembled Macro Pads',
+    countFn: (items) => items.filter((i) => i.category === 'assembled').length
+  },
+  { id: 'bluetooth', label: 'Wireless / Bluetooth' },
+  { id: 'encoder', label: 'With Rotary Knob / Lever' },
+  {
+    id: 'component',
+    label: 'DIY Parts & Kits',
+    countFn: (items) => items.filter((i) => i.category === 'component').length
+  }
+];
+
+export const SHOP_SECTIONS = [
+  {
+    id: 'weather-stations',
+    category: 'weather-station',
+    sectionClass: 'py-16 bg-slate-900 text-slate-200 border-b border-slate-800',
+    eyebrow: 'Ready for Outdoor Deployment · Solar + Li-Ion Powered',
+    eyebrowClass: 'text-teal-400',
+    title: 'Pre-Built Mateo Weather Stations',
+    titleClass: 'text-white',
+    description:
+      'Complete, weather-sealed outdoor stations built with genuine Bosch BME280 barometric sensors, MOSFET-gated MQ-135 air quality heaters, tempered-glass solar panels, and protected Li-Ion / LiFePO4 battery packs.',
+    descriptionClass: 'text-slate-300',
+    linkLabel: 'Learn how the Mateo network works →',
+    linkHref: 'mateo.html',
+    linkClass: 'text-xs font-semibold text-teal-400 hover:text-white shrink-0',
+    gridClass: 'grid grid-cols-1 md:grid-cols-3 gap-6'
+  },
+  {
+    id: 'assembled-devices',
+    category: 'assembled',
+    sectionClass: 'py-16 bg-slate-50 border-b border-slate-200/80',
+    eyebrow: 'Ready to Plug & Play',
+    eyebrowClass: 'text-teal-700',
+    title: 'Assembled Macro Pads',
+    titleClass: 'text-slate-900',
+    description:
+      'Fully soldered, flashed with our open-source EEPROM firmware, and ready for your desk.',
+    descriptionClass: 'text-slate-600',
+    linkLabel: 'See how the Macro Pad works →',
+    linkHref: 'macro.html',
+    linkClass: 'text-xs font-semibold text-teal-700 hover:text-slate-900 shrink-0',
+    gridClass: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+  },
+  {
+    id: 'diy-components',
+    category: 'component',
+    sectionClass: 'py-16 bg-white border-b border-slate-200/80',
+    eyebrow: 'Build or Repair Your Own',
+    eyebrowClass: 'text-teal-700',
+    title: 'Individual Components & DIY Kits',
+    titleClass: 'text-slate-900',
+    description:
+      'Have a 3D printer and a soldering iron? Grab the exact microcontrollers, switches, and sensors used in our projects.',
+    descriptionClass: 'text-slate-600',
+    linkLabel: 'Proceed to Cart & Checkout →',
+    linkHref: 'cart.html',
+    linkClass:
+      'shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors',
+    gridClass: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'
+  }
+];
+
+export const CART_PAGE_CONFIG = {
+  pageTitle: 'Shopping Cart & Checkout',
+  pageDescription:
+    'Review your Eggman Studios hardware cart, adjust quantities, and complete your order.',
+  backLinkLabel: '← Continue Shopping in Hardware Store',
+  backLinkHref: 'shop.html',
+  header: {
+    eyebrow: 'Hardware Order & Dispatch',
+    title: 'Shopping Cart & Checkout',
+    subtitle:
+      'Review your selected devices and DIY kits below, adjust quantities, and submit your shipping details. Every assembled unit is bench-tested before dispatch.',
+    addMoreLabel: '+ Add More Items',
+    clearLabel: 'Clear Cart'
+  },
+  itemsPanel: {
+    headingPrefix: 'Selected Hardware',
+    emptyTitle: 'Your cart is currently empty',
+    emptyDescription:
+      'Browse our pre-built solar Mateo Weather Stations, custom Macro Pads, or DIY component kits to add items to your order.',
+    emptyCtaLabel: 'Browse Hardware Shop →',
+    emptyCtaHref: 'shop.html'
+  },
+  assuranceCards: [
+    {
+      badge: '01 · Bench Tested',
+      text: 'Every assembled pad and weather station is tested over USB/serial before packing.'
+    },
+    {
+      badge: '02 · Open Firmware',
+      text: 'Ships pre-flashed with our open-source firmware—no cloud account required.'
+    },
+    {
+      badge: '03 · Direct Support',
+      text: 'Follow our step-by-step Setup Tutorials or ask questions on the Community Forum.'
+    }
+  ],
+  summaryPanel: {
+    eyebrow: 'Order Summary',
+    title: 'Shipping & Order Confirmation',
+    subtotalLabel: 'Hardware Subtotal',
+    calibrationLabel: 'Firmware Pre-Flash & Calibration',
+    calibrationValue: 'Included',
+    totalLabel: 'Total Due',
+    submitLabel: 'Place Order & Send Confirmation',
+    fields: {
+      nameLabel: 'Full Name *',
+      namePlaceholder: 'Recipient full name',
+      emailLabel: 'Email Address *',
+      emailPlaceholder: 'Confirmation email address',
+      phoneLabel: 'Phone (Courier)',
+      phonePlaceholder: 'Contact phone number',
+      addressLabel: 'Shipping Address (Street, City, Postal Code) *',
+      addressPlaceholder: 'Street address, city, postal code, and country',
+      notesLabel: 'Custom Build Notes (Switch type, keycap color, etc.)',
+      notesPlaceholder: 'Optional build preferences or delivery notes'
+    }
+  }
+};
+
 /**
  * Sanitized, minimal projection of catalog items for client-side cart rendering
  * and canonical price verification. Excludes internal specs, CSV metadata, and

@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PROJECTS } from '../src/data/projects.js';
+import { PROJECTS, SITE_COPY } from '../src/data/projects.js';
 import { Layout } from '../src/components/Layout.js';
 import { renderLandingView } from '../src/views/LandingView.js';
 import { renderProjectsView } from '../src/views/ProjectsView.js';
@@ -18,20 +18,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const TEMPLATES_DIR = path.join(ROOT_DIR, 'templates');
+const MANIFEST_PATH = path.join(ROOT_DIR, 'src', 'data', 'repos-manifest.json');
 
-const CUSTOM_PROJECT_RENDERERS = {
-  rfid: renderRfidView,
-  macro: renderMacroView,
-  mateo: renderMateoView
+const PROJECT_THEME_RENDERERS = {
+  split: renderRfidView,
+  dark: renderMacroView,
+  atmospheric: renderMateoView
 };
 
 /**
- * Fallback view generator for any new project added to `PROJECTS` in `src/data/projects.js`
- * that does not have a custom view file in `src/views/`.
+ * Fallback view generator for any project in `PROJECTS` that does not specify
+ * one of the specialized `detailPage.theme` layouts.
  */
 function renderGenericProjectView({ project, assetPrefix = '.' }) {
   const highlights = (project.highlights || [])
-    .map((h) => `<li class="flex items-start gap-2.5 text-sm text-slate-600"><span class="text-teal-700 font-bold">&bull;</span><span>${h}</span></li>`)
+    .map(
+      (h) =>
+        `<li class="flex items-start gap-2.5 text-sm text-slate-600"><span class="text-teal-700 font-bold">&bull;</span><span>${h}</span></li>`
+    )
     .join('\n');
 
   const bodyContent = `
@@ -56,7 +60,7 @@ function renderGenericProjectView({ project, assetPrefix = '.' }) {
         </section>`;
 
   return Layout({
-    title: `${project.title} — Eggman Studios`,
+    title: `${project.title} — ${SITE_COPY.brand.name}`,
     description: project.summary,
     activePage: project.slug,
     assetPrefix,
@@ -64,18 +68,15 @@ function renderGenericProjectView({ project, assetPrefix = '.' }) {
   });
 }
 
-function buildSite() {
-  fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
-  generateShopPlaceholders();
-
-  const pages = [
+export function getSitePages(projects = PROJECTS) {
+  return [
     {
       filename: 'index.html',
       render: (assetPrefix) => renderLandingView({ assetPrefix })
     },
     {
       filename: 'projects.html',
-      render: (assetPrefix) => renderProjectsView({ projects: PROJECTS, assetPrefix })
+      render: (assetPrefix) => renderProjectsView({ projects, assetPrefix })
     },
     {
       filename: 'shop.html',
@@ -93,17 +94,49 @@ function buildSite() {
       filename: 'forum.html',
       render: (assetPrefix) => renderForumView({ assetPrefix })
     },
-    ...PROJECTS.map((project) => {
-      const customRenderer = CUSTOM_PROJECT_RENDERERS[project.slug];
+    ...projects.map((project) => {
+      const themeRenderer = PROJECT_THEME_RENDERERS[project.detailPage?.theme];
       return {
         filename: project.overviewPage,
         render: (assetPrefix) =>
-          customRenderer
-            ? customRenderer({ project, assetPrefix })
+          themeRenderer
+            ? themeRenderer({ project, projects, assetPrefix })
             : renderGenericProjectView({ project, assetPrefix })
       };
     })
   ];
+}
+
+export function buildSite() {
+  fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
+  generateShopPlaceholders();
+
+  // Keep repos-manifest.json synchronized with PROJECTS (no stale hardcoded paths)
+  const manifestPayload = {
+    generatedAt: new Date().toISOString(),
+    organization: {
+      name: SITE_COPY.brand.name,
+      tagline: SITE_COPY.brand.subtitle,
+      license: SITE_COPY.brand.licenseNote,
+      githubProfile: SITE_COPY.brand.githubProfile
+    },
+    projects: PROJECTS.map((p) => ({
+      id: p.id,
+      slug: p.slug,
+      group: p.group,
+      title: p.title,
+      tagline: p.tagline,
+      kindLabel: p.kindLabel,
+      githubUrl: p.githubUrl,
+      overviewPage: p.overviewPage,
+      summary: p.summary,
+      whatItSolves: p.whatItSolves,
+      highlights: p.highlights
+    }))
+  };
+  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifestPayload, null, 2) + '\n', 'utf8');
+
+  const pages = getSitePages(PROJECTS);
 
   for (const page of pages) {
     const rootHtml = page.render('.');
@@ -116,4 +149,6 @@ function buildSite() {
   }
 }
 
-buildSite();
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  buildSite();
+}

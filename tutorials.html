@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -112,61 +112,65 @@
 
     <main id="main-content">
 
-        <!-- Clean, Direct Header with Quick Jump Cards -->
+        <!-- Header with Dynamic Jump Cards -->
         <section class="bg-white border-b border-slate-200/80 py-14">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl space-y-3 mb-10">
                     <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block">
-                        Getting Started &amp; Setup Guides
+                        Getting Started & Setup Guides
                     </span>
                     <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                        How to install, connect &amp; assemble.
+                        How to install, connect & assemble.
                     </h1>
                     <p class="text-base text-slate-600 leading-relaxed">
                         Pick what you are setting up below—whether you are installing Python for your Macro Pad, mounting a pre-built Weather Station outside, or wiring a DIY kit.
                     </p>
                 </div>
 
-                <!-- 4 Direct Jump Cards -->
+                <!-- Dynamic Jump Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    
                     <a href="#python-os-setup"
                         class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-teal-600 transition-colors block">
-                        <span class="text-xs font-bold text-teal-700 block">01 &middot; Software Setup</span>
-                        <span class="text-sm font-bold text-slate-900 mt-1 block">Install Python &amp; Macro App</span>
-                        <span class="text-xs text-slate-500 mt-0.5 block">Windows, Linux &amp; macOS</span>
+                        <span class="text-xs font-bold text-teal-700 block">01 · Software Setup</span>
+                        <span class="text-sm font-bold text-slate-900 mt-1 block">Install Python & Macro App</span>
+                        <span class="text-xs text-slate-500 mt-0.5 block">Windows, Linux & macOS</span>
                     </a>
+
                     <a href="#setup-macro-diy"
                         class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-teal-600 transition-colors block">
-                        <span class="text-xs font-bold text-teal-700 block">02 &middot; Desk Hardware</span>
+                        <span class="text-xs font-bold text-teal-700 block">02 · Desk Hardware</span>
                         <span class="text-sm font-bold text-slate-900 mt-1 block">Assemble a DIY Macro Pad</span>
-                        <span class="text-xs text-slate-500 mt-0.5 block">Switches, pins &amp; upload</span>
+                        <span class="text-xs text-slate-500 mt-0.5 block">Switches, pins & upload</span>
                     </a>
+
                     <a href="#setup-weather-station"
                         class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-teal-600 transition-colors block">
-                        <span class="text-xs font-bold text-teal-700 block">03 &middot; Outdoor Weather</span>
+                        <span class="text-xs font-bold text-teal-700 block">03 · Outdoor Weather</span>
                         <span class="text-sm font-bold text-slate-900 mt-1 block">Mount a Weather Station</span>
-                        <span class="text-xs text-slate-500 mt-0.5 block">Battery switch, Wi-Fi &amp; solar</span>
+                        <span class="text-xs text-slate-500 mt-0.5 block">Battery switch, Wi-Fi & solar</span>
                     </a>
+
                     <a href="#setup-rfid-door"
                         class="p-4 rounded-xl bg-slate-50 border border-slate-200 hover:border-teal-600 transition-colors block">
-                        <span class="text-xs font-bold text-teal-700 block">04 &middot; Room Security</span>
+                        <span class="text-xs font-bold text-teal-700 block">04 · Room Security</span>
                         <span class="text-sm font-bold text-slate-900 mt-1 block">Wire the RFID Door Kit</span>
-                        <span class="text-xs text-slate-500 mt-0.5 block">Reader, lock relay &amp; cards</span>
+                        <span class="text-xs text-slate-500 mt-0.5 block">Reader, lock relay & cards</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Section 1: Operating System Switcher for Python & Macro Pad App -->
+        <!-- Section 1: Operating System Switcher -->
         <section id="python-os-setup" class="py-16 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">
-                            Guide 01 &middot; Macro Pad Desktop App
+                            Guide 01 · Macro Pad Desktop App
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                            Install Python &amp; Connect Your Macro Pad
+                            Install Python & Connect Your Macro Pad
                         </h2>
                         <p class="text-sm text-slate-600 mt-1 max-w-xl">
                             Choose your operating system below for the exact steps to install Python, open the configurator, and save your shortcuts.
@@ -249,7 +253,7 @@ python -m pip install pyserial keyboard</code></pre>
                             <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
                                 <div>
                                     <h3 class="text-base font-bold text-slate-900 mb-2">4. Connect & Assign Your Keys</h3>
-                                    <p class="text-sm text-slate-600 leading-relaxed">In the app window: click "🔄 Refresh", choose your COM port (like COM3 or COM4) from the dropdown, and click "✔️ Connect". Click "📝 Program Buttons", assign each key, and hit "💾 Save to Device". Once it says updated, you can close the app—your shortcuts are saved inside the pad.</p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">In the app window: click "🔄 Refresh", choose your COM port from the dropdown, and click "✔️ Connect". Click "📝 Program Buttons", assign each key, and hit "💾 Save to Device". Once saved, you can close the app—your shortcuts are stored inside the pad.</p>
                                 </div>
                                 
                             </div>
@@ -298,7 +302,7 @@ sudo pacman -S --needed python python-pip tk git</code></pre>
                             <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
                                 <div>
                                     <h3 class="text-base font-bold text-slate-900 mb-2">2. Allow USB Port Access (One-Time Step)</h3>
-                                    <p class="text-sm text-slate-600 leading-relaxed">Add your user account to the serial port group so you can connect to `/dev/ttyACM0` without permission errors. Log out and log back in once after running this:</p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Add your user account to the serial port group so you can connect to USB serial ports without permission errors. Log out and log back in once after running this:</p>
                                 </div>
                                 <div class="relative mt-3">
                                     <div class="flex items-center justify-between bg-slate-800 text-slate-400 px-3.5 py-1.5 rounded-t-xl text-[11px] font-mono border-b border-slate-700">
@@ -348,7 +352,7 @@ pip install pyserial keyboard</code></pre>
                             <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
                                 <div>
                                     <h3 class="text-base font-bold text-slate-900 mb-2">4. Open the App & Save Your Keys</h3>
-                                    <p class="text-sm text-slate-600 leading-relaxed">Plug in your Macro Pad, launch the app, select `/dev/ttyACM0`, click "✔️ Connect", set your shortcuts, and click "💾 Save to Device":</p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Plug in your Macro Pad, launch the app, select your USB port, click "✔️ Connect", set your shortcuts, and click "💾 Save to Device":</p>
                                 </div>
                                 <div class="relative mt-3">
                                     <div class="flex items-center justify-between bg-slate-800 text-slate-400 px-3.5 py-1.5 rounded-t-xl text-[11px] font-mono border-b border-slate-700">
@@ -434,7 +438,7 @@ pip install pyserial keyboard</code></pre>
                             <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col justify-between">
                                 <div>
                                     <h3 class="text-base font-bold text-slate-900 mb-2">4. Select USB Port & Save Keys</h3>
-                                    <p class="text-sm text-slate-600 leading-relaxed">Pick the `/dev/cu.usbmodem...` port from the dropdown, click "✔️ Connect", then click "📝 Program Buttons". Assign your 9 keys and click "💾 Save to Device".</p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">Pick the USB serial port from the dropdown, click "✔️ Connect", then click "📝 Program Buttons". Assign your 9 keys and click "💾 Save to Device".</p>
                                 </div>
                                 
                             </div>
@@ -452,10 +456,10 @@ pip install pyserial keyboard</code></pre>
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
                 <div class="max-w-2xl">
                     <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">
-                        Guides 02–04 &middot; Hardware Assembly &amp; Mounting
+                        Hardware Assembly & Mounting
                     </span>
                     <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                        Connecting &amp; assembling your hardware
+                        Connecting & assembling your hardware
                     </h2>
                     <p class="text-sm text-slate-600 mt-1">
                         Simple 4-step checklists for assembling a DIY Macro Pad, setting up a Mateo Weather Station outside, or installing an RFID door lock.
@@ -494,7 +498,7 @@ pip install pyserial keyboard</code></pre>
                                     3
                                 </span>
                                 <h4 class="text-base font-bold text-slate-900">Upload the Firmware (Skip if Pre-Flashed)</h4>
-                                <p class="text-xs text-slate-600 leading-relaxed">If you bought our Pre-Flashed Microcontroller from the shop, skip this step! Otherwise, open Arduino IDE, install the "Keypad" library from Library Manager, open `3x3/simple/usb/simple.ino`, select "Arduino Leonardo" under Tools -> Board, and click Upload.</p>
+                                <p class="text-xs text-slate-600 leading-relaxed">If you bought our Pre-Flashed Microcontroller from the shop, skip this step! Otherwise, open Arduino IDE, install the "Keypad" library from Library Manager, open the USB sketch from the Macro repository, select "Arduino Leonardo" under Tools -> Board, and click Upload.</p>
                             </div>
 
                             <div class="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
@@ -529,7 +533,7 @@ pip install pyserial keyboard</code></pre>
                                     2
                                 </span>
                                 <h4 class="text-base font-bold text-slate-900">Connect to Wi-Fi (or Plug In Your Indoor Display Hub)</h4>
-                                <p class="text-xs text-slate-600 leading-relaxed">For Urban Wi-Fi stations: hold the Setup button for 3 seconds, connect your phone or laptop to the "Mateo-Setup" Wi-Fi network, and enter your home Wi-Fi password at 192.168.4.1. For Long-Range LoRa stations: simply plug the indoor receiver screen into a USB power adapter inside your house—it is already paired to the outdoor mast.</p>
+                                <p class="text-xs text-slate-600 leading-relaxed">For Urban Wi-Fi stations: hold the Setup button for 3 seconds, connect your phone or laptop to the station setup Wi-Fi network, and enter your home Wi-Fi credentials. For Long-Range LoRa stations: simply plug the indoor receiver screen into a USB power adapter inside your house—it is already paired to the outdoor mast.</p>
                             </div>
 
                             <div class="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
@@ -580,7 +584,7 @@ pip install pyserial keyboard</code></pre>
                                     3
                                 </span>
                                 <h4 class="text-base font-bold text-slate-900">Flash the Two Boards (If Building from Scratch)</h4>
-                                <p class="text-xs text-slate-600 leading-relaxed">If you are using your own ESP boards instead of a pre-flashed kit, upload `esp/InputNode.ino` to the outside reader board (MFRC522 on pins 10 and 9) and `esp/OutputNode.ino` to the inside relay board.</p>
+                                <p class="text-xs text-slate-600 leading-relaxed">If you are using your own ESP boards instead of a pre-flashed kit, upload the exterior reader sketch to the outside board and the interior controller sketch to the inside relay board.</p>
                             </div>
 
                             <div class="p-5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
@@ -594,15 +598,15 @@ pip install pyserial keyboard</code></pre>
                     </article>
                 </div>
 
-                <!-- Friendly Need Help Strip -->
+                <!-- Support Banner -->
                 <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <h3 class="text-base font-bold text-slate-900">Run into an issue during setup?</h3>
-                        <p class="text-xs text-slate-600 mt-0.5">Check solved issues or post your question on the Community Forum and we'll help you get it running.</p>
+                        <p class="text-xs text-slate-600 mt-0.5">Check discussions or post your question on the Community Forum and we'll help you get it running.</p>
                     </div>
                     <a href="forum.html"
                         class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                        Go to Community Forum &rarr;
+                        Go to Community Forum →
                     </a>
                 </div>
             </div>
@@ -621,18 +625,18 @@ pip install pyserial keyboard</code></pre>
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>

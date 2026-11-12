@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RFID Student Access — Eggman Studios</title>
-    <meta name="description" content="A self-hosted badge access system for classrooms and student workshops built on two separate ESP boards.">
+    <meta name="description" content="A self-hosted badge access system built on two separate ESP microcontrollers and a lightweight local web page—with zero recurring cloud fees.">
     <link rel="icon" type="image/svg+xml" href="./src/img/eggmanlogo.svg">
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -112,7 +112,7 @@
 
     <main id="main-content">
 
-        <!-- Distinct Split-Screen Architectural Header -->
+        <!-- Split-Screen Architectural Header -->
         <section class="bg-white border-b border-slate-200/80 py-16 md:py-20">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-6">
@@ -122,38 +122,28 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    <!-- Left: Plain-English Overview -->
+                    <!-- Left: Overview -->
                     <div class="lg:col-span-6 space-y-5">
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block">
-                            Project 01 &middot; Classroom &amp; Workshop Security
+                            Project 01 · Classroom & Workshop Security
                         </span>
                         <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                             A smarter way to unlock the student lab.
                         </h1>
-                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
-                            Schools and makerspaces shouldn't have to pay monthly cloud fees just to let students tap into a workshop. And they definitely shouldn't use cheap all-in-one door readers where anyone can pop off the plastic cover and hotwire the lock.
-                        </p>
-                        <p class="text-sm text-slate-600 leading-relaxed">
-                            <strong>RFID Student Access</strong> solves both problems by splitting the hardware across two small boards—one outside the door, one safely inside—paired with a simple web page running on the school's own local network.
-                        </p>
+                        <p class="text-base sm:text-lg text-slate-600 leading-relaxed">Schools and makerspaces shouldn't have to pay monthly cloud fees just to let students tap into a workshop. And they definitely shouldn't use cheap all-in-one door readers where anyone can pop off the plastic cover and hotwire the lock.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">RFID Student Access solves both problems by splitting the hardware across two small boards—one outside the door, one safely inside—paired with a simple web page running on the school’s own local network.</p>
 
                         <div class="pt-2 flex flex-wrap gap-3">
-                            <a href="shop.html"
-                                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                                Get the Starter Kit in the Shop &rarr;
-                            </a>
-                            <a href="tutorials.html#setup-rfid-door"
-                                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors">
-                                How to Wire &amp; Install &rarr;
-                            </a>
+                            <a href="shop.html" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">Get the Starter Kit in the Shop →</a>
+                            <a href="tutorials.html#setup-rfid-door" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors">How to Wire & Install →</a>
                             <a href="https://github.com/FilipVastl005/RFID-student-acces-system" target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors">
-                                View on GitHub &nearr;
+                                View on GitHub ↗
                             </a>
                         </div>
                     </div>
 
-                    <!-- Right: Visual "Outside vs. Inside the Wall" Blueprint Card -->
+                    <!-- Right: Architecture Card -->
                     <div class="lg:col-span-6">
                         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 sm:p-8">
                             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-4">
@@ -161,7 +151,7 @@
                             </span>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <!-- Hallway Side -->
+                                
                                 <div class="bg-white p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
                                     <div>
                                         <span class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded inline-block mb-2">
@@ -177,7 +167,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Room Side -->
                                 <div class="bg-white p-5 rounded-xl border border-teal-200 flex flex-col justify-between">
                                     <div>
                                         <span class="text-xs font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded inline-block mb-2">
@@ -194,7 +183,6 @@
                                 </div>
                             </div>
 
-                            <!-- Bottom Local Dashboard Bar -->
                             <div class="mt-4 bg-white p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                                 <div>
                                     <h3 class="text-sm font-bold text-slate-900">3. The Local Web Dashboard</h3>
@@ -208,7 +196,7 @@
             </div>
         </section>
 
-        <!-- Section 2: How a Card Tap Works (Simple 3-Step Flow) -->
+        <!-- Step-by-Step Flow Section -->
         <section class="py-16 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl mb-10">
@@ -219,6 +207,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    
                     <div class="bg-white p-6 rounded-2xl border border-slate-200">
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">1</span>
                         <h3 class="text-base font-bold text-slate-900 mb-2">Outside reader scans the card</h3>
@@ -226,6 +215,7 @@
                             The hallway reader picks up the student badge number and sends it through the thin cable in the wall to the inside box.
                         </p>
                     </div>
+
                     <div class="bg-white p-6 rounded-2xl border border-slate-200">
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">2</span>
                         <h3 class="text-base font-bold text-slate-900 mb-2">Inside controller checks the list</h3>
@@ -233,6 +223,7 @@
                             The inside board checks if that card is approved for the room—even if the school Wi-Fi is down, it keeps a backup list in its own memory.
                         </p>
                     </div>
+
                     <div class="bg-white p-6 rounded-2xl border border-slate-200">
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">3</span>
                         <h3 class="text-base font-bold text-slate-900 mb-2">Door unlocks for 3 seconds</h3>
@@ -250,13 +241,17 @@
                     </div>
                     <a href="tutorials.html#setup-rfid-door"
                         class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                        Open RFID Setup Guide &rarr;
+                        Open RFID Setup Guide →
                     </a>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-200">
-                    <a href="projects.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">&larr; Back to Projects</a>
-                    <a href="macro.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">Next Project: Macro 3&times;3 Pad &rarr;</a>
+                    <a href="mateo.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">
+                        &larr; Previous: Mateo Weather Network
+                    </a>
+                    <a href="macro.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">
+                        Next Project: Macro 3×3 Pad &rarr;
+                    </a>
                 </div>
             </div>
         </section>
@@ -274,18 +269,18 @@
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>

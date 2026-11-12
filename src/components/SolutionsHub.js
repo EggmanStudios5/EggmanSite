@@ -1,14 +1,16 @@
 /**
  * Modular SolutionsHub Component — Eggman Studios
- * Automatically separates projects into their configured groups
- * (e.g. Connected Platforms vs. Standalone Devices & One-Time Solutions)
- * so projects can be added, edited, or removed in `src/data/projects.js`.
+ * Automatically separates projects into their configured groups from `src/data/projects.js`.
  */
 
-import { PROJECT_GROUPS, PROJECTS } from '../data/projects.js';
+import { PROJECT_GROUPS, PROJECTS, SITE_COPY } from '../data/projects.js';
 import { SolutionCard } from './SolutionCard.js';
 
-export function SolutionsHub({ projects = PROJECTS, groups = PROJECT_GROUPS } = {}) {
+export function SolutionsHub({
+  projects = PROJECTS,
+  groups = PROJECT_GROUPS,
+  hubCopy = SITE_COPY.solutionsHub
+} = {}) {
   const sectionsHtml = groups
     .map((group) => {
       const groupProjects = projects.filter((p) => p.group === group.id);
@@ -50,12 +52,12 @@ export function SolutionsHub({ projects = PROJECTS, groups = PROJECT_GROUPS } = 
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                 <!-- Section Header -->
                 <div class="max-w-2xl">
-                    <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-2">Projects &amp; Solutions</span>
+                    <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-2">${hubCopy.eyebrow}</span>
                     <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-3">
-                        From single-purpose devices to community networks.
+                        ${hubCopy.title}
                     </h2>
                     <p class="text-base text-slate-600 leading-relaxed">
-                        Some problems only need a small circuit board on your desk or a classroom door. Others take a connected network of stations working together. Here is what we currently maintain.
+                        ${hubCopy.description}
                     </p>
                 </div>
 

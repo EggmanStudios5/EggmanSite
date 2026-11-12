@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Macro 3×3 Pad — Eggman Studios</title>
-    <meta name="description" content="A 9-key hardware shortcut pad that saves your bindings directly on the chip so you never need background bloatware.">
+    <meta name="description" content="A compact 3×3 USB keypad that saves your custom shortcuts directly to onboard memory so you never have to leave configuration software running.">
     <link rel="icon" type="image/svg+xml" href="./src/img/eggmanlogo.svg">
     <link rel="stylesheet" href="./src/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -112,7 +112,7 @@
 
     <main id="main-content">
 
-        <!-- Distinct Dark Studio Hardware Showcase Hero -->
+        <!-- Dark Studio Hardware Showcase Hero -->
         <section class="bg-slate-900 text-slate-200 border-b border-slate-800 py-16 md:py-24">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-6">
@@ -125,35 +125,25 @@
                     <!-- Left: Product Story -->
                     <div class="lg:col-span-7 space-y-5">
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block">
-                            Project 02 &middot; Everyday Desk Hardware
+                            Project 02 · Everyday Desk Hardware
                         </span>
                         <h1 class="text-3xl sm:text-5xl font-bold text-white tracking-tight leading-tight">
                             Nine keys. Zero background bloatware.
                         </h1>
-                        <p class="text-base sm:text-lg text-slate-300 leading-relaxed">
-                            Why do commercial macro pads make you install a 500MB app and log into a cloud account just to assign Copy and Paste? Worse yet, the moment you plug that pad into a different laptop, it forgets everything.
-                        </p>
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            <strong>Macro</strong> saves your shortcuts directly onto the pad's own onboard memory. Set your keys once with our tiny Python app, close it forever, and plug the pad into any Windows, Mac, or Linux machine.
-                        </p>
+                        <p class="text-base sm:text-lg text-slate-300 leading-relaxed">Why do commercial macro pads make you install a 500MB app and log into a cloud account just to assign Copy and Paste? Worse yet, the moment you plug that pad into a different laptop, it forgets everything.</p>
+                        <p class="text-sm text-slate-400 leading-relaxed">Macro saves your shortcuts directly onto the pad's own onboard memory. Set your keys once with our tiny Python app, close it forever, and plug the pad into any Windows, Mac, or Linux machine.</p>
 
                         <div class="pt-3 flex flex-wrap gap-3">
-                            <a href="shop.html"
-                                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors">
-                                Shop Macro Pads &amp; Parts &rarr;
-                            </a>
-                            <a href="tutorials.html#python-os-setup"
-                                class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 transition-colors">
-                                How to Install &amp; Set Up &rarr;
-                            </a>
+                            <a href="shop.html" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors">Shop Macro Pads & Parts →</a>
+                            <a href="tutorials.html#python-os-setup" class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 transition-colors">How to Install & Set Up →</a>
                             <a href="https://github.com/FilipVastl005/Macro" target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center px-5 py-2.5 rounded-lg text-sm font-semibold bg-slate-800 text-slate-200 border border-slate-700 hover:bg-slate-700 transition-colors">
-                                GitHub Repo &nearr;
+                                GitHub Repo ↗
                             </a>
                         </div>
                     </div>
 
-                    <!-- Right: Clean Hardware Summary Card (No Fake Emulator) -->
+                    <!-- Right: Hardware Summary Card -->
                     <div class="lg:col-span-5">
                         <div class="bg-slate-800/90 rounded-2xl border border-slate-700 p-6 sm:p-8 shadow-xs space-y-4">
                             <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block">
@@ -161,14 +151,17 @@
                             </span>
                             <h2 class="text-xl font-bold text-white">Plug-and-play USB or Bluetooth</h2>
                             <ul class="space-y-3 text-xs text-slate-300 leading-relaxed">
+                                
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-teal-400 font-bold">&bull;</span>
                                     <span><strong>Onboard Memory:</strong> Remembers your shortcuts even when unplugged and moved to a new computer.</span>
                                 </li>
+
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-teal-400 font-bold">&bull;</span>
-                                    <span><strong>13 Layouts in the Shop:</strong> From compact 4-key strips and 3&times;3 pads to 16-key grids and rotary dial models for audio/video editing.</span>
+                                    <span><strong>Multiple Layouts in the Shop:</strong> From compact 4-key strips and 3×3 pads to 16-key grids and rotary dial models for audio/video editing.</span>
                                 </li>
+
                                 <li class="flex items-start gap-2.5">
                                     <span class="text-teal-400 font-bold">&bull;</span>
                                     <span><strong>Easy to Build or Repair:</strong> Standard mechanical switches and a 6-wire switch matrix you can solder yourself.</span>
@@ -180,7 +173,7 @@
             </div>
         </section>
 
-        <!-- Section 2: Simple 3-Step Guide -->
+        <!-- Step-by-Step Guide -->
         <section id="how-to-setup" class="py-20 bg-white border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-2xl mb-12">
@@ -194,6 +187,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">1</span>
                         <h3 class="text-lg font-bold text-slate-900 mb-2">Plug it in via USB</h3>
@@ -206,22 +200,22 @@
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">2</span>
                         <h3 class="text-lg font-bold text-slate-900 mb-2">Run the small Python app</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            Open <code class="bg-white px-1.5 py-0.5 rounded border border-slate-200 text-xs">macro_pad_config.py</code>, pick your USB port, click any button on screen, and press the key combo you want.
+                            Open macro_pad_config.py, pick your USB port, click any button on screen, and press the key combo you want.
                         </p>
                     </div>
 
                     <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
                         <span class="w-8 h-8 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center mb-4">3</span>
-                        <h3 class="text-lg font-bold text-slate-900 mb-2">Save &amp; close the app</h3>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Save & close the app</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">
-                            Click <em>Save to Device</em>. Your 9 shortcuts are written to the chip's internal EEPROM memory and stay there even when unplugged.
+                            Click Save to Device. Your 9 shortcuts are written to the chip's internal EEPROM memory and stay there even when unplugged.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 3: Link to Tutorials & Next Project -->
+        <!-- Link to Tutorials & Dynamic Adjacent Projects -->
         <section class="py-14 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="p-6 rounded-2xl bg-white border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
@@ -232,13 +226,17 @@
                     </div>
                     <a href="tutorials.html"
                         class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                        Open Setup Tutorials &rarr;
+                        Open Setup Tutorials →
                     </a>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-slate-200">
-                    <a href="rfid.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">&larr; Previous: RFID Student Access</a>
-                    <a href="mateo.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">Next Project: Mateo Weather Network &rarr;</a>
+                    <a href="rfid.html" class="text-xs font-semibold text-slate-600 hover:text-slate-900">
+                        &larr; Previous: RFID Student Access
+                    </a>
+                    <a href="mateo.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">
+                        Next Project: Mateo Weather Network &rarr;
+                    </a>
                 </div>
             </div>
         </section>
@@ -256,18 +254,18 @@
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>

@@ -1,10 +1,49 @@
 /**
  * ============================================================================
- * EGGMAN STUDIOS — SIMPLE INSTALL, CONNECT, ASSEMBLE & SETUP TUTORIALS
+ * EGGMAN STUDIOS — SETUP, ASSEMBLY & CONNECTION TUTORIALS DATA (`tutorials.html`)
  * ============================================================================
- * Straightforward, practical step-by-step guides for installing the software,
- * connecting your device, assembling DIY kits, and mounting weather stations.
+ * All page copy, quick-jump card metadata, OS guides, and hardware guides
+ * are defined here so `TutorialsView.js` renders 100% dynamically.
  */
+
+export const TUTORIALS_PAGE_CONFIG = {
+  pageTitle: 'Setup & Assembly Tutorials',
+  pageDescription:
+    'Simple, step-by-step instructions to install Python, connect your Macro Pad, assemble DIY kits, and mount Mateo Weather Stations.',
+  header: {
+    eyebrow: 'Getting Started & Setup Guides',
+    title: 'How to install, connect & assemble.',
+    subtitle:
+      'Pick what you are setting up below—whether you are installing Python for your Macro Pad, mounting a pre-built Weather Station outside, or wiring a DIY kit.'
+  },
+  osSection: {
+    id: 'python-os-setup',
+    jumpBadge: '01 · Software Setup',
+    jumpTitle: 'Install Python & Macro App',
+    jumpSubtitle: 'Windows, Linux & macOS',
+    eyebrow: 'Guide 01 · Macro Pad Desktop App',
+    title: 'Install Python & Connect Your Macro Pad',
+    subtitle:
+      'Choose your operating system below for the exact steps to install Python, open the configurator, and save your shortcuts.',
+    terminalHeader: 'Terminal / Command Prompt',
+    copyLabel: 'Copy',
+    tipPrefix: 'Helpful Tip'
+  },
+  hardwareSection: {
+    id: 'hardware-assembly',
+    eyebrow: 'Hardware Assembly & Mounting',
+    title: 'Connecting & assembling your hardware',
+    subtitle:
+      'Simple 4-step checklists for assembling a DIY Macro Pad, setting up a Mateo Weather Station outside, or installing an RFID door lock.'
+  },
+  supportBanner: {
+    title: 'Run into an issue during setup?',
+    description:
+      "Check discussions or post your question on the Community Forum and we'll help you get it running.",
+    ctaLabel: 'Go to Community Forum →',
+    ctaHref: 'forum.html'
+  }
+};
 
 export const PYTHON_OS_GUIDES = [
   {
@@ -30,14 +69,13 @@ python -m pip install pyserial keyboard`
       },
       {
         title: '3. Plug In Your Pad & Open the App',
-        description:
-          'Plug your Macro Pad into a USB port, then start the app:',
+        description: 'Plug your Macro Pad into a USB port, then start the app:',
         code: 'python macro_pad_config.py'
       },
       {
         title: '4. Connect & Assign Your Keys',
         description:
-          'In the app window: click "🔄 Refresh", choose your COM port (like COM3 or COM4) from the dropdown, and click "✔️ Connect". Click "📝 Program Buttons", assign each key, and hit "💾 Save to Device". Once it says updated, you can close the app—your shortcuts are saved inside the pad.'
+          'In the app window: click "🔄 Refresh", choose your COM port from the dropdown, and click "✔️ Connect". Click "📝 Program Buttons", assign each key, and hit "💾 Save to Device". Once saved, you can close the app—your shortcuts are stored inside the pad.'
       }
     ],
     tip: 'Not sure which COM port is your pad? Unplug the USB cable, click Refresh to see which port disappears, then plug it back in and click Refresh again.'
@@ -65,7 +103,7 @@ sudo pacman -S --needed python python-pip tk git`
       {
         title: '2. Allow USB Port Access (One-Time Step)',
         description:
-          'Add your user account to the serial port group so you can connect to `/dev/ttyACM0` without permission errors. Log out and log back in once after running this:',
+          'Add your user account to the serial port group so you can connect to USB serial ports without permission errors. Log out and log back in once after running this:',
         code: `# Ubuntu / Debian / Fedora:
 sudo usermod -a -G dialout $USER
 
@@ -85,7 +123,7 @@ pip install pyserial keyboard`
       {
         title: '4. Open the App & Save Your Keys',
         description:
-          'Plug in your Macro Pad, launch the app, select `/dev/ttyACM0`, click "✔️ Connect", set your shortcuts, and click "💾 Save to Device":',
+          'Plug in your Macro Pad, launch the app, select your USB port, click "✔️ Connect", set your shortcuts, and click "💾 Save to Device":',
         code: './.venv/bin/python macro_pad_config.py'
       }
     ],
@@ -116,14 +154,13 @@ pip install pyserial keyboard`
       },
       {
         title: '3. Plug In Your Pad & Run the App',
-        description:
-          'Connect your Macro Pad via USB and start the app:',
+        description: 'Connect your Macro Pad via USB and start the app:',
         code: './.venv/bin/python macro_pad_config.py'
       },
       {
         title: '4. Select USB Port & Save Keys',
         description:
-          'Pick the `/dev/cu.usbmodem...` port from the dropdown, click "✔️ Connect", then click "📝 Program Buttons". Assign your 9 keys and click "💾 Save to Device".'
+          'Pick the USB serial port from the dropdown, click "✔️ Connect", then click "📝 Program Buttons". Assign your 9 keys and click "💾 Save to Device".'
       }
     ],
     tip: 'If macOS asks for "Input Monitoring" permission when capturing key presses, you can either allow Terminal in System Settings -> Privacy & Security, or just type your shortcut (like CTRL+C) into the popup box.'
@@ -133,14 +170,18 @@ pip install pyserial keyboard`
 export const SETUP_GUIDES = [
   {
     id: 'setup-macro-diy',
+    jumpBadge: '02 · Desk Hardware',
+    jumpTitle: 'Assemble a DIY Macro Pad',
+    jumpSubtitle: 'Switches, pins & upload',
     badge: 'Guide 02 · DIY Macro Pad Kit',
     title: 'How to Assemble & Flash a DIY Macro Pad',
-    subtitle: 'Bought bare switches and a microcontroller from the shop? Follow these 4 steps to put it together.',
+    subtitle:
+      'Bought bare switches and a microcontroller from the shop? Follow these 4 steps to put it together.',
     steps: [
       {
         stepNumber: '1',
         title: 'Snap Switches into the Plate',
-        text: 'Push your mechanical switches firmly into the top plate until they click, making sure the metal pins on the bottom aren\'t bent. Push your keycaps onto the stems.'
+        text: "Push your mechanical switches firmly into the top plate until they click, making sure the metal pins on the bottom aren't bent. Push your keycaps onto the stems."
       },
       {
         stepNumber: '2',
@@ -150,7 +191,7 @@ export const SETUP_GUIDES = [
       {
         stepNumber: '3',
         title: 'Upload the Firmware (Skip if Pre-Flashed)',
-        text: 'If you bought our Pre-Flashed Microcontroller from the shop, skip this step! Otherwise, open Arduino IDE, install the "Keypad" library from Library Manager, open `3x3/simple/usb/simple.ino`, select "Arduino Leonardo" under Tools -> Board, and click Upload.'
+        text: 'If you bought our Pre-Flashed Microcontroller from the shop, skip this step! Otherwise, open Arduino IDE, install the "Keypad" library from Library Manager, open the USB sketch from the Macro repository, select "Arduino Leonardo" under Tools -> Board, and click Upload.'
       },
       {
         stepNumber: '4',
@@ -161,9 +202,13 @@ export const SETUP_GUIDES = [
   },
   {
     id: 'setup-weather-station',
+    jumpBadge: '03 · Outdoor Weather',
+    jumpTitle: 'Mount a Weather Station',
+    jumpSubtitle: 'Battery switch, Wi-Fi & solar',
     badge: 'Guide 03 · Pre-Built & DIY Mateo Weather Stations',
     title: 'How to Mount & Connect Your Mateo Weather Station',
-    subtitle: 'Where to place your station outdoors, how to turn on the solar battery, and how to connect it to Wi-Fi or your indoor display.',
+    subtitle:
+      'Where to place your station outdoors, how to turn on the solar battery, and how to connect it to Wi-Fi or your indoor display.',
     steps: [
       {
         stepNumber: '1',
@@ -173,7 +218,7 @@ export const SETUP_GUIDES = [
       {
         stepNumber: '2',
         title: 'Connect to Wi-Fi (or Plug In Your Indoor Display Hub)',
-        text: 'For Urban Wi-Fi stations: hold the Setup button for 3 seconds, connect your phone or laptop to the "Mateo-Setup" Wi-Fi network, and enter your home Wi-Fi password at 192.168.4.1. For Long-Range LoRa stations: simply plug the indoor receiver screen into a USB power adapter inside your house—it is already paired to the outdoor mast.'
+        text: 'For Urban Wi-Fi stations: hold the Setup button for 3 seconds, connect your phone or laptop to the station setup Wi-Fi network, and enter your home Wi-Fi credentials. For Long-Range LoRa stations: simply plug the indoor receiver screen into a USB power adapter inside your house—it is already paired to the outdoor mast.'
       },
       {
         stepNumber: '3',
@@ -189,9 +234,13 @@ export const SETUP_GUIDES = [
   },
   {
     id: 'setup-rfid-door',
+    jumpBadge: '04 · Room Security',
+    jumpTitle: 'Wire the RFID Door Kit',
+    jumpSubtitle: 'Reader, lock relay & cards',
     badge: 'Guide 04 · RFID Classroom & Workshop Door Kit',
     title: 'How to Install & Wire the RFID Door Access Kit',
-    subtitle: 'How to mount the reader in the hallway, keep the lock switch safe inside the room, and add student cards.',
+    subtitle:
+      'How to mount the reader in the hallway, keep the lock switch safe inside the room, and add student cards.',
     steps: [
       {
         stepNumber: '1',
@@ -201,12 +250,12 @@ export const SETUP_GUIDES = [
       {
         stepNumber: '2',
         title: 'Wire the Electric Door Strike (Inside the Room)',
-        text: 'Connect your 12V electric door strike to the green relay screw terminals inside the room (Pin 4 on the inside board). Attach the included 1N4007 diode across the two door lock wires (silver stripe on the +12V wire) so the lock doesn\'t cause power spikes.'
+        text: "Connect your 12V electric door strike to the green relay screw terminals inside the room (Pin 4 on the inside board). Attach the included 1N4007 diode across the two door lock wires (silver stripe on the +12V wire) so the lock doesn't cause power spikes."
       },
       {
         stepNumber: '3',
         title: 'Flash the Two Boards (If Building from Scratch)',
-        text: 'If you are using your own ESP boards instead of a pre-flashed kit, upload `esp/InputNode.ino` to the outside reader board (MFRC522 on pins 10 and 9) and `esp/OutputNode.ino` to the inside relay board.'
+        text: 'If you are using your own ESP boards instead of a pre-flashed kit, upload the exterior reader sketch to the outside board and the interior controller sketch to the inside relay board.'
       },
       {
         stepNumber: '4',

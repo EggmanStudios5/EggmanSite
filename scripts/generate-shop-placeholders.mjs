@@ -206,5 +206,7 @@ export function generateShopPlaceholders() {
   console.log(`[shop-placeholders] Generated ${total} placeholder SVGs in src/img/shop/`);
 }
 
-generateShopPlaceholders();
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  generateShopPlaceholders();
+}
 

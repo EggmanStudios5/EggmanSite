@@ -47,7 +47,7 @@
                 <a href="forum.html" class="text-slate-600 hover:text-slate-900 transition-colors">Forum</a>
             </nav>
 
-            <!-- Action CTAs: Dedicated Cart Page Link + Projects -->
+            <!-- Action CTAs -->
             <div class="hidden md:flex items-center gap-2.5">
                 <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,7 +66,7 @@
 
             <!-- Mobile Menu Button -->
             <div class="flex md:hidden items-center gap-2">
-                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="Shopping Cart">
+                <a href="cart.html" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors" aria-label="View Shopping Cart and Checkout">
                     <span>Cart</span>
                     <span data-nav-cart-count
                         class="px-1.5 py-0.5 rounded bg-slate-900 text-white font-mono text-[11px] font-bold leading-none">0</span>
@@ -89,16 +89,16 @@
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Projects</a>
             <a href="shop.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Shop</a>
-            <a href="cart.html"
-                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart &amp; Checkout</a>
             <a href="tutorials.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Tutorials</a>
             <a href="forum.html"
                 class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Forum</a>
+            <a href="cart.html"
+                class="mobile-nav-link block py-2 text-sm font-medium text-slate-700 hover:text-teal-700">Cart & Checkout</a>
         </div>
     </header>
 
-    <!-- Global User-Friendly Error Boundary (Hidden unless a runtime error is caught) -->
+    <!-- Global User-Friendly Error Boundary -->
     <div id="app-error-boundary" role="alert" aria-live="polite"
         class="hidden bg-amber-50 border-b border-amber-200 text-amber-800 text-xs font-medium py-2.5 px-4">
         <div class="max-w-6xl mx-auto flex items-center justify-between gap-4">
@@ -121,14 +121,14 @@
                             Eggman Studios Hardware Store
                         </span>
                         <h1 class="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-                            Pre-built devices &amp; DIY parts.
+                            Pre-built devices & DIY parts.
                         </h1>
                         <p class="text-base text-slate-600 leading-relaxed max-w-2xl">
-                            Pick up a fully calibrated solar <strong>Mateo Weather Station</strong>, a ready-to-plug <strong>Macro Pad</strong>, or grab raw switches, sensors, and controllers to solder your own build at home.
+                            Pick up a fully calibrated solar Mateo Weather Station, a ready-to-plug Macro Pad, or grab raw switches, sensors, and controllers to solder your own build at home.
                         </p>
                     </div>
 
-                    <!-- Dedicated Cart Summary Card (Links to cart.html) -->
+                    <!-- Dedicated Cart Summary Card -->
                     <div class="lg:col-span-5">
                         <div class="bg-slate-900 text-white rounded-2xl p-6 border border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div class="space-y-1">
@@ -142,55 +142,50 @@
                             </div>
                             <a href="cart.html"
                                 class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-lg text-xs font-semibold bg-teal-600 text-white hover:bg-teal-700 transition-colors">
-                                View Cart &amp; Checkout &rarr;
+                                View Cart & Checkout →
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Interactive Filter Pills -->
+                <!-- Dynamic Filter Pills -->
                 <div class="mt-8 pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
                     <div class="flex flex-wrap gap-2" role="group" aria-label="Filter shop catalog">
-                        <button type="button" data-shop-filter="all"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white transition-colors cursor-pointer">
+                        <button type="button" data-shop-filter="all" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white transition-colors cursor-pointer">
                             All Items (22)
                         </button>
-                        <button type="button" data-shop-filter="weather-station"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                        <button type="button" data-shop-filter="weather-station" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
                             Weather Stations (3)
                         </button>
-                        <button type="button" data-shop-filter="assembled"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                        <button type="button" data-shop-filter="assembled" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
                             Assembled Macro Pads (13)
                         </button>
-                        <button type="button" data-shop-filter="bluetooth"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                        <button type="button" data-shop-filter="bluetooth" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
                             Wireless / Bluetooth
                         </button>
-                        <button type="button" data-shop-filter="encoder"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                        <button type="button" data-shop-filter="encoder" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
                             With Rotary Knob / Lever
                         </button>
-                        <button type="button" data-shop-filter="component"
-                            class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
-                            DIY Parts &amp; Kits (6)
+                        <button type="button" data-shop-filter="component" class="shop-filter-btn px-4 py-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer">
+                            DIY Parts & Kits (6)
                         </button>
                     </div>
 
                     <a href="tutorials.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900">
-                        Need installation or wiring help? View Setup Tutorials &rarr;
+                        Need installation or wiring help? View Setup Tutorials →
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Section 0: Pre-Built Mateo Solar Weather Stations -->
-        <section id="weather-stations" class="py-16 bg-slate-900 text-slate-200 border-b border-slate-800">
+        
+        <!-- Dynamic Catalog Section: Pre-Built Mateo Weather Stations -->
+        <section id="weather-stations" data-shop-section="weather-station" class="py-16 bg-slate-900 text-slate-200 border-b border-slate-800">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-400 block mb-1">
-                            Ready for Outdoor Deployment &middot; Solar + Li-Ion Powered
+                            Ready for Outdoor Deployment · Solar + Li-Ion Powered
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                             Pre-Built Mateo Weather Stations
@@ -200,7 +195,7 @@
                         </p>
                     </div>
                     <a href="mateo.html" class="text-xs font-semibold text-teal-400 hover:text-white shrink-0">
-                        Learn how the Mateo network works &rarr;
+                        Learn how the Mateo network works →
                     </a>
                 </div>
 
@@ -386,23 +381,23 @@
             </div>
         </section>
 
-        <!-- Section 1: Assembled Macro Pads -->
-        <section id="assembled-devices" class="py-16 bg-slate-50 border-b border-slate-200/80">
+        <!-- Dynamic Catalog Section: Assembled Macro Pads -->
+        <section id="assembled-devices" data-shop-section="assembled" class="py-16 bg-slate-50 border-b border-slate-200/80">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
                     <div>
                         <span class="text-xs font-bold uppercase tracking-wider text-teal-700 block mb-1">
-                            Ready to Plug &amp; Play
+                            Ready to Plug & Play
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                             Assembled Macro Pads
                         </h2>
-                        <p class="text-sm text-slate-600 mt-1">
+                        <p class="text-sm text-slate-600 mt-1 max-w-2xl">
                             Fully soldered, flashed with our open-source EEPROM firmware, and ready for your desk.
                         </p>
                     </div>
                     <a href="macro.html" class="text-xs font-semibold text-teal-700 hover:text-slate-900 shrink-0">
-                        See how the Macro Pad works &rarr;
+                        See how the Macro Pad works →
                     </a>
                 </div>
 
@@ -1204,8 +1199,8 @@
             </div>
         </section>
 
-        <!-- Section 2: DIY Components & Project Kits -->
-        <section id="diy-components" class="py-16 bg-white border-b border-slate-200/80">
+        <!-- Dynamic Catalog Section: Individual Components & DIY Kits -->
+        <section id="diy-components" data-shop-section="component" class="py-16 bg-white border-b border-slate-200/80">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
                     <div>
@@ -1213,15 +1208,14 @@
                             Build or Repair Your Own
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                            Individual Components &amp; DIY Kits
+                            Individual Components & DIY Kits
                         </h2>
-                        <p class="text-sm text-slate-600 mt-1">
+                        <p class="text-sm text-slate-600 mt-1 max-w-2xl">
                             Have a 3D printer and a soldering iron? Grab the exact microcontrollers, switches, and sensors used in our projects.
                         </p>
                     </div>
-                    <a href="cart.html"
-                        class="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
-                        Proceed to Cart &amp; Checkout &rarr;
+                    <a href="cart.html" class="shrink-0 inline-flex items-center justify-center px-4 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors">
+                        Proceed to Cart & Checkout →
                     </a>
                 </div>
 
@@ -1576,18 +1570,18 @@
                         <span class="font-bold text-white text-sm tracking-tight">Eggman Studios</span>
                     </div>
                     <p class="text-slate-400 leading-relaxed max-w-sm">
-                        Open Hardware & Software &middot; Practical tools and open community hardware.
+                        Open Hardware & Software · Practical tools and open community hardware.
                     </p>
                 </div>
 
                 <div>
                     <h3 class="text-white font-semibold mb-3 uppercase tracking-wider text-[11px]">Explore</h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="hover:text-white transition-colors">Home &amp; Story</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home & Story</a></li>
                         <li><a href="projects.html" class="hover:text-white transition-colors">All Projects Directory</a></li>
-                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware &amp; Parts Shop</a></li>
-                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart &amp; Checkout</a></li>
-                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup &amp; Assembly Tutorials</a></li>
+                        <li><a href="shop.html" class="hover:text-white transition-colors">Hardware & Parts Shop</a></li>
+                        <li><a href="cart.html" class="hover:text-white transition-colors">Shopping Cart & Checkout</a></li>
+                        <li><a href="tutorials.html" class="hover:text-white transition-colors">Setup & Assembly Tutorials</a></li>
                         <li><a href="forum.html" class="hover:text-white transition-colors">Community Forum</a></li>
                     </ul>
                 </div>
