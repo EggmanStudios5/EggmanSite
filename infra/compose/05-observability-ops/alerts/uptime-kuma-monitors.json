@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "notificationChannel": {
+    "type": "ntfy",
+    "serverUrl": "http://eggman-ntfy:8080",
+    "topic": "eggman-sec-alerts"
+  },
+  "monitors": [
+    {
+      "name": "YARP Edge Gateway (Live)",
+      "type": "http",
+      "url": "http://eggman-gateway-yarp:8080/health/live",
+      "intervalSeconds": 30,
+      "publicStatus": true
+    },
+    {
+      "name": "Eggman Landing Page",
+      "type": "http",
+      "url": "http://eggman-web-landing:8080/healthz",
+      "intervalSeconds": 60,
+      "publicStatus": true
+    },
+    {
+      "name": "Eggman Docs Hub",
+      "type": "http",
+      "url": "http://eggman-web-docs:8080/healthz",
+      "intervalSeconds": 60,
+      "publicStatus": true
+    },
+    {
+      "name": "Eggman ReleaseHub",
+      "type": "http",
+      "url": "https://eggman-releasehub:8443/health/live",
+      "intervalSeconds": 30,
+      "publicStatus": true
+    },
+    {
+      "name": "HashiCorp Vault Seal Status",
+      "type": "http",
+      "url": "https://eggman-vault:8200/v1/sys/health",
+      "acceptedStatusCodes": ["200"],
+      "intervalSeconds": 30,
+      "publicStatus": false,
+      "notes": "Vault returns 503 when sealed and 501 when uninitialized; triggers ntfy alert immediately."
+    },
+    {
+      "name": "Keycloak Identity Plane",
+      "type": "http",
+      "url": "https://eggman-keycloak:8443/realms/eggman-public/.well-known/openid-configuration",
+      "intervalSeconds": 60,
+      "publicStatus": true
+    },
+    {
+      "name": "Eggman IoT Bridge (Private)",
+      "type": "http",
+      "url": "https://eggman-iot-bridge:8443/health/live",
+      "intervalSeconds": 30,
+      "publicStatus": false
+    }
+  ]
+}

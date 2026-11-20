@@ -1,0 +1,155 @@
+{
+  "currencySymbol": "Kč",
+  "currencyPosition": "after",
+  "showcaseNotice": "Read-only hardware catalog showcase. Online ordering & Czech SPAYD QR checkout will launch in an upcoming authenticated release.",
+  "pageConfig": {
+    "pageTitle": "Hardware & Parts Showcase",
+    "pageDescription": "Explore Eggman Studios assembled Macro Pads, Mateo weather reference kits, and DIY builder components.",
+    "header": {
+      "eyebrow": "Eggman Studios Hardware Showcase",
+      "title": "Pre-built devices & DIY parts.",
+      "subtitle": "Inspect specifications for our programmable Macro Pads, weather sensor kits, and split-perimeter RFID hardware."
+    },
+    "statusCard": {
+      "eyebrow": "Release & Ordering Status",
+      "title": "Direct SPAYD QR Checkout Coming Soon",
+      "description": "Zero-bloat hardware specs are listed openly below. Firmware binaries and verification hashes live on ReleaseHub.",
+      "ctaLabel": "Open ReleaseHub →",
+      "ctaHref": "https://releases.eggmanstudios.me/api/v1/firmware"
+    },
+    "tutorialsPrompt": {
+      "label": "Need wiring or assembly guides? Open Docs →",
+      "href": "https://docs.eggmanstudios.me"
+    }
+  },
+  "modelDescriptions": {
+    "Macro simple": "Classic 3×3 9-key shortcut pad with onboard EEPROM storage.",
+    "Macro simpleBT": "3×3 9-key pad upgraded with wireless Bluetooth and USB-C.",
+    "Macro S": "Compact 6-key (3×2) pad for essential everyday shortcuts.",
+    "Macro S BT": "Wireless Bluetooth + USB-C version of the compact 6-key pad.",
+    "Macro M": "Mid-size 8-key (4×2) layout for window management or CAD tools.",
+    "Macro M BT": "Wireless Bluetooth + USB-C 8-key pad for cable-free setups.",
+    "Macro L": "Full 16-key (4×4) grid for power users and complex workflows.",
+    "Macro gamer": "Low-profile 1×4 4-key strip for rapid one-handed actions.",
+    "Macro gamerBT": "Wireless Bluetooth + USB-C 4-key strip.",
+    "Macro office": "3 shortcut keys paired with a tactile rotary encoder dial.",
+    "Macro office BT": "Wireless Bluetooth + USB-C 3-key + rotary dial pad.",
+    "Macro producer": "Built for audio workflows: 9 keys (3×3) plus 3 rotary encoders.",
+    "Macro Editor": "Video & photo timeline deck: 6 keys (2×3) plus jog encoder."
+  },
+  "weatherStations": [
+    {
+      "id": "station-mateo-urban",
+      "slug": "station-mateo-urban",
+      "name": "Mateo Urban Station (Wi-Fi + Air Quality)",
+      "category": "weather-station",
+      "categoryLabel": "Weather Station Reference",
+      "powerSpec": "2W Solar + 3000mAh LiFePO4",
+      "sensorsSpec": "Bosch BME280 + MQ-135 Air Quality",
+      "connectivitySpec": "Wi-Fi 6 (802.11ax) + Deep-Sleep",
+      "price": 3499.99,
+      "image": "assets/img/shop/station-mateo-urban.svg",
+      "description": "Reference balcony weather station design pairing Bosch BME280, MOSFET-gated MQ-135 sensor, and UV-ASA radiation shield."
+    },
+    {
+      "id": "station-mateo-suburban-lora",
+      "slug": "station-mateo-suburban-lora",
+      "name": "Mateo Long-Range Field Mast + Home Deck",
+      "category": "weather-station",
+      "categoryLabel": "Weather Station Reference",
+      "powerSpec": "5W Solar + 6000mAh Dual Battery Pack",
+      "sensorsSpec": "BME280 + Air Quality + Frost Probe",
+      "connectivitySpec": "SX1262 LoRa (2 km) + OLED Hub",
+      "price": 4899.99,
+      "image": "assets/img/shop/station-mateo-suburban-lora.svg",
+      "description": "Two-unit long-range LoRa weather design with local microSD logging when internet is unavailable."
+    },
+    {
+      "id": "station-mateo-offgrid-pro",
+      "slug": "station-mateo-offgrid-pro",
+      "name": "Mateo Off-Grid Autonomous Mesh Station",
+      "category": "weather-station",
+      "categoryLabel": "Weather Station Reference",
+      "powerSpec": "10W Solar Array + 12000mAh LiFePO4 Bank",
+      "sensorsSpec": "Dual BME280 + Rain + Wind",
+      "connectivitySpec": "LoRa Mesh Relay + Local Portal",
+      "price": 6899.99,
+      "image": "assets/img/shop/station-mateo-offgrid-pro.svg",
+      "description": "Autonomous IP66 field station design built for remote valleys and off-grid communities."
+    }
+  ],
+  "diyComponents": [
+    {
+      "id": "comp-switches-pack",
+      "slug": "comp-switches-pack",
+      "name": "Tactile Mechanical Switches + Keycaps (10× Pack)",
+      "category": "component",
+      "categoryLabel": "Switches & Keycaps",
+      "specSummary": "10× switches + 10× blank PBT keycaps",
+      "compatibility": "Fits all Macro Pad sizes",
+      "price": 189.99,
+      "image": "assets/img/shop/comp-switches-pack.svg",
+      "description": "10-pack of crisp tactile switches paired with blank matte PBT keycaps."
+    },
+    {
+      "id": "comp-rotary-encoder",
+      "slug": "comp-rotary-encoder",
+      "name": "EC11 Rotary Encoder + Machined Knob",
+      "category": "component",
+      "categoryLabel": "Encoders & Dials",
+      "specSummary": "Detented 360° dial + push switch",
+      "compatibility": "Macro office / producer / Editor",
+      "price": 89.99,
+      "image": "assets/img/shop/comp-rotary-encoder.svg",
+      "description": "Smooth detented rotary encoder with integrated push click and knurled aluminum cap."
+    },
+    {
+      "id": "comp-hid-mcu",
+      "slug": "comp-hid-mcu",
+      "name": "USB HID Microcontroller Board (Pre-Flashed)",
+      "category": "component",
+      "categoryLabel": "Microcontrollers",
+      "specSummary": "ATmega32U4 / RP2040 · EEPROM Ready",
+      "compatibility": "USB Wired & DIY Matrix Builds",
+      "price": 219.99,
+      "image": "assets/img/shop/comp-hid-mcu.svg",
+      "description": "Pre-flashed with Eggman Macro EEPROM firmware for driverless HID shortcuts."
+    },
+    {
+      "id": "comp-ble-mcu",
+      "slug": "comp-ble-mcu",
+      "name": "Bluetooth + USB-C Controller Module",
+      "category": "component",
+      "categoryLabel": "Microcontrollers",
+      "specSummary": "Wireless BLE HID + LiPo Charger",
+      "compatibility": "Macro BT Series & Wireless Builds",
+      "price": 279.99,
+      "image": "assets/img/shop/comp-ble-mcu.svg",
+      "description": "USB-C microcontroller with BLE HID and integrated battery charging."
+    },
+    {
+      "id": "comp-rfid-kit",
+      "slug": "comp-rfid-kit",
+      "name": "RFID Door Access Starter Kit",
+      "category": "component",
+      "categoryLabel": "Project Kits",
+      "specSummary": "2× ESP32 + MFRC522 + Relay + 3 Cards",
+      "compatibility": "RFID Student Access System",
+      "price": 449.99,
+      "image": "assets/img/shop/comp-rfid-kit.svg",
+      "description": "Bench kit for split-perimeter door access control with opto-isolated relay."
+    },
+    {
+      "id": "comp-mateo-sensor-kit",
+      "slug": "comp-mateo-sensor-kit",
+      "name": "Mateo Solar Weather Sensor DIY Bundle",
+      "category": "component",
+      "categoryLabel": "Project Kits",
+      "specSummary": "ESP32-C6 + BME280 + MQ-135 + Solar",
+      "compatibility": "Mateo Weather Blueprint",
+      "price": 899.99,
+      "image": "assets/img/shop/comp-mateo-sensor-kit.svg",
+      "description": "Electronics bundle for builders 3D-printing a custom louvered radiation shield."
+    }
+  ]
+}

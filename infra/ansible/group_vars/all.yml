@@ -1,0 +1,35 @@
+---
+eggman_domain: eggmanstudios.me
+eggman_admin_user: eggman-ops
+eggman_root: /srv/eggman
+eggman_repo_dir: /srv/eggman/repo
+eggman_data_dir: /srv/eggman/data
+eggman_secrets_dir: /srv/eggman/secrets
+eggman_certs_dir: /srv/eggman/certs
+eggman_backups_dir: /srv/eggman/backups
+eggman_releases_dir: /srv/eggman/releases
+
+# Runtime network vars (overridden by bootstrap or extra-vars / inventory)
+tailscale_interface: tailscale0
+tailscale_ip: "{{ ansible_facts['tailscale0']['ipv4']['address'] | default('100.64.0.10') }}"
+iot_vlan_ip: "192.168.50.10"
+iot_vlan_cidr: "192.168.50.0/24"
+
+# Non-root UIDs/GIDs matching container user: declarations
+eggman_dotnet_uid: 1654
+eggman_dotnet_gid: 1654
+eggman_app_uid: 1000
+eggman_app_gid: 1000
+eggman_vault_uid: 100
+eggman_vault_gid: 1000
+eggman_data_uid: 999
+eggman_data_gid: 999
+
+# Host Beszel Agent (bound strictly to net_tailscale_admin gateway; ZERO docker.sock in containers)
+beszel_agent_version: "0.9.1"
+beszel_agent_listen_ip: "172.28.20.1"
+beszel_agent_port: 45876
+beszel_agent_ssh_pubkey_file: "/srv/eggman/secrets/beszel_agent_pubkey"
+
+# ZRAM swap cap for 16GB HP EliteDesk 800 G1 SFF
+zram_max_mb: 4096

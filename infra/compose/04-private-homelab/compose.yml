@@ -1,0 +1,357 @@
+networks:
+  net_private_apps:
+    external: true
+  net_private_data:
+    external: true
+  net_private_bus:
+    external: true
+  net_private_egress:
+    external: true
+  net_tailscale_admin:
+    external: true
+
+services:
+  nextcloud-app:
+    image: nextcloud:30.0.6-apache
+    container_name: eggman-nextcloud
+    restart: unless-stopped
+    user: "33:33"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      POSTGRES_HOST: eggman-postgres-private
+      POSTGRES_DB: nextcloud
+      POSTGRES_USER: svc_nextcloud
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?Set via Vault/env}
+      NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER:-eggman-nc-admin}
+      NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD:?Set via Vault/env}
+      NEXTCLOUD_TRUSTED_DOMAINS: drive.eggmanstudios.me
+      OVERWRITEPROTOCOL: https
+      OVERWRITEHOST: drive.eggmanstudios.me
+      REDIS_HOST: tls://eggman-redis
+      REDIS_HOST_PORT: "6379"
+      REDIS_HOST_USER: svc_nextcloud
+      REDIS_HOST_PASSWORD: ${NEXTCLOUD_REDIS_PASSWORD:?Set via Vault/env}
+      PGSSLMODE: verify-full
+      PGSSLROOTCERT: /etc/ssl/certs/eggman-ca.crt
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/nextcloud/html:/var/www/html:rw
+      - ./nextcloud/ports.conf:/etc/apache2/ports.conf:ro
+      - ./nextcloud/000-default.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+      - ./nextcloud/php-memory.ini:/usr/local/etc/php/conf.d/zz-memory.ini:ro
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/ca/ca.crt:/etc/ssl/certs/eggman-ca.crt:ro
+    tmpfs:
+      - /tmp:size=128m,noexec,nosuid,nodev
+      - /var/run/apache2:size=16m,noexec,nosuid,nodev
+      - /var/lock/apache2:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+      - net_private_data
+      - net_private_egress
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/status.php | grep -q '\"installed\":true' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1280M
+
+  nextcloud-cron:
+    image: nextcloud:30.0.6-apache
+    container_name: eggman-nextcloud-cron
+    restart: unless-stopped
+    user: "33:33"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    entrypoint: ["/cron.sh"]
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/nextcloud/html:/var/www/html:rw
+      - ./nextcloud/php-memory.ini:/usr/local/etc/php/conf.d/zz-memory.ini:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - net_private_data
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f cron >/dev/null || exit 1"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:v1.126.1
+    container_name: eggman-immich-server
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      IMMICH_PORT: "2283"
+      DB_HOSTNAME: eggman-postgres-private
+      DB_PORT: "5432"
+      DB_USERNAME: svc_immich
+      DB_PASSWORD: ${IMMICH_DB_PASSWORD:?Set via Vault/env}
+      DB_DATABASE_NAME: immich
+      REDIS_HOSTNAME: eggman-redis
+      REDIS_PORT: "6379"
+      REDIS_USERNAME: svc_immich
+      REDIS_PASSWORD: ${IMMICH_REDIS_PASSWORD:?Set via Vault/env}
+      IMMICH_MACHINE_LEARNING_URL: http://eggman-immich-ml:3003
+      NODE_EXTRA_CA_CERTS: /etc/ssl/certs/eggman-ca.crt
+      PGSSLMODE: verify-full
+      PGSSLROOTCERT: /etc/ssl/certs/eggman-ca.crt
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/immich/upload:/usr/src/app/upload:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/ca/ca.crt:/etc/ssl/certs/eggman-ca.crt:ro
+    tmpfs:
+      - /tmp:size=128m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+      - net_private_data
+    healthcheck:
+      test: ["CMD", "immich-admin", "help"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+  immich-ml:
+    image: ghcr.io/immich-app/immich-machine-learning:v1.126.1
+    container_name: eggman-immich-ml
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      MACHINE_LEARNING_WORKERS: "1"
+      MACHINE_LEARNING_MODEL_TTL: "300"
+      MPLCONFIGDIR: /tmp/matplotlib
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/immich/ml-cache:/cache:rw
+    tmpfs:
+      - /tmp:size=128m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c 'import urllib.request; urllib.request.urlopen(\"http://127.0.0.1:3003/ping\")'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 2048M
+
+  jellyfin:
+    image: jellyfin/jellyfin:10.10.6
+    container_name: eggman-jellyfin
+    restart: unless-stopped
+    user: "1000:1000"
+    group_add:
+      - "${RENDER_GID:-109}"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      JELLYFIN_PublishedServerUrl: https://media.eggmanstudios.me
+      JELLYFIN_DATA_DIR: /config
+      JELLYFIN_CACHE_DIR: /cache
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/jellyfin/config:/config:rw
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/media:/media:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /cache:size=256m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+      - net_private_egress
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8096/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1536M
+
+  navidrome:
+    image: deluan/navidrome:0.54.5
+    container_name: eggman-navidrome
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      GOMEMLIMIT: 100MiB
+      ND_MUSICFOLDER: /music
+      ND_DATAFOLDER: /data
+      ND_ADDRESS: 0.0.0.0
+      ND_PORT: "4533"
+      ND_BASEURL: https://music.eggmanstudios.me
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/navidrome:/data:rw
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/music:/music:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:4533/ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:10.0.1-rootless
+    container_name: eggman-forgejo
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      FORGEJO__database__DB_TYPE: postgres
+      FORGEJO__database__HOST: eggman-postgres-private:5432
+      FORGEJO__database__NAME: forgejo
+      FORGEJO__database__USER: svc_forgejo
+      FORGEJO__database__PASSWD: ${FORGEJO_DB_PASSWORD:?Set via Vault/env}
+      FORGEJO__database__SSL_MODE: verify-full
+      FORGEJO__server__DOMAIN: git.eggmanstudios.me
+      FORGEJO__server__ROOT_URL: https://git.eggmanstudios.me/
+      FORGEJO__server__HTTP_PORT: "3000"
+      FORGEJO__server__DISABLE_SSH: "true"
+      FORGEJO__service__DISABLE_REGISTRATION: "true"
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/forgejo:/var/lib/gitea:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/ca/ca.crt:/etc/ssl/certs/eggman-ca.crt:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /run:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+      - net_private_data
+      - net_private_egress
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:3000/api/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  eggman-iot-bridge:
+    build:
+      context: ../../../
+      dockerfile: services/Eggman.IoT.Bridge/Dockerfile
+    image: eggman/iot-bridge:local
+    container_name: eggman-iot-bridge
+    restart: unless-stopped
+    user: "1654:1654"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "${IOT_VLAN_IP:?Set IOT_VLAN_IP}:8443:8443"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: https://+:8443
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /etc/eggman/certs/tls.crt
+      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: /etc/eggman/certs/tls.key
+      DOTNET_GCHeapHardLimit: "0xB000000"
+      DOTNET_EnableDiagnostics: "0"
+      SSL_CERT_FILE: /etc/eggman/certs/ca.crt
+      Keycloak__Authority: https://auth.eggmanstudios.me/realms/eggman-public
+      Keycloak__MetadataAddress: https://eggman-keycloak:8443/realms/eggman-public/.well-known/openid-configuration
+      Keycloak__Audience: eggman-iot-bridge
+      Vault__Address: https://eggman-vault:8200
+      Vault__RoleIdFile: /run/secrets/approle/role-id
+      Vault__SecretIdFile: /run/secrets/approle/secret-id
+      Postgres__Host: eggman-postgres-private
+      Postgres__Database: iot_bridge
+      RabbitMq__Host: eggman-rabbitmq
+      RabbitMq__VirtualHost: /private-iot
+      IoT__HmacSharedSecret: ${IOT_DEVICE_HMAC_SECRET:?Set via Vault/env}
+    volumes:
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/iot-bridge:/etc/eggman/certs:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/approle/iot-bridge:/run/secrets/approle:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+      - net_private_data
+      - net_private_bus
+      - net_tailscale_admin
+    healthcheck:
+      test: ["CMD", "/app/Eggman.IoT.Bridge", "--healthcheck"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v0.10.9
+    container_name: eggman-homepage
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: home.eggmanstudios.me
+    volumes:
+      - ./homepage:/app/config:ro
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+      - /app/config/logs:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_private_apps
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 128M

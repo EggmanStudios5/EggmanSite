@@ -1,0 +1,162 @@
+{
+  "vhosts": [
+    { "name": "/public-events" },
+    { "name": "/private-iot" },
+    { "name": "/private-jarvis" }
+  ],
+  "users": [
+    {
+      "name": "rmq_admin",
+      "password_hash": "CHANGE_ME_RENDERED_BY_BOOTSTRAP_VAULT",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": ["administrator"]
+    },
+    {
+      "name": "svc_releasehub",
+      "password_hash": "CHANGE_ME_RENDERED_BY_BOOTSTRAP_VAULT",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "svc_iot_bridge",
+      "password_hash": "CHANGE_ME_RENDERED_BY_BOOTSTRAP_VAULT",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    },
+    {
+      "name": "svc_jarvis_reserved",
+      "password_hash": "CHANGE_ME_RENDERED_BY_BOOTSTRAP_VAULT",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": []
+    }
+  ],
+  "permissions": [
+    {
+      "user": "rmq_admin",
+      "vhost": "/public-events",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "rmq_admin",
+      "vhost": "/private-iot",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "rmq_admin",
+      "vhost": "/private-jarvis",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    {
+      "user": "svc_releasehub",
+      "vhost": "/public-events",
+      "configure": "^$",
+      "write": "^eggman\\.public\\.events$",
+      "read": "^$"
+    },
+    {
+      "user": "svc_iot_bridge",
+      "vhost": "/private-iot",
+      "configure": "^(eggman\\.iot\\..*)$",
+      "write": "^eggman\\.iot\\.events$",
+      "read": "^eggman\\.iot\\.commands$"
+    },
+    {
+      "user": "svc_jarvis_reserved",
+      "vhost": "/private-iot",
+      "configure": "^$",
+      "write": "^eggman\\.iot\\.commands$",
+      "read": "^(eggman\\.iot\\.events|jarvis\\.telemetry\\.q)$"
+    },
+    {
+      "user": "svc_jarvis_reserved",
+      "vhost": "/private-jarvis",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "eggman.public.events",
+      "vhost": "/public-events",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "eggman.iot.events",
+      "vhost": "/private-iot",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "eggman.iot.commands",
+      "vhost": "/private-iot",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "jarvis.telemetry.q",
+      "vhost": "/private-iot",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": { "x-message-ttl": 86400000 }
+    },
+    {
+      "name": "ntfy.alerts.q",
+      "vhost": "/private-iot",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": { "x-message-ttl": 86400000 }
+    },
+    {
+      "name": "releasehub.audit.q",
+      "vhost": "/public-events",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": { "x-message-ttl": 604800000 }
+    }
+  ],
+  "bindings": [
+    {
+      "source": "eggman.iot.events",
+      "vhost": "/private-iot",
+      "destination": "jarvis.telemetry.q",
+      "destination_type": "queue",
+      "routing_key": "iot.#",
+      "arguments": {}
+    },
+    {
+      "source": "eggman.iot.events",
+      "vhost": "/private-iot",
+      "destination": "ntfy.alerts.q",
+      "destination_type": "queue",
+      "routing_key": "iot.alert.#",
+      "arguments": {}
+    },
+    {
+      "source": "eggman.public.events",
+      "vhost": "/public-events",
+      "destination": "releasehub.audit.q",
+      "destination_type": "queue",
+      "routing_key": "release.#",
+      "arguments": {}
+    }
+  ]
+}

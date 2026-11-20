@@ -1,0 +1,24 @@
+{
+  "name": "eggman-studios-landing",
+  "version": "2.0.0",
+  "description": "Eggman Studios sovereign modular landing page and showcase hub (eggmanstudios.me).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:css": "tailwindcss -i src/css/input.css -o dist/assets/css/style.css --minify",
+    "verify": "node scripts/verify.mjs",
+    "test": "node scripts/build.mjs && node scripts/verify.mjs",
+    "dev": "node scripts/build.mjs && npx tailwindcss -i src/css/input.css -o dist/assets/css/style.css && python3 -m http.server 8080 --bind 127.0.0.1 --directory dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EggmanStudios5/EggmanSite.git"
+  },
+  "author": "Eggman Studios",
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3"
+  }
+}

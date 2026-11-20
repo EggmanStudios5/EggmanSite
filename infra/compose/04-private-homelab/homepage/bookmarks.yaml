@@ -1,0 +1,14 @@
+---
+- Public Properties:
+    - Eggman Studios:
+        - abbr: ES
+          href: https://eggmanstudios.me
+    - Documentation:
+        - abbr: DOC
+          href: https://docs.eggmanstudios.me
+    - ReleaseHub:
+        - abbr: REL
+          href: https://releases.eggmanstudios.me
+    - Public Status:
+        - abbr: STS
+          href: https://status.eggmanstudios.me

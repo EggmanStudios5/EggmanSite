@@ -1,0 +1,31 @@
+# Eggman Zero Trust Alerting Rules (Implemented via Beszel + Uptime Kuma + RabbitMQ -> ntfy)
+# Future Prometheus /metrics endpoints are also scraped internally when deferred stack is enabled.
+groups:
+  - name: eggman-zero-trust-security
+    rules:
+      - alert: GatewayAuthFailureSpike
+        expr: increase(eggman_gateway_auth_failures_total[1m]) >= 20
+        severity: critical
+        route: rabbitmq:/public-events/gateway.auth.spike -> ntfy:eggman-sec-alerts
+        summary: High 401/403 authentication failure rate detected at YARP gateway.
+
+      - alert: VaultSealedOrUnhealthy
+        probe: uptime-kuma://https://eggman-vault:8200/v1/sys/health
+        expected_http_status: 200
+        severity: critical
+        route: ntfy:eggman-sec-alerts
+        summary: HashiCorp Vault is sealed (HTTP 503) or unreachable; operator unseal required over Tailscale.
+
+      - alert: EliteDeskMemoryPressure
+        source: beszel-hub
+        threshold_percent: 85
+        severity: warning
+        route: ntfy:eggman-sec-alerts
+        summary: HP EliteDesk 16GB host memory exceeds 85% ceiling; inspect immich-ml / jellyfin limits.
+
+      - alert: RackThermalOverheat
+        source: eggman-iot-bridge -> rabbitmq:/private-iot/iot.alert.thermal
+        threshold_celsius: 42.0
+        severity: critical
+        route: ntfy:eggman-sec-alerts
+        summary: Rack temperature exceeded 42C; inspect UNO R4 cooling PWM telemetry.

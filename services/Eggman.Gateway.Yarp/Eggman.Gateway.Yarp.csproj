@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <RootNamespace>Eggman.Gateway.Yarp</RootNamespace>
+    <AssemblyName>Eggman.Gateway.Yarp</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Eggman.ServiceDefaults\Eggman.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,52 @@
+---
+- name: Verify non-root admin authorized_keys exists with an Ed25519 key before enabling SSH
+  ansible.builtin.shell: |
+    set -euo pipefail
+    AUTH_FILE="/home/{{ eggman_admin_user }}/.ssh/authorized_keys"
+    test -s "${AUTH_FILE}"
+    grep -qE '^(ssh-ed25519|sk-ssh-ed25519@openssh\.com)[[:space:]]' "${AUTH_FILE}"
+  args:
+    executable: /bin/bash
+  register: ssh_key_safety_check
+  failed_when: false
+  changed_when: false
+
+- name: Warn and keep SSH disabled if no Ed25519 authorized key is provisioned
+  ansible.builtin.debug:
+    msg: "SSH NOT enabled: missing valid Ed25519 key in /home/{{ eggman_admin_user }}/.ssh/authorized_keys"
+  when: ssh_key_safety_check.rc != 0
+
+- name: Disable SSH service if no authorized Ed25519 key exists
+  ansible.builtin.systemd:
+    name: ssh
+    enabled: false
+    state: stopped
+  when: ssh_key_safety_check.rc != 0
+  failed_when: false
+
+- name: Ensure /etc/ssh/sshd_config.d directory exists
+  ansible.builtin.file:
+    path: /etc/ssh/sshd_config.d
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: ssh_key_safety_check.rc == 0
+
+- name: Deploy Zero Trust SSHD drop-in bound strictly to Tailscale IP (Ed25519 key-only)
+  ansible.builtin.template:
+    src: 99-eggman-zero-trust.conf.j2
+    dest: /etc/ssh/sshd_config.d/99-eggman-zero-trust.conf
+    owner: root
+    group: root
+    mode: "0600"
+    validate: "/usr/sbin/sshd -t -f %s"
+  when: ssh_key_safety_check.rc == 0
+  notify: Restart sshd
+
+- name: Enable and start SSH strictly after key safety validation passes
+  ansible.builtin.systemd:
+    name: ssh
+    enabled: true
+    state: started
+  when: ssh_key_safety_check.rc == 0

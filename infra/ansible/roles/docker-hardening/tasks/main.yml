@@ -1,0 +1,139 @@
+---
+- name: Install Docker repository prerequisites
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: present
+
+- name: Detect distribution facts
+  ansible.builtin.set_fact:
+    docker_distro: "{{ ansible_facts['distribution'] | lower }}"
+    docker_codename: "{{ ansible_facts['distribution_release'] }}"
+
+- name: Ensure /etc/apt/keyrings exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Add Docker GPG key
+  ansible.builtin.get_url:
+    url: "https://download.docker.com/linux/{{ docker_distro }}/gpg"
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: Add Docker APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ ansible_facts['architecture'] | replace('x86_64', 'amd64') | replace('aarch64', 'arm64') }} signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/{{ docker_distro }} {{ docker_codename }} stable"
+    filename: docker
+    state: present
+
+- name: Install Docker Engine & Compose Plugin
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+    update_cache: true
+
+- name: Ensure /etc/docker exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: "0750"
+
+- name: Apply Zero Trust Docker daemon hardening config
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Restart docker
+
+- name: Enable and start Docker service
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Create dedicated non-root service groups
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    system: true
+  loop:
+    - { name: eggman-dotnet, gid: "{{ eggman_dotnet_gid }}" }
+    - { name: eggman-app, gid: "{{ eggman_app_gid }}" }
+    - { name: eggman-data, gid: "{{ eggman_data_gid }}" }
+
+- name: Create dedicated non-root service accounts
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.group }}"
+    shell: /usr/sbin/nologin
+    create_home: false
+    system: true
+  loop:
+    - { name: eggman-dotnet, uid: "{{ eggman_dotnet_uid }}", group: eggman-dotnet }
+    - { name: eggman-app, uid: "{{ eggman_app_uid }}", group: eggman-app }
+    - { name: eggman-data, uid: "{{ eggman_data_uid }}", group: eggman-data }
+
+- name: Create /srv/eggman directory structure with strict 0750/0700 permissions
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "{{ eggman_root }}", owner: root, group: "{{ eggman_admin_user }}", mode: "0750" }
+    - { path: "{{ eggman_repo_dir }}", owner: "{{ eggman_admin_user }}", group: "{{ eggman_admin_user }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}", owner: root, group: root, mode: "0750" }
+    - { path: "{{ eggman_secrets_dir }}", owner: root, group: root, mode: "0700" }
+    - { path: "{{ eggman_certs_dir }}", owner: root, group: eggman-dotnet, mode: "0750" }
+    - { path: "{{ eggman_backups_dir }}", owner: root, group: root, mode: "0700" }
+    - { path: "{{ eggman_releases_dir }}", owner: eggman-dotnet, group: eggman-dotnet, mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/vault", owner: "{{ eggman_vault_uid }}", group: "{{ eggman_vault_gid }}", mode: "0700" }
+    - { path: "{{ eggman_data_dir }}/keycloak", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/postgres-public", owner: "{{ eggman_data_uid }}", group: "{{ eggman_data_gid }}", mode: "0700" }
+    - { path: "{{ eggman_data_dir }}/postgres-private", owner: "{{ eggman_data_uid }}", group: "{{ eggman_data_gid }}", mode: "0700" }
+    - { path: "{{ eggman_data_dir }}/redis", owner: "{{ eggman_data_uid }}", group: "{{ eggman_data_gid }}", mode: "0700" }
+    - { path: "{{ eggman_data_dir }}/rabbitmq", owner: "{{ eggman_data_uid }}", group: "{{ eggman_data_gid }}", mode: "0700" }
+    - { path: "{{ eggman_data_dir }}/caddy", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/nextcloud", owner: "33", group: "33", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/immich", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/jellyfin", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/navidrome", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/forgejo", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/beszel", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/uptime-kuma", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_data_dir }}/ntfy", owner: "{{ eggman_app_uid }}", group: "{{ eggman_app_gid }}", mode: "0750" }
+    - { path: "{{ eggman_secrets_dir }}/approle", owner: root, group: eggman-dotnet, mode: "0750" }
+    - { path: "{{ eggman_secrets_dir }}/approle/yarp", owner: root, group: eggman-dotnet, mode: "0750" }
+    - { path: "{{ eggman_secrets_dir }}/approle/releasehub", owner: root, group: eggman-dotnet, mode: "0750" }
+    - { path: "{{ eggman_secrets_dir }}/approle/iot-bridge", owner: root, group: eggman-dotnet, mode: "0750" }
+
+- name: Sync repository to /srv/eggman/repo during local bootstrap
+  ansible.builtin.command:
+    argv:
+      - rsync
+      - -a
+      - --exclude=.env
+      - --exclude=secrets/
+      - "{{ eggman_repo_src }}/"
+      - "{{ eggman_repo_dir }}/"
+  when:
+    - eggman_repo_src is defined
+    - eggman_repo_src != eggman_repo_dir
+  changed_when: false
+  failed_when: false

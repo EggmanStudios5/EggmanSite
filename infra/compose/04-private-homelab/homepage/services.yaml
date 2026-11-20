@@ -1,0 +1,40 @@
+---
+- Services:
+    - Nextcloud:
+        href: https://drive.eggmanstudios.me
+        description: Private cloud drive & sync
+    - Immich:
+        href: https://photos.eggmanstudios.me
+        description: Self-hosted photo & video library
+    - Jellyfin:
+        href: https://media.eggmanstudios.me
+        description: Private media streaming
+    - Navidrome:
+        href: https://music.eggmanstudios.me
+        description: Private music server
+    - Forgejo:
+        href: https://git.eggmanstudios.me
+        description: Private Git & issue tracking
+    - Eggman IoT Bridge:
+        href: https://iot.eggmanstudios.me
+        description: Rack cooling, sensors & RFID nodes
+
+- Security & Ops:
+    - HashiCorp Vault:
+        href: https://vault.eggmanstudios.me
+        description: Secrets, PKI CA & AppRoles
+    - Keycloak Admin:
+        href: https://auth-admin.eggmanstudios.me
+        description: Identity & OIDC administration
+    - RabbitMQ Management:
+        href: https://mq.eggmanstudios.me
+        description: AMQPS message bus console
+    - Beszel Monitor:
+        href: https://monitor.eggmanstudios.me
+        description: Host & container telemetry
+    - Uptime Kuma:
+        href: https://uptime.eggmanstudios.me
+        description: Service uptime & checks
+    - ntfy Alerts:
+        href: https://notify.eggmanstudios.me
+        description: Push notifications to iPhone

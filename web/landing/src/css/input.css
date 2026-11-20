@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/* Typography & Zero Trust strict CSP external stylesheet (no inline <style> in HTML) */
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.font-mono-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hero-banner {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.84) 0%, rgba(248, 250, 252, 0.95) 100%),
+    url('../img/banner1.svg');
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] .faq-icon {
+  transform: rotate(180deg);
+}

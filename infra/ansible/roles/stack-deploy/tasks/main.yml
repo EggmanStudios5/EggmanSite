@@ -1,0 +1,61 @@
+---
+- name: Verify root .env exists before stack deployment
+  ansible.builtin.stat:
+    path: "{{ eggman_repo_dir }}/.env"
+  register: root_env
+  failed_when: not root_env.stat.exists
+
+- name: Ensure canonical 13 Zero Trust Docker networks exist
+  ansible.builtin.command:
+    cmd: "{{ eggman_repo_dir }}/scripts/init-networks.sh"
+  changed_when: false
+
+- name: Deploy systemd service units in strict dependency order
+  ansible.builtin.copy:
+    dest: "/etc/systemd/system/eggman-stack-{{ item }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Eggman Zero Trust Stack ({{ item }})
+      After=docker.service tailscaled.service network-online.target
+      Requires=docker.service
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      WorkingDirectory={{ eggman_repo_dir }}/infra/compose/{{ item }}
+      ExecStart=/usr/bin/docker compose --env-file {{ eggman_repo_dir }}/.env --env-file .env up -d --remove-orphans
+      ExecStop=/usr/bin/docker compose --env-file {{ eggman_repo_dir }}/.env --env-file .env down
+      TimeoutStartSec=300
+
+      [Install]
+      WantedBy=multi-user.target
+  loop:
+    - 01-security
+    - 02-data-bus
+    - 03-public-edge
+    - 04-private-homelab
+    - 05-observability-ops
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable and start zone stacks sequentially (01-security -> 05-observability-ops)
+  ansible.builtin.systemd:
+    name: "eggman-stack-{{ item }}.service"
+    enabled: true
+    state: started
+  loop:
+    - 01-security
+    - 02-data-bus
+    - 03-public-edge
+    - 04-private-homelab
+    - 05-observability-ops
+
+- name: Execute on-box Zero Trust verification
+  ansible.builtin.command:
+    cmd: "{{ eggman_repo_dir }}/scripts/verify-zero-trust.sh --live"
+  changed_when: false

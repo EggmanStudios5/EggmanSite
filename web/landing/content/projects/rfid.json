@@ -1,0 +1,76 @@
+{
+  "id": "rfid-student-access-system",
+  "slug": "rfid",
+  "group": "standalone",
+  "title": "RFID Student Access",
+  "tagline": "Split-perimeter door access for classrooms and workshops.",
+  "kindLabel": "Hardware Security System",
+  "githubUrl": "https://github.com/EggmanStudios5/RFID-student-acces-system",
+  "overviewPage": "rfid.html",
+  "favicon": "eggmanlogo.svg",
+  "summary": "A badge access architecture separating the exterior hallway reader from the interior lock relay controller, backed by Zero Trust HMAC-SHA256 verification.",
+  "whatItSolves": "Cheap all-in-one readers mount the strike relay directly behind the exterior cover where wires can be shorted. Splitting reader and lock controller keeps the actuator inside the locked room.",
+  "highlights": [
+    "Exterior reader never carries electric strike relay wiring",
+    "Interior ESP32 node communicates over TLS + HMAC-SHA256 with Eggman.IoT.Bridge",
+    "Firmware builds verified via SHA-256 on releases.eggmanstudios.me"
+  ],
+  "detailPage": {
+    "theme": "split",
+    "kicker": "Hardware 01 · Split-Perimeter Door Access",
+    "headline": "A safer architecture for workshop access control.",
+    "paragraphs": [
+      "Labs and makerspaces should never pay cloud subscriptions just to let members unlock a room—nor rely on exterior readers where popping off a plastic cover exposes the door strike wires.",
+      "Our split-node design keeps the actuator safely behind the locked door while verifying hashed badge tokens over authenticated TLS requests."
+    ],
+    "ctas": [
+      { "label": "View Hardware Showcase →", "href": "shop.html", "style": "primary" },
+      { "label": "Wiring & Security Docs →", "href": "https://docs.eggmanstudios.me/guides/rfid-wiring/", "style": "secondary" }
+    ],
+    "githubCtaLabel": "GitHub Repo ↗",
+    "architectureCard": {
+      "eyebrow": "Zero Trust Two-Node Separation",
+      "nodes": [
+        {
+          "badge": "Hallway Side (Untrusted)",
+          "badgeClass": "text-amber-700 bg-amber-50",
+          "borderClass": "border-slate-200",
+          "title": "1. Exterior Reader Node",
+          "description": "Mounted beside the door handle. Captures card scan events and forwards them without any strike relay connection.",
+          "footerNote": "Zero lock wires exposed",
+          "footerClass": "text-slate-500"
+        },
+        {
+          "badge": "Locked Room (Interior)",
+          "badgeClass": "text-teal-800 bg-teal-50",
+          "borderClass": "border-teal-200",
+          "title": "2. Interior Lock Controller",
+          "description": "Verifies HMAC-authenticated response from Eggman.IoT.Bridge before energizing the opto-isolated 12V door strike.",
+          "footerNote": "Protected inside the room",
+          "footerClass": "text-teal-700"
+        }
+      ],
+      "bottomBar": {
+        "title": "3. Eggman.IoT.Bridge (Private Tailscale Zone)",
+        "description": "Validates hashed badge tokens and publishes audit events to RabbitMQ over TLS 1.3.",
+        "tag": "TLS + HMAC-SHA256"
+      }
+    },
+    "stepsSection": {
+      "eyebrow": "Verification Flow",
+      "title": "What happens on every badge scan",
+      "steps": [
+        { "number": "1", "title": "Exterior reader scans badge", "description": "The hallway reader hashes the scanned identifier and forwards the request inside." },
+        { "number": "2", "title": "Bridge verifies HMAC & policy", "description": "The interior ESP32 node signs a request with HMAC-SHA256, timestamp, and nonce to Eggman.IoT.Bridge." },
+        { "number": "3", "title": "Timed strike release + audit", "description": "Approved tokens trigger a 3-second relay unlock and emit an immutable audit log event." }
+      ]
+    },
+    "tutorialBanner": {
+      "eyebrow": "Step-by-Step Guide",
+      "title": "Wiring or flashing an RFID node?",
+      "description": "Read the full wiring and TLS provisioning guide on docs.eggmanstudios.me.",
+      "ctaLabel": "Open RFID Docs →",
+      "ctaHref": "https://docs.eggmanstudios.me/guides/rfid-wiring/"
+    }
+  }
+}

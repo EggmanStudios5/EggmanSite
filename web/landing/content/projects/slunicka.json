@@ -1,0 +1,35 @@
+{
+  "id": "game-slunicka",
+  "slug": "slunicka",
+  "group": "games",
+  "title": "Sluníčka",
+  "tagline": "Original Eggman Studios indie release distributed via ReleaseHub.",
+  "kindLabel": "Indie Game Build",
+  "githubUrl": "https://github.com/EggmanStudios5",
+  "overviewPage": "slunicka.html",
+  "favicon": "eggmanlogo.svg",
+  "summary": "An original indie title by Eggman Studios distributed without launchers, DRM, or forced telemetry—verified with SHA-256 digests on Eggman.ReleaseHub.",
+  "whatItSolves": "Modern game distribution wraps small indie builds in intrusive launchers and opaque updates. Sluníčka ships as clean, checksum-verified standalone archives.",
+  "highlights": [
+    "Zero DRM, zero background launchers, zero telemetry",
+    "SHA-256 manifest served by releases.eggmanstudios.me/api/v1/games",
+    "Built and packaged reproducibly for Windows and Linux"
+  ],
+  "detailPage": {
+    "theme": "game",
+    "kicker": "Game Release 01 · Eggman Studios",
+    "headline": "Sluníčka — standalone, DRM-free, SHA-256 verified.",
+    "paragraphs": [
+      "Sluníčka is an original Eggman Studios game designed to run offline with zero accounts or third-party launchers.",
+      "Download verified builds directly from ReleaseHub and check every archive against its published SHA-256 digest."
+    ],
+    "releaseSlug": "slunicka",
+    "releaseUrl": "https://releases.eggmanstudios.me/api/v1/games",
+    "docsUrl": "https://docs.eggmanstudios.me/guides/altstore-releases/",
+    "specs": [
+      { "label": "Distribution", "value": "Eggman.ReleaseHub (releases.eggmanstudios.me)" },
+      { "label": "Integrity", "value": "SHA-256 Digest + X-Checksum-Sha256 Header" },
+      { "label": "Telemetry / DRM", "value": "None — 100% Offline Playable" }
+    ]
+  }
+}

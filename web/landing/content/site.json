@@ -1,0 +1,96 @@
+{
+  "brand": {
+    "name": "Eggman Studios",
+    "subtitle": "Open Hardware, Software & Games",
+    "logo": "eggmanlogo.svg",
+    "githubProfile": "https://github.com/EggmanStudios5",
+    "licenseNote": "Released under permissive Open-Source Licenses (MIT & CERN-OHL)"
+  },
+  "errorBoundary": {
+    "defaultMessage": "We encountered a temporary issue completing that action. Please refresh the page or try again in a moment.",
+    "dismissLabel": "Dismiss"
+  },
+  "navigation": {
+    "links": [
+      { "id": "about", "label": "Our Story", "href": "index.html#about", "homeHref": "#about" },
+      { "id": "projects", "label": "Projects", "href": "projects.html" },
+      { "id": "shop", "label": "Hardware Showcase", "href": "shop.html" },
+      { "id": "docs", "label": "Docs & Tutorials", "href": "https://docs.eggmanstudios.me" },
+      { "id": "releases", "label": "Releases & AltStore", "href": "https://releases.eggmanstudios.me" }
+    ],
+    "primaryCta": {
+      "label": "Browse Projects",
+      "href": "projects.html"
+    }
+  },
+  "footer": {
+    "blurb": "Open Hardware, Software & Sovereign Games · Practical tools you actually own.",
+    "exploreHeading": "Ecosystem",
+    "reposHeading": "Source & Releases",
+    "tagline": "Built for people who like hardware and software they can actually own.",
+    "links": [
+      { "label": "Home & Story", "href": "index.html" },
+      { "label": "All Projects Directory", "href": "projects.html" },
+      { "label": "Hardware Showcase", "href": "shop.html" },
+      { "label": "Docs & Tutorials", "href": "https://docs.eggmanstudios.me" },
+      { "label": "Releases & AltStore Hub", "href": "https://releases.eggmanstudios.me" },
+      { "label": "System Status", "href": "https://status.eggmanstudios.me" }
+    ]
+  },
+  "hero": {
+    "kicker": "Eggman Studios · eggmanstudios.me",
+    "title": "Practical open-source tools & indie builds, built to stay yours.",
+    "subtitle": "We design open hardware, zero-bloat desktop utilities, and original indie games. Everything ships without mandatory accounts, cloud subscriptions, or telemetry trackers.",
+    "primaryCta": { "label": "Explore Our Projects", "href": "projects.html" },
+    "secondaryCta": { "label": "Read Documentation", "href": "https://docs.eggmanstudios.me" }
+  },
+  "about": {
+    "eyebrow": "About the Studio",
+    "title": "Simple ideas, shared openly.",
+    "paragraphs": [
+      "Most of what we build starts because we needed a tool ourselves and could only find over-engineered commercial options tied to cloud accounts or heavy background software.",
+      "From programmable macro pads and split-perimeter room security hardware to original games like Sluníčka and Protikód, we publish transparent builds verified with SHA-256 checksums on ReleaseHub."
+    ],
+    "principles": [
+      {
+        "title": "Runs on its own",
+        "description": "Tools should keep working even when the internet is down. We design for local networks and onboard memory first."
+      },
+      {
+        "title": "Zero background bloat",
+        "description": "We avoid heavy installers and always-on desktop daemons when onboard EEPROM or static specs can do the job."
+      },
+      {
+        "title": "Verified sovereign releases",
+        "description": "Game builds, firmware OTA binaries, and AltStore packages ship with transparent SHA-256 digests via releases.eggmanstudios.me."
+      }
+    ]
+  },
+  "solutionsHub": {
+    "eyebrow": "Projects & Releases",
+    "title": "Hardware designs, reference networks, and indie games.",
+    "description": "Browse Eggman Studios hardware projects, open reference architectures, and verified game builds.",
+    "pageTitle": "Projects Directory",
+    "pageDescription": "Explore Eggman Studios open-source hardware tools, reference platforms, and original games."
+  },
+  "projectGroups": [
+    {
+      "id": "games",
+      "label": "Games & Software Releases",
+      "shortLabel": "Games & Apps",
+      "description": "Original Eggman Studios software and games distributed with SHA-256 verification via ReleaseHub."
+    },
+    {
+      "id": "standalone",
+      "label": "Hardware Devices & Utilities",
+      "shortLabel": "Hardware",
+      "description": "Focused, self-contained open hardware devices you flash once and own permanently."
+    },
+    {
+      "id": "network",
+      "label": "Reference Platforms (Design Archive)",
+      "shortLabel": "Reference Designs",
+      "description": "Open architectural blueprints and community network specifications maintained as reference works."
+    }
+  ]
+}

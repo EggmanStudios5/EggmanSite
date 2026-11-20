@@ -1,0 +1,9 @@
+base-url: "https://notify.eggmanstudios.me"
+listen-http: ":8080"
+behind-proxy: true
+cache-file: "/var/cache/ntfy/cache.db"
+auth-file: "/var/cache/ntfy/auth.db"
+auth-default-access: "deny-all"
+upstream-base-url: "https://ntfy.sh"
+enable-login: true
+require-login: true

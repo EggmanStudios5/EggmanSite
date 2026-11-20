@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Eggman.Platform.Tests</RootNamespace>
+    <AssemblyName>Eggman.Platform.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.23" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\contracts\Eggman.Contracts\Eggman.Contracts.csproj" />
+    <ProjectReference Include="..\..\services\Eggman.ServiceDefaults\Eggman.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\..\services\Eggman.Gateway.Yarp\Eggman.Gateway.Yarp.csproj">
+      <Aliases>GatewayAsm</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\..\services\Eggman.ReleaseHub\Eggman.ReleaseHub.csproj">
+      <Aliases>ReleaseHubAsm</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\..\services\Eggman.IoT.Bridge\Eggman.IoT.Bridge.csproj">
+      <Aliases>IoTBridgeAsm</Aliases>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

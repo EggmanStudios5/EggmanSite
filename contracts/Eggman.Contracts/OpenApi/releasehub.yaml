@@ -1,0 +1,64 @@
+openapi: 3.1.0
+info:
+  title: Eggman.ReleaseHub API
+  version: 1.0.0
+  description: Zero Trust artifact release service for AltStore/SideStore IPAs, Macro/ESP32 firmware OTA, and game builds (Sluníčka, Protikód).
+servers:
+  - url: https://releases.eggmanstudios.me
+paths:
+  /api/v1/altstore/source.json:
+    get:
+      summary: Fetch AltStore/SideStore source manifest with SHA-256 checksums
+      responses:
+        "200":
+          description: AltStore JSON manifest
+  /api/v1/firmware:
+    get:
+      summary: List signed firmware manifests for Eggman hardware
+      responses:
+        "200":
+          description: List of firmware manifests
+  /api/v1/games:
+    get:
+      summary: List verified builds for Sluníčka and Protikód
+      responses:
+        "200":
+          description: List of game builds
+  /api/v1/releases/{kind}/{fileName}:
+    get:
+      summary: Download release binary with X-Checksum-Sha256 header
+      parameters:
+        - name: kind
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [ipa, firmware, games]
+        - name: fileName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Binary stream
+        "404":
+          description: Artifact not found
+  /api/v1/releases:
+    post:
+      summary: Register release metadata (Keycloak JWT + releases:write scope required)
+      security:
+        - keycloakBearer: [releases:write]
+      responses:
+        "201":
+          description: Release recorded
+        "401":
+          description: Missing or invalid JWT
+        "403":
+          description: Missing releases:write scope
+components:
+  securitySchemes:
+    keycloakBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

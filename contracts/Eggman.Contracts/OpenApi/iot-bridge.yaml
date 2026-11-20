@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: Eggman.IoT.Bridge API
+  version: 1.0.0
+  description: Zone B authenticated ingestion and control API for Arduino UNO R4 rack cooling, Arduino Mega sensors, and ESP32 RFID access nodes.
+servers:
+  - url: https://iot.eggmanstudios.me
+paths:
+  /api/v1/devices/telemetry:
+    post:
+      summary: Submit sensor telemetry (Device HMAC-SHA256 + timestamp + nonce required)
+      security:
+        - deviceHmac: []
+      responses:
+        "202":
+          description: Accepted and published to /private-iot RabbitMQ
+        "401":
+          description: Invalid HMAC signature, stale timestamp, or replayed nonce
+  /api/v1/devices/rfid/verify:
+    post:
+      summary: Verify hashed badge access against Zone B policy
+      security:
+        - deviceHmac: []
+      responses:
+        "200":
+          description: Verification verdict
+  /api/v1/rack/airflow:
+    post:
+      summary: Command rack cooling PWM (Keycloak JWT + iot:control scope required)
+      security:
+        - keycloakBearer: [iot:control]
+      responses:
+        "202":
+          description: Command queued
+components:
+  securitySchemes:
+    deviceHmac:
+      type: apiKey
+      in: header
+      name: X-Eggman-Signature
+    keycloakBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

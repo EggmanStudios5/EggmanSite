@@ -1,0 +1,29 @@
+[Unit]
+Description=Beszel Host Agent (Hardened Native Unit - Zero Container docker.sock)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=beszel-agent
+Group=beszel-agent
+SupplementaryGroups=docker
+Environment="LISTEN={{ beszel_agent_listen_ip }}:{{ beszel_agent_port }}"
+EnvironmentFile=-/srv/eggman/secrets/beszel-agent.env
+ExecStart=/opt/beszel-agent/beszel-agent
+Restart=on-failure
+RestartSec=5
+
+# Strict Resource & Sandbox Containment
+MemoryMax=32M
+CPUQuota=15%
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadOnlyPaths=/
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

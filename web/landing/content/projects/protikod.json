@@ -1,0 +1,35 @@
+{
+  "id": "game-protikod",
+  "slug": "protikod",
+  "group": "games",
+  "title": "Protikód",
+  "tagline": "Tactical code-breaking & systems puzzle game from Eggman Studios.",
+  "kindLabel": "Indie Game Build",
+  "githubUrl": "https://github.com/EggmanStudios5",
+  "overviewPage": "protikod.html",
+  "favicon": "eggmanlogo.svg",
+  "summary": "A crisp logic and systems-oriented game built at Eggman Studios, distributed DRM-free with cryptographic checksums via Eggman.ReleaseHub.",
+  "whatItSolves": "Delivers a focused offline puzzle experience with deterministic binary verification and zero tracking bloat.",
+  "highlights": [
+    "Self-contained cross-platform builds",
+    "Verified SHA-256 checksums on every release artifact",
+    "Zero ads, zero microtransactions, zero required internet connection"
+  ],
+  "detailPage": {
+    "theme": "game",
+    "kicker": "Game Release 02 · Eggman Studios",
+    "headline": "Protikód — pure logic, zero bloat.",
+    "paragraphs": [
+      "Protikód pairs clean mechanical puzzle design with lightweight offline execution.",
+      "Every published binary is indexed by Eggman.ReleaseHub with an immutable SHA-256 digest."
+    ],
+    "releaseSlug": "protikod",
+    "releaseUrl": "https://releases.eggmanstudios.me/api/v1/games",
+    "docsUrl": "https://docs.eggmanstudios.me/guides/altstore-releases/",
+    "specs": [
+      { "label": "Distribution", "value": "Eggman.ReleaseHub (releases.eggmanstudios.me)" },
+      { "label": "Integrity", "value": "SHA-256 Digest + X-Checksum-Sha256 Header" },
+      { "label": "Telemetry / DRM", "value": "None — 100% Offline Playable" }
+    ]
+  }
+}

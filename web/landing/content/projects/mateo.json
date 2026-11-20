@@ -1,0 +1,78 @@
+{
+  "id": "mateo-web-projekt",
+  "slug": "mateo",
+  "group": "network",
+  "title": "Mateo Weather Network (Reference Blueprint)",
+  "tagline": "Community weather station blueprint for cities, farms, and off-grid valleys.",
+  "kindLabel": "Reference Architecture",
+  "githubUrl": "https://github.com/EggmanStudios5",
+  "overviewPage": "mateo.html",
+  "favicon": "mateologo.svg",
+  "logo": "mateologo.svg",
+  "summary": "An open-source, solar-powered weather station blueprint designed to bring reliable local microclimate measurements to areas commercial stations miss (reference specification only).",
+  "whatItSolves": "Official weather stations cost thousands of dollars, while cheap backyard sensors skew readings in direct sunlight. The Mateo blueprint pairs solar hardware with multi-stage neighbor sanity checking.",
+  "highlights": [
+    "Three reference topologies for balconies, rural farms, and off-grid villages",
+    "Three-stage Zero Trust telemetry quality checks filter sun-glare spikes",
+    "Maintained strictly as a hardware/architecture reference design"
+  ],
+  "detailPage": {
+    "theme": "atmospheric",
+    "kicker": "Reference Design · Community Weather Blueprint",
+    "headline": "Local weather station architecture, documented openly.",
+    "paragraphs": [
+      "Official weather stations cost thousands of dollars and sit near airports—leaving farms, valleys, and small towns without accurate local frost or rain signals.",
+      "Mateo is maintained as an open hardware reference blueprint for solar-powered environmental nodes."
+    ],
+    "ctas": [
+      { "label": "View Hardware Showcase →", "href": "shop.html", "style": "teal" },
+      { "label": "Mounting Documentation →", "href": "https://docs.eggmanstudios.me/guides/mateo-mount/", "style": "outline" }
+    ],
+    "githubCtaLabel": "Eggman Studios GitHub ↗",
+    "topologiesSection": {
+      "eyebrow": "Reference Topologies",
+      "title": "Three station setups across environments.",
+      "subtitle": "The blueprint pairs a shared Bosch BME280 + air-quality core with three power and radio options.",
+      "items": [
+        {
+          "badge": "Setup 01 · City & Balcony",
+          "badgeClass": "text-blue-800 bg-blue-50",
+          "title": "Home Wi-Fi Station",
+          "subtitle": "For apartments, rooftops, and neighborhoods",
+          "description": "Deep-sleep duty cycling wakes the microcontroller briefly every few minutes to transmit encrypted readings and preserve winter solar battery life."
+        },
+        {
+          "badge": "Setup 02 · Countryside & Farms",
+          "badgeClass": "text-indigo-800 bg-indigo-50",
+          "title": "Long-Range LoRa Mast + Indoor Hub",
+          "subtitle": "When the sensor sits beyond Wi-Fi range",
+          "description": "Streams readings up to 2 km over SX1262 LoRa to an indoor OLED receiver that continues logging locally to microSD even during internet outages."
+        },
+        {
+          "badge": "Setup 03 · Off-Grid Villages",
+          "badgeClass": "text-emerald-800 bg-emerald-50",
+          "title": "Solar Community Kiosk",
+          "subtitle": "Local access without cellular infrastructure",
+          "description": "Relay nodes forward frost and rainfall telemetry to a local offline kiosk portal accessible on community Wi-Fi."
+        }
+      ]
+    },
+    "stepsSection": {
+      "eyebrow": "Telemetry Integrity",
+      "title": "Three automatic data sanity checks.",
+      "subtitle": "Before accepting readings, the reference pipeline isolates physical wire faults and solar radiation bias.",
+      "steps": [
+        { "number": "1", "title": "Physical bounds filtering", "description": "Out-of-range spikes from loose wires are discarded before persistence." },
+        { "number": "2", "title": "Rate-of-change spike detection", "description": "Impossible 5°C jumps in under a minute from direct sun glare are flagged automatically." },
+        { "number": "3", "title": "Neighbor cross-validation", "description": "Each station is cross-checked against peers within 25 km to compute a rolling quality index." }
+      ]
+    },
+    "tutorialBanner": {
+      "eyebrow": "Documentation",
+      "title": "Looking for Mateo mounting & solar orientation guides?",
+      "description": "Visit the dedicated documentation hub on docs.eggmanstudios.me.",
+      "ctaLabel": "Open Docs →",
+      "ctaHref": "https://docs.eggmanstudios.me/guides/mateo-mount/"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "eyebrow": "Documentation & Guides",
+  "title": "Zero-bloat setup & release verification guides.",
+  "description": "Add a new hardware or release guide by adding a single entry to content/tutorials.json and a Markdown page in web/docs.",
+  "ctaLabel": "Open Full Docs Hub →",
+  "ctaHref": "https://docs.eggmanstudios.me",
+  "items": [
+    {
+      "id": "macro-setup",
+      "badge": "01 · Software",
+      "title": "Macro Pad Python Configurator",
+      "summary": "Install Python 3, pyserial, and write 9 key bindings directly to onboard EEPROM across Windows, Linux, and macOS.",
+      "href": "https://docs.eggmanstudios.me/guides/macro-setup/"
+    },
+    {
+      "id": "macro-diy",
+      "badge": "02 · Desk Hardware",
+      "title": "DIY Macro Pad Soldering & Flash",
+      "summary": "Wire the 3×3 switch matrix to pins 4–9, verify firmware checksums, and flash ATmega32U4 controllers.",
+      "href": "https://docs.eggmanstudios.me/guides/macro-diy/"
+    },
+    {
+      "id": "rfid-wiring",
+      "badge": "03 · Room Security",
+      "title": "RFID Split-Node TLS + HMAC Wiring",
+      "summary": "Separate exterior badge scanning from interior strike relays and provision Zero Trust HMAC device credentials.",
+      "href": "https://docs.eggmanstudios.me/guides/rfid-wiring/"
+    },
+    {
+      "id": "altstore-releases",
+      "badge": "04 · Games & OTA",
+      "title": "AltStore & SHA-256 Verification",
+      "summary": "Subscribe to ReleaseHub and verify SHA-256 digests for Sluníčka, Protikód, and hardware firmware.",
+      "href": "https://docs.eggmanstudios.me/guides/altstore-releases/"
+    }
+  ]
+}

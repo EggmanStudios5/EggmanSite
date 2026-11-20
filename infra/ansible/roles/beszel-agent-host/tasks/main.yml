@@ -1,0 +1,44 @@
+---
+- name: Create dedicated unprivileged beszel-agent system user (docker group only on host, NEVER in container)
+  ansible.builtin.user:
+    name: beszel-agent
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+    groups: docker
+    append: true
+
+- name: Create /opt/beszel-agent directory
+  ansible.builtin.file:
+    path: /opt/beszel-agent
+    state: directory
+    owner: root
+    group: beszel-agent
+    mode: "0750"
+
+- name: Install beszel-agent binary (pinned release)
+  ansible.builtin.get_url:
+    url: "https://github.com/henrygd/beszel/releases/download/v{{ beszel_agent_version }}/beszel-agent_linux_{{ 'amd64' if ansible_facts['architecture'] == 'x86_64' else 'arm64' }}.tar.gz"
+    dest: /tmp/beszel-agent.tar.gz
+    mode: "0640"
+  register: beszel_dl
+  failed_when: false
+
+- name: Extract beszel-agent binary when download succeeds
+  ansible.builtin.unarchive:
+    src: /tmp/beszel-agent.tar.gz
+    dest: /opt/beszel-agent
+    remote_src: true
+    owner: root
+    group: beszel-agent
+    mode: "0750"
+  when: beszel_dl is succeeded
+
+- name: Install systemd unit for host beszel-agent (32MB RAM cap, read-only FS)
+  ansible.builtin.template:
+    src: beszel-agent.service.j2
+    dest: /etc/systemd/system/beszel-agent.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload systemd and restart beszel-agent

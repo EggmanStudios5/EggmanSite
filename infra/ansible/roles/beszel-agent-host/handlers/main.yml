@@ -1,0 +1,8 @@
+---
+- name: Reload systemd and restart beszel-agent
+  ansible.builtin.systemd:
+    name: beszel-agent
+    daemon_reload: true
+    enabled: true
+    state: restarted
+  failed_when: false

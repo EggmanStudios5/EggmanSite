@@ -1,0 +1,58 @@
+{
+  "id": "macro-pad-utility",
+  "slug": "macro",
+  "group": "standalone",
+  "title": "Macro 3×3 Pad",
+  "tagline": "Programmable shortcut pads with onboard EEPROM storage.",
+  "kindLabel": "Standalone Desk Hardware",
+  "githubUrl": "https://github.com/EggmanStudios5/Macro",
+  "overviewPage": "macro.html",
+  "favicon": "eggmanlogo.svg",
+  "summary": "A compact USB HID keypad family that persists custom key bindings directly to onboard EEPROM so no background software ever has to stay running.",
+  "whatItSolves": "Commercial macro pads demand bloated always-on background suites and cloud logins. Eggman Macro saves bindings straight onto the microcontroller chip.",
+  "highlights": [
+    "Configure once via serial utility, then close forever",
+    "Shortcuts travel with the pad across Windows, Linux, and macOS",
+    "Signed firmware builds published on releases.eggmanstudios.me"
+  ],
+  "detailPage": {
+    "theme": "dark",
+    "kicker": "Hardware 02 · Everyday Desk Hardware",
+    "headline": "Nine keys. Zero background bloatware.",
+    "paragraphs": [
+      "Commercial macro pads lock basic shortcuts behind 500 MB background suites and cloud accounts—and lose your bindings on any other machine.",
+      "Eggman Macro writes key bindings directly into onboard EEPROM memory and behaves as a driverless USB keyboard everywhere."
+    ],
+    "ctas": [
+      { "label": "View Macro Pad Models →", "href": "shop.html", "style": "teal" },
+      { "label": "Setup & Assembly Docs →", "href": "https://docs.eggmanstudios.me/guides/macro-setup/", "style": "dark-outline" }
+    ],
+    "githubCtaLabel": "GitHub Repo ↗",
+    "summaryCard": {
+      "eyebrow": "At a Glance",
+      "title": "Driverless USB & BLE HID",
+      "bullets": [
+        { "lead": "Onboard EEPROM:", "text": "Shortcuts persist across reboots and computers with zero background daemons." },
+        { "lead": "13 Hardware Layouts:", "text": "From 4-key strips and 3×3 pads to 16-key grids and multi-encoder editing decks." },
+        { "lead": "Firmware OTA:", "text": "Verify SHA-256 checksums and fetch signed firmware via ReleaseHub." }
+      ]
+    },
+    "stepsSection": {
+      "eyebrow": "How It Works",
+      "title": "Set up in under two minutes.",
+      "subtitle": "Plug in over USB, assign your bindings once, and carry your workflow anywhere.",
+      "steps": [
+        { "number": "1", "title": "Plug in via USB", "description": "Enumerates immediately as a standard HID keyboard with zero custom kernel drivers." },
+        { "number": "2", "title": "Assign key bindings", "description": "Use the lightweight serial configurator to write your shortcuts to onboard EEPROM." },
+        { "number": "3", "title": "Unplug & use anywhere", "description": "Close the utility forever; bindings stay on the chip across every OS." }
+      ]
+    },
+    "tutorialBanner": {
+      "eyebrow": "Documentation & Firmware",
+      "title": "Need Python setup or DIY soldering instructions?",
+      "description": "Follow the complete OS and hardware assembly guides on docs.eggmanstudios.me.",
+      "ctaLabel": "Open Macro Docs →",
+      "ctaHref": "https://docs.eggmanstudios.me/guides/macro-setup/"
+    }
+  }
+}

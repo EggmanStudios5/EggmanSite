@@ -1,0 +1,136 @@
+networks:
+  net_public_auth:
+    external: true
+  net_public_data:
+    external: true
+  net_private_data:
+    external: true
+  net_vault_public:
+    external: true
+  net_tailscale_admin:
+    external: true
+  net_private_apps:
+    external: true
+  net_private_egress:
+    external: true
+
+services:
+  vault:
+    image: hashicorp/vault:1.18.4
+    container_name: eggman-vault
+    restart: unless-stopped
+    user: "100:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command: ["server", "-config=/vault/config/vault.hcl"]
+    environment:
+      GOMEMLIMIT: 200MiB
+      VAULT_ADDR: https://127.0.0.1:8200
+      VAULT_CACERT: /vault/certs/ca.crt
+    volumes:
+      - ./vault/vault.hcl:/vault/config/vault.hcl:ro
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/vault:/vault/data:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/vault:/vault/certs:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_vault_public
+      - net_tailscale_admin
+      - net_public_data
+      - net_private_data
+    healthcheck:
+      test: ["CMD-SHELL", "vault status -tls-skip-verify=false >/dev/null 2>&1 || test $$? -eq 2"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.0
+    container_name: eggman-keycloak
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command: ["start"]
+    environment:
+      JAVA_OPTS_APPEND: "-Xms256m -Xmx768m"
+      KC_DB: postgres
+      KC_DB_URL: "jdbc:postgresql://postgres-public:5432/keycloak?sslmode=verify-full&sslrootcert=/opt/keycloak/certs/ca.crt"
+      KC_DB_USERNAME: svc_keycloak
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD:?Set via Vault runtime env}
+      KC_HOSTNAME: https://auth.eggmanstudios.me
+      KC_HOSTNAME_ADMIN: https://auth-admin.eggmanstudios.me
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_ENABLED: "false"
+      KC_HTTPS_PORT: "8443"
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/certs/tls.crt
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/certs/tls.key
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "false"
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-eggman-sec-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?Set via Vault runtime env}
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/keycloak:/opt/keycloak/data:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/keycloak:/opt/keycloak/certs:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+    networks:
+      - net_public_auth
+      - net_public_data
+      - net_tailscale_admin
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+  tailscale-proxy:
+    image: caddy:2.9.1-alpine
+    container_name: eggman-tailscale-proxy
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "${TAILSCALE_IP:?Set TAILSCALE_IP}:443:8443"
+      - "${TAILSCALE_IP:?Set TAILSCALE_IP}:80:8080"
+    environment:
+      GOMEMLIMIT: 100MiB
+      CLOUDFLARE_DNS_API_TOKEN: ${CLOUDFLARE_DNS_API_TOKEN:-}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/caddy:/data:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/ca:/etc/caddy/certs:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+      - /config:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_tailscale_admin
+      - net_private_apps
+      - net_private_egress
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:2019/config/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 128M

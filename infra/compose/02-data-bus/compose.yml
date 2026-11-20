@@ -1,0 +1,172 @@
+networks:
+  net_public_data:
+    external: true
+  net_public_bus:
+    external: true
+  net_private_data:
+    external: true
+  net_private_bus:
+    external: true
+  net_tailscale_admin:
+    external: true
+
+services:
+  postgres-public:
+    image: postgres:16.8-bookworm
+    container_name: eggman-postgres-public
+    restart: unless-stopped
+    user: "999:999"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+      - "-c"
+      - "hba_file=/etc/postgresql/pg_hba.conf"
+    environment:
+      POSTGRES_USER: pgadmin_pub
+      POSTGRES_PASSWORD: ${POSTGRES_PUBLIC_ADMIN_PASSWORD:?Set via Vault/env}
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--auth-local=scram-sha-256 --auth-host=scram-sha-256"
+      SVC_KEYCLOAK_PASSWORD: ${KC_DB_PASSWORD:?Set via Vault/env}
+      SVC_RELEASEHUB_PASSWORD: ${RELEASEHUB_DB_PASSWORD:?Set via Vault/env}
+      VAULT_DB_ADMIN_PASSWORD: ${VAULT_PG_PUB_PASSWORD:?Set via Vault/env}
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/postgres-public:/var/lib/postgresql/data:rw
+      - ./postgres-public/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./postgres-public/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./postgres-public/init:/docker-entrypoint-initdb.d:ro
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/postgres-public:/etc/postgresql/certs:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /var/run/postgresql:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_public_data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h /var/run/postgresql -U pgadmin_pub -d postgres"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  postgres-private:
+    image: ghcr.io/immich-app/postgres:16-vectorchord0.3.0-pgvectors0.3.0
+    container_name: eggman-postgres-private
+    restart: unless-stopped
+    user: "999:999"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql/postgresql.conf"
+      - "-c"
+      - "hba_file=/etc/postgresql/pg_hba.conf"
+    environment:
+      POSTGRES_USER: pgadmin_priv
+      POSTGRES_PASSWORD: ${POSTGRES_PRIVATE_ADMIN_PASSWORD:?Set via Vault/env}
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--auth-local=scram-sha-256 --auth-host=scram-sha-256"
+      SVC_NEXTCLOUD_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?Set via Vault/env}
+      SVC_IMMICH_PASSWORD: ${IMMICH_DB_PASSWORD:?Set via Vault/env}
+      SVC_FORGEJO_PASSWORD: ${FORGEJO_DB_PASSWORD:?Set via Vault/env}
+      SVC_IOT_BRIDGE_PASSWORD: ${IOT_BRIDGE_DB_PASSWORD:?Set via Vault/env}
+      VAULT_DB_ADMIN_PASSWORD: ${VAULT_PG_PRIV_PASSWORD:?Set via Vault/env}
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/postgres-private:/var/lib/postgresql/data:rw
+      - ./postgres-private/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./postgres-private/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./postgres-private/init:/docker-entrypoint-initdb.d:ro
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/postgres-private:/etc/postgresql/certs:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /var/run/postgresql:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_private_data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h /var/run/postgresql -U pgadmin_priv -d postgres"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+
+  redis:
+    image: redis:7.4.2-alpine
+    container_name: eggman-redis
+    restart: unless-stopped
+    user: "999:999"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/redis:/data:rw
+      - ./redis/redis.conf:/etc/redis/redis.conf:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/redis/users.acl:/etc/redis/users.acl:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/redis/health.pass:/etc/redis/health.pass:ro
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/redis:/etc/redis/certs:ro
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_private_data
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=\"$$(cat /etc/redis/health.pass)\" redis-cli --tls --cacert /etc/redis/certs/ca.crt --cert /etc/redis/certs/tls.crt --key /etc/redis/certs/tls.key --user healthcheck ping | grep -q PONG"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 320M
+
+  rabbitmq:
+    image: rabbitmq:4.0.6-management
+    container_name: eggman-rabbitmq
+    restart: unless-stopped
+    user: "999:999"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      RABBITMQ_LOGS: "-"
+      RABBITMQ_SASL_LOGS: "-"
+      RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE:?Set via Vault/env}
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/rabbitmq:/var/lib/rabbitmq:rw
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/rabbitmq:/etc/rabbitmq/certs:ro
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid,nodev
+      - /var/log/rabbitmq:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_public_bus
+      - net_private_bus
+      - net_tailscale_admin
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M

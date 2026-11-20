@@ -1,0 +1,25 @@
+# Zero Trust SSH Lockdown — Tailscale-only, Ed25519 key-only, Zero Root Login
+ListenAddress {{ tailscale_ip }}
+AddressFamily inet
+
+HostKey /etc/ssh/ssh_host_ed25519_key
+PubkeyAcceptedAlgorithms ssh-ed25519,sk-ssh-ed25519@openssh.com
+
+PermitRootLogin no
+PasswordAuthentication no
+PermitEmptyPasswords no
+KbdInteractiveAuthentication no
+PubkeyAuthentication yes
+AuthenticationMethods publickey
+
+AllowUsers {{ eggman_admin_user }}
+MaxAuthTries 3
+LoginGraceTime 20
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+X11Forwarding no
+AllowAgentForwarding no
+AllowTcpForwarding no
+PermitTunnel no
+Subsystem sftp internal-sftp

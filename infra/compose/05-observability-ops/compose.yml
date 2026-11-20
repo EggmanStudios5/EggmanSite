@@ -1,0 +1,103 @@
+networks:
+  net_tailscale_admin:
+    external: true
+  net_private_apps:
+    external: true
+  net_private_bus:
+    external: true
+  net_private_egress:
+    external: true
+  net_public_status:
+    external: true
+
+services:
+  beszel-hub:
+    image: henrygd/beszel:0.9.1
+    container_name: eggman-beszel-hub
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      APP_URL: https://monitor.eggmanstudios.me
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/beszel:/beszel_data:rw
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_tailscale_admin
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8090/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 96M
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.16
+    container_name: eggman-uptime-kuma
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=192"
+      UPTIME_KUMA_PORT: "3001"
+    volumes:
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/uptime-kuma:/app/data:rw
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_tailscale_admin
+      - net_private_apps
+      - net_public_status
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3001').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  ntfy:
+    image: binwiederhier/ntfy:v2.11.0
+    container_name: eggman-ntfy
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command: ["serve", "--config=/etc/ntfy/server.yml"]
+    environment:
+      GOMEMLIMIT: 96MiB
+    volumes:
+      - ./ntfy/server.yml:/etc/ntfy/server.yml:ro
+      - ${EGGMAN_DATA_ROOT:-/srv/eggman/data}/ntfy:/var/cache/ntfy:rw
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_tailscale_admin
+      - net_private_bus
+      - net_private_egress
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 128M

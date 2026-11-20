@@ -1,0 +1,43 @@
+# Secrets & Environment
+.env
+.env.*
+!.env.example
+!infra/compose/*/.env.example
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+vault-init*.json
+unseal-keys*
+
+# Build & Generated Web Artifacts
+web/landing/dist/
+web/landing/node_modules/
+web/landing/.cache/
+web/docs/dist/
+web/docs/.astro/
+web/docs/node_modules/
+dist/
+node_modules/
+
+# .NET / Aspire
+bin/
+obj/
+*.user
+*.suo
+*.vs/
+TestResults/
+
+# Ansible & Python
+*.retry
+.venv/
+__pycache__/
+*.pyc
+.vault_pass
+
+# OS / Editor
+.DS_Store
+Thumbs.db

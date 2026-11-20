@@ -1,0 +1,9 @@
+---
+- name: Reconcile Zone-Split Docker Compose Stacks & Verify Zero Trust Posture
+  hosts: localhost
+  become: true
+  vars_files:
+    - ../group_vars/all.yml
+
+  roles:
+    - role: stack-deploy

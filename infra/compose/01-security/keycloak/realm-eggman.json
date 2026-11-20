@@ -1,0 +1,120 @@
+{
+  "realm": "eggman-public",
+  "enabled": true,
+  "displayName": "Eggman Studios Identity",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": true,
+  "rememberMe": false,
+  "bruteForceProtected": true,
+  "permanentLockout": false,
+  "maxFailureWaitSeconds": 900,
+  "minimumQuickLoginWaitSeconds": 60,
+  "waitIncrementSeconds": 60,
+  "maxDeltaTimeSeconds": 43200,
+  "failureFactor": 5,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "defaultSignatureAlgorithm": "RS256",
+  "roles": {
+    "realm": [
+      { "name": "eggman-user", "description": "Standard authenticated Eggman user" },
+      { "name": "eggman-publisher", "description": "Authorized release publisher for Eggman.ReleaseHub" },
+      { "name": "eggman-iot-operator", "description": "Authorized Zone B IoT controller" }
+    ]
+  },
+  "clientScopes": [
+    {
+      "name": "releases:read",
+      "description": "Read public Eggman release feeds",
+      "protocol": "openid-connect",
+      "attributes": { "include.in.token.scope": "true" }
+    },
+    {
+      "name": "releases:write",
+      "description": "Publish firmware/game/AltStore releases",
+      "protocol": "openid-connect",
+      "attributes": { "include.in.token.scope": "true" },
+      "protocolMappers": [
+        {
+          "name": "eggman-releasehub-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.custom.audience": "eggman-releasehub",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "name": "iot:control",
+      "description": "Control rack cooling and RFID rules via Eggman.IoT.Bridge",
+      "protocol": "openid-connect",
+      "attributes": { "include.in.token.scope": "true" },
+      "protocolMappers": [
+        {
+          "name": "eggman-iot-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.custom.audience": "eggman-iot-bridge",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "eggman-web-spa",
+      "name": "Eggman Studios Public SPA",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "attributes": {
+        "pkce.code.challenge.method": "S256"
+      },
+      "redirectUris": [
+        "https://eggmanstudios.me/*",
+        "https://releases.eggmanstudios.me/*"
+      ],
+      "webOrigins": [
+        "https://eggmanstudios.me",
+        "https://releases.eggmanstudios.me"
+      ],
+      "defaultClientScopes": ["openid", "profile", "email", "releases:read"]
+    },
+    {
+      "clientId": "eggman-releasehub-ci",
+      "name": "Eggman ReleaseHub Publisher Service Client",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "secret": "CHANGE_ME_FROM_VAULT_KEYCLOAK_RELEASEHUB_CLIENT_SECRET",
+      "defaultClientScopes": ["releases:read", "releases:write"]
+    },
+    {
+      "clientId": "eggman-iot-operator-cli",
+      "name": "Eggman IoT Operator Client (Tailscale-only)",
+      "enabled": true,
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "secret": "CHANGE_ME_FROM_VAULT_KEYCLOAK_IOT_CLIENT_SECRET",
+      "redirectUris": ["https://iot.eggmanstudios.me/*"],
+      "webOrigins": ["https://iot.eggmanstudios.me"],
+      "defaultClientScopes": ["openid", "iot:control"]
+    }
+  ]
+}

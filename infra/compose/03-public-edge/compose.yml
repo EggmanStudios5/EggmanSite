@@ -1,0 +1,201 @@
+networks:
+  net_public_tunnel:
+    external: true
+  net_public_ingress:
+    external: true
+  net_public_apps:
+    external: true
+  net_public_auth:
+    external: true
+  net_public_status:
+    external: true
+  net_public_data:
+    external: true
+  net_public_bus:
+    external: true
+  net_vault_public:
+    external: true
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:2025.2.0
+    container_name: eggman-cloudflared
+    restart: unless-stopped
+    user: "65532:65532"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    command: ["tunnel", "--no-autoupdate", "--metrics", "127.0.0.1:2000", "run"]
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN:?Set Cloudflare Tunnel token}
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_public_tunnel
+      - net_public_ingress
+    healthcheck:
+      test: ["CMD", "cloudflared", "version"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  eggman-gateway-yarp:
+    build:
+      context: ../../../
+      dockerfile: services/Eggman.Gateway.Yarp/Dockerfile
+    image: eggman/gateway-yarp:local
+    container_name: eggman-gateway-yarp
+    restart: unless-stopped
+    user: "1654:1654"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      DOTNET_GCHeapHardLimit: "0xB000000"
+      DOTNET_EnableDiagnostics: "0"
+      SSL_CERT_FILE: /etc/eggman/certs/ca.crt
+      Keycloak__Authority: https://auth.eggmanstudios.me/realms/eggman-public
+      Keycloak__MetadataAddress: https://eggman-keycloak:8443/realms/eggman-public/.well-known/openid-configuration
+      Vault__Address: https://eggman-vault:8200
+      Vault__RoleIdFile: /run/secrets/approle/role-id
+      Vault__SecretIdFile: /run/secrets/approle/secret-id
+    volumes:
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/ca:/etc/eggman/certs:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/approle/yarp:/run/secrets/approle:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_public_ingress
+      - net_public_apps
+      - net_public_auth
+      - net_public_status
+      - net_vault_public
+    healthcheck:
+      test: ["CMD", "/app/Eggman.Gateway.Yarp", "--healthcheck"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  eggman-releasehub:
+    build:
+      context: ../../../
+      dockerfile: services/Eggman.ReleaseHub/Dockerfile
+    image: eggman/releasehub:local
+    container_name: eggman-releasehub
+    restart: unless-stopped
+    user: "1654:1654"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: https://+:8443
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /etc/eggman/certs/tls.crt
+      ASPNETCORE_Kestrel__Certificates__Default__KeyPath: /etc/eggman/certs/tls.key
+      DOTNET_GCHeapHardLimit: "0xB000000"
+      DOTNET_EnableDiagnostics: "0"
+      SSL_CERT_FILE: /etc/eggman/certs/ca.crt
+      Keycloak__Authority: https://auth.eggmanstudios.me/realms/eggman-public
+      Keycloak__MetadataAddress: https://eggman-keycloak:8443/realms/eggman-public/.well-known/openid-configuration
+      Keycloak__Audience: eggman-releasehub
+      Vault__Address: https://eggman-vault:8200
+      Vault__RoleIdFile: /run/secrets/approle/role-id
+      Vault__SecretIdFile: /run/secrets/approle/secret-id
+      Postgres__Host: eggman-postgres-public
+      Postgres__Database: releasehub
+      RabbitMq__Host: eggman-rabbitmq
+      RabbitMq__VirtualHost: /public-events
+      ReleaseHub__StorageRoot: /var/lib/eggman/releases
+    volumes:
+      - ${EGGMAN_RELEASES_ROOT:-/srv/eggman/releases}:/var/lib/eggman/releases:rw
+      - ${EGGMAN_CERTS_ROOT:-/srv/eggman/certs}/releasehub:/etc/eggman/certs:ro
+      - ${EGGMAN_SECRETS_ROOT:-/srv/eggman/secrets}/approle/releasehub:/run/secrets/approle:ro
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid,nodev
+    networks:
+      - net_public_apps
+      - net_public_auth
+      - net_public_data
+      - net_public_bus
+      - net_vault_public
+    healthcheck:
+      test: ["CMD", "/app/Eggman.ReleaseHub", "--healthcheck"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  web-landing:
+    build:
+      context: ../../../web/landing
+      dockerfile: Dockerfile
+    image: eggman/web-landing:local
+    container_name: eggman-web-landing
+    restart: unless-stopped
+    user: "101:101"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+      - /var/cache/nginx:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_public_apps
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+  web-docs:
+    build:
+      context: ../../../web/docs
+      dockerfile: Dockerfile
+    image: eggman/web-docs:local
+    container_name: eggman-web-docs
+    restart: unless-stopped
+    user: "101:101"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+      - /var/cache/nginx:size=16m,noexec,nosuid,nodev
+    networks:
+      - net_public_apps
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 64M

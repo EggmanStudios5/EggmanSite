@@ -1,0 +1,176 @@
+---
+- name: Install baseline hardening, firewall, and swap packages
+  ansible.builtin.apt:
+    name:
+      - unattended-upgrades
+      - apt-listchanges
+      - fail2ban
+      - ufw
+      - iptables
+      - systemd-zram-generator
+      - jq
+      - acl
+      - rsync
+      - apparmor
+      - apparmor-utils
+    state: present
+    update_cache: true
+
+- name: Configure unattended security upgrades
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+      APT::Periodic::AutocleanInterval "7";
+
+- name: Apply Zero Trust kernel sysctl configuration
+  ansible.builtin.template:
+    src: 99-eggman-zero-trust.conf.j2
+    dest: /etc/sysctl.d/99-eggman-zero-trust.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload sysctl
+
+- name: Configure zram swap for 16GB HP EliteDesk headroom
+  ansible.builtin.template:
+    src: zram-generator.conf.j2
+    dest: /etc/systemd/zram-generator.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart zram
+
+- name: Configure fail2ban SSH jail
+  ansible.builtin.copy:
+    dest: /etc/fail2ban/jail.d/sshd-zero-trust.conf
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [sshd]
+      enabled = true
+      backend = systemd
+      maxretry = 3
+      findtime = 600
+      bantime = 3600
+  notify: Restart fail2ban
+
+- name: Configure UFW default-deny incoming, outgoing, and routed policies
+  community.general.ufw:
+    direction: "{{ item.direction }}"
+    policy: "{{ item.policy }}"
+  loop:
+    - { direction: incoming, policy: deny }
+    - { direction: outgoing, policy: deny }
+    - { direction: routed, policy: deny }
+
+- name: Allow explicit outbound Zero Trust egress (DNS, HTTPS updates, Tailscale, Cloudflare Tunnel)
+  community.general.ufw:
+    rule: allow
+    direction: out
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  loop:
+    - { port: "53", proto: udp, comment: "DNS UDP" }
+    - { port: "53", proto: tcp, comment: "DNS TCP" }
+    - { port: "853", proto: tcp, comment: "DNS over TLS" }
+    - { port: "80", proto: tcp, comment: "APT / ACME HTTP" }
+    - { port: "443", proto: tcp, comment: "HTTPS updates, Tailscale control, ACME DNS-01, APNs" }
+    - { port: "123", proto: udp, comment: "NTP clock sync" }
+    - { port: "41641", proto: udp, comment: "Tailscale WireGuard" }
+    - { port: "3478", proto: udp, comment: "Tailscale STUN" }
+    - { port: "7844", proto: udp, comment: "Cloudflare Tunnel QUIC" }
+    - { port: "7844", proto: tcp, comment: "Cloudflare Tunnel HTTPS fallback" }
+
+- name: Allow outbound traffic across Tailscale mesh and internal Docker bridge subnets
+  community.general.ufw:
+    rule: allow
+    direction: out
+    to_ip: "{{ item.to_ip }}"
+    comment: "{{ item.comment }}"
+  loop:
+    - { to_ip: "100.64.0.0/10", comment: "Tailscale CGNAT mesh" }
+    - { to_ip: "172.28.0.0/16", comment: "Eggman Zone Docker bridges" }
+
+- name: Allow SSH strictly on tailscale0 interface
+  community.general.ufw:
+    rule: allow
+    interface: "{{ tailscale_interface }}"
+    direction: in
+    to_ip: "{{ tailscale_ip }}"
+    port: "22"
+    proto: tcp
+    comment: "Zero Trust SSH on Tailscale only"
+
+- name: Allow HTTPS & HTTP Split-DNS proxy strictly on tailscale0 interface
+  community.general.ufw:
+    rule: allow
+    interface: "{{ tailscale_interface }}"
+    direction: in
+    to_ip: "{{ tailscale_ip }}"
+    port: "{{ item }}"
+    proto: tcp
+    comment: "Zero Trust Tailscale Split-DNS Caddy ingress"
+  loop:
+    - "80"
+    - "443"
+
+- name: Allow authenticated IoT hardware TLS/HMAC telemetry on dedicated IoT VLAN IP only
+  community.general.ufw:
+    rule: allow
+    direction: in
+    from_ip: "{{ iot_vlan_cidr }}"
+    to_ip: "{{ iot_vlan_ip }}"
+    port: "8443"
+    proto: tcp
+    comment: "IoT VLAN devices to Eggman.IoT.Bridge (TLS + HMAC)"
+  when: iot_vlan_ip != "127.0.0.1"
+
+- name: Allow Beszel Hub (net_tailscale_admin) to host Beszel Agent on gateway port
+  community.general.ufw:
+    rule: allow
+    direction: in
+    from_ip: "172.28.20.0/27"
+    to_ip: "{{ beszel_agent_listen_ip }}"
+    port: "{{ beszel_agent_port | string }}"
+    proto: tcp
+    comment: "Beszel Hub to host agent (no docker.sock)"
+
+- name: Inject Zero Trust DOCKER-USER isolation rules into /etc/ufw/after.rules
+  ansible.builtin.blockinfile:
+    path: /etc/ufw/after.rules
+    marker: "# {mark} EGGMAN ZERO TRUST DOCKER-USER ISOLATION"
+    block: |
+      *filter
+      :DOCKER-USER - [0:0]
+      -A DOCKER-USER -m conntrack --ctstate RELATED,ESTABLISHED -j RETURN
+      -A DOCKER-USER -s 172.28.20.0/27 -d {{ beszel_agent_listen_ip }}/32 -p tcp --dport {{ beszel_agent_port }} -j RETURN
+      -A DOCKER-USER -s 172.28.0.0/16 -o {{ tailscale_interface }} -j DROP
+      -A DOCKER-USER -s 172.28.0.0/16 -d 100.64.0.0/10 -j DROP
+      -A DOCKER-USER -s 172.28.0.0/20 -d 172.28.16.0/20 -j DROP
+      -A DOCKER-USER -s 172.28.0.0/20 -d 172.28.0.0/20 -j RETURN
+      -A DOCKER-USER -s 172.28.0.0/20 -d 10.0.0.0/8 -j DROP
+      -A DOCKER-USER -s 172.28.0.0/20 -d 172.16.0.0/12 -j DROP
+      -A DOCKER-USER -s 172.28.0.0/20 -d 192.168.0.0/16 -j DROP
+      -A DOCKER-USER -j RETURN
+      COMMIT
+  notify: Reload ufw
+
+- name: Enable UFW, AppArmor, and fail2ban
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - apparmor
+    - fail2ban
+
+- name: Enable UFW firewall
+  community.general.ufw:
+    state: enabled

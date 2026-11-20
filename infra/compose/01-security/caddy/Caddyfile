@@ -1,0 +1,101 @@
+{
+  admin 127.0.0.1:2019
+  http_port 8080
+  https_port 8443
+  servers {
+    trusted_proxies static private_ranges
+  }
+}
+
+(security_headers) {
+  header {
+    Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+    X-Content-Type-Options "nosniff"
+    X-Frame-Options "SAMEORIGIN"
+    Referrer-Policy "strict-origin-when-cross-origin"
+    -Server
+  }
+}
+
+(internal_tls) {
+  transport http {
+    tls
+    tls_trusted_ca_certs /etc/caddy/certs/ca.crt
+  }
+}
+
+# --- Zone C: Core Security & Data Admin UIs (Tailscale-only) ---
+vault.eggmanstudios.me {
+  import security_headers
+  reverse_proxy https://eggman-vault:8200 {
+    import internal_tls
+  }
+}
+
+auth-admin.eggmanstudios.me {
+  import security_headers
+  reverse_proxy https://eggman-keycloak:8443 {
+    import internal_tls
+  }
+}
+
+mq.eggmanstudios.me {
+  import security_headers
+  reverse_proxy https://eggman-rabbitmq:15671 {
+    import internal_tls
+  }
+}
+
+# --- Zone B: Private Homelab Apps (Tailscale Split-DNS only) ---
+home.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-homepage:3000
+}
+
+drive.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-nextcloud:8080
+}
+
+photos.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-immich-server:2283
+}
+
+media.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-jellyfin:8096
+}
+
+music.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-navidrome:4533
+}
+
+git.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-forgejo:3000
+}
+
+iot.eggmanstudios.me {
+  import security_headers
+  reverse_proxy https://eggman-iot-bridge:8443 {
+    import internal_tls
+  }
+}
+
+# --- Zone B: Observability & Alerting (Tailscale-only) ---
+notify.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-ntfy:8080
+}
+
+monitor.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-beszel-hub:8090
+}
+
+uptime.eggmanstudios.me {
+  import security_headers
+  reverse_proxy http://eggman-uptime-kuma:3001
+}

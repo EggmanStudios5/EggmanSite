@@ -1,0 +1,108 @@
+networks:
+  net_public_tunnel:
+    name: net_public_tunnel
+    driver: bridge
+    internal: false
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "false"
+    ipam:
+      config:
+        - subnet: 172.28.1.0/28
+
+  net_public_ingress:
+    name: net_public_ingress
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.2.0/28
+
+  net_public_apps:
+    name: net_public_apps
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.3.0/28
+
+  net_public_auth:
+    name: net_public_auth
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.4.0/28
+
+  net_public_status:
+    name: net_public_status
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.5.0/28
+
+  net_public_data:
+    name: net_public_data
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.6.0/28
+
+  net_public_bus:
+    name: net_public_bus
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.7.0/28
+
+  net_vault_public:
+    name: net_vault_public
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.8.0/28
+
+  net_tailscale_admin:
+    name: net_tailscale_admin
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.20.0/27
+
+  net_private_apps:
+    name: net_private_apps
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.21.0/26
+
+  net_private_data:
+    name: net_private_data
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.22.0/26
+
+  net_private_bus:
+    name: net_private_bus
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.28.23.0/28
+
+  net_private_egress:
+    name: net_private_egress
+    driver: bridge
+    internal: false
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "false"
+    ipam:
+      config:
+        - subnet: 172.28.24.0/27

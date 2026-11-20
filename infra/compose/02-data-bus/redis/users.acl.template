@@ -1,0 +1,6 @@
+# Rendered by scripts/bootstrap-vault.sh into /srv/eggman/secrets/redis/users.acl (0640)
+user default off
+user healthcheck on >CHANGE_ME_FROM_VAULT_REDIS_HEALTH_PASS ~health:* +ping -@all
+user svc_nextcloud on >CHANGE_ME_FROM_VAULT_REDIS_NC_PASS ~nc:* +@read +@write +@keyspace +@connection +@transaction -@dangerous -@admin
+user svc_immich on >CHANGE_ME_FROM_VAULT_REDIS_IMMICH_PASS ~immich:* ~bull:* +@all -@dangerous
+user svc_forgejo on >CHANGE_ME_FROM_VAULT_REDIS_FORGEJO_PASS ~forgejo:* +@read +@write +@keyspace +@connection -@dangerous -@admin
