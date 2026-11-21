@@ -20,9 +20,10 @@ if (args.Contains("--healthcheck", StringComparer.OrdinalIgnoreCase))
 var builder = WebApplication.CreateBuilder(args);
 
 var configuredMaxRequestBytes = builder.Configuration.GetValue<long?>("Security:MaxRequestBodyBytes") ?? 10 * 1024 * 1024;
+var configuredReleaseUploadMaxBytes = builder.Configuration.GetValue<long?>("Security:MaxReleaseUploadBodyBytes") ?? 60L * 1024 * 1024;
 builder.WebHost.ConfigureKestrel(kestrel =>
 {
-    kestrel.Limits.MaxRequestBodySize = configuredMaxRequestBytes;
+    kestrel.Limits.MaxRequestBodySize = Math.Max(configuredMaxRequestBytes, configuredReleaseUploadMaxBytes);
     kestrel.Limits.RequestHeadersTimeout = TimeSpan.FromSeconds(15);
     kestrel.AddServerHeader = false;
 });
@@ -32,7 +33,8 @@ builder.AddEggmanZeroTrustDefaults();
 builder.Services.AddEggmanKeycloakJwtAuth(builder.Configuration);
 
 builder.Services.AddAuthorizationBuilder()
-    .AddEggmanScopePolicy("ReleaseWritePolicy", "releases:write");
+    .AddEggmanScopePolicy("ReleaseWritePolicy", "releases:write")
+    .AddEggmanScopePolicy("ReleasePublishPolicy", "releases:publish");
 
 builder.Services.AddCors(options =>
 {
@@ -42,7 +44,7 @@ builder.Services.AddCors(options =>
                 "https://docs.eggmanstudios.me",
                 "https://releases.eggmanstudios.me",
                 "https://altstore.eggmanstudios.me")
-              .WithMethods("GET", "HEAD", "POST", "OPTIONS")
+              .WithMethods("GET", "HEAD", "POST", "PUT", "OPTIONS")
               .WithHeaders("Authorization", "Content-Type"));
 });
 
@@ -198,8 +200,14 @@ app.Use(async (ctx, next) =>
     }
 });
 
-// 2. Request body size caps (10 MiB overall, 1 MiB for /api/ & /realms/)
-app.UseEggmanRequestBodySizeLimit(10 * 1024 * 1024, apiMaxBytes: 1 * 1024 * 1024);
+// 2. Request body size caps (60 MiB under Cloudflare 100 MB ceiling for /api/releases/*, 1 MiB other APIs, 10 MiB overall)
+app.UseEggmanRequestBodySizeLimit(
+    defaultMaxBytes: 10L * 1024 * 1024,
+    apiMaxBytes: 1L * 1024 * 1024,
+    routeLimitResolver: (path, cfg) =>
+        path.StartsWithSegments("/api/releases", StringComparison.OrdinalIgnoreCase)
+            ? cfg.GetValue<long?>("Security:MaxReleaseUploadBodyBytes") ?? 60L * 1024 * 1024
+            : null);
 
 // 3. Strip untrusted forwarding headers BEFORE UseForwardedHeaders, then strip all spoofable headers AFTER
 app.Use(async (ctx, next) =>

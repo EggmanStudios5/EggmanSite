@@ -51,6 +51,24 @@
       ]
     },
     {
+      "name": "releases:publish",
+      "description": "Execute resumable chunked release uploads to Eggman.ReleaseHub",
+      "protocol": "openid-connect",
+      "attributes": { "include.in.token.scope": "true" },
+      "protocolMappers": [
+        {
+          "name": "eggman-releasehub-publish-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.custom.audience": "eggman-releasehub",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
       "name": "iot:control",
       "description": "Control rack cooling and RFID rules via Eggman.IoT.Bridge",
       "protocol": "openid-connect",
@@ -101,7 +119,7 @@
       "serviceAccountsEnabled": true,
       "directAccessGrantsEnabled": false,
       "secret": "CHANGE_ME_FROM_VAULT_KEYCLOAK_RELEASEHUB_CLIENT_SECRET",
-      "defaultClientScopes": ["releases:read", "releases:write"]
+      "defaultClientScopes": ["releases:read", "releases:write", "releases:publish"]
     },
     {
       "clientId": "eggman-iot-operator-cli",

@@ -146,7 +146,8 @@ public static class ZeroTrustExtensions
     public static WebApplication UseEggmanRequestBodySizeLimit(
         this WebApplication app,
         long defaultMaxBytes,
-        long? apiMaxBytes = null)
+        long? apiMaxBytes = null,
+        Func<PathString, IConfiguration, long?>? routeLimitResolver = null)
     {
         app.Use(async (ctx, next) =>
         {
@@ -155,11 +156,12 @@ public static class ZeroTrustExtensions
             var configuredApi = cfg.GetValue<long?>("Security:MaxApiRequestBodyBytes") ?? apiMaxBytes;
 
             var path = ctx.Request.Path.Value ?? string.Empty;
-            var limit = configuredApi.HasValue &&
+            var routeOverride = routeLimitResolver?.Invoke(ctx.Request.Path, cfg);
+            var limit = routeOverride ?? (configuredApi.HasValue &&
                         (path.StartsWith("/api/", StringComparison.OrdinalIgnoreCase) ||
                          path.StartsWith("/realms/", StringComparison.OrdinalIgnoreCase))
                 ? configuredApi.Value
-                : configuredDefault;
+                : configuredDefault);
 
             var feature = ctx.Features.Get<IHttpMaxRequestBodySizeFeature>();
             if (feature is { IsReadOnly: false })

@@ -56,6 +56,72 @@ paths:
           description: Missing or invalid JWT
         "403":
           description: Missing releases:write scope
+  /api/releases/uploads/init:
+    post:
+      summary: Initialize resumable chunked release upload session (requires releases:publish)
+      security:
+        - keycloakBearer: [releases:publish]
+      responses:
+        "201":
+          description: Upload session initialized
+        "400":
+          description: Validation failure
+        "401":
+          description: Missing or invalid JWT
+        "403":
+          description: Missing releases:publish scope
+  /api/releases/uploads/{uploadId}/chunks/{chunkIndex}:
+    put:
+      summary: Stream raw binary chunk up to 55MB (requires releases:publish)
+      security:
+        - keycloakBearer: [releases:publish]
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: chunkIndex
+          in: path
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        "200":
+          description: Chunk staged
+        "400":
+          description: Invalid chunk index or cumulative size exceeded
+        "401":
+          description: Missing or invalid JWT
+        "403":
+          description: Missing releases:publish scope or session ownership mismatch
+        "413":
+          description: Chunk exceeds 55MB limit (60MB at YARP edge)
+  /api/releases/uploads/{uploadId}/complete:
+    post:
+      summary: Assemble verified chunks, check SHA-256, and promote release atomically (requires releases:publish)
+      security:
+        - keycloakBearer: [releases:publish]
+      parameters:
+        - name: uploadId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Verified artifact promoted and catalog updated
+        "400":
+          description: Missing chunks
+        "401":
+          description: Missing or invalid JWT
+        "403":
+          description: Missing releases:publish scope or session ownership mismatch
+        "422":
+          description: Final SHA-256 digest mismatch; staging purged
 components:
   securitySchemes:
     keycloakBearer:

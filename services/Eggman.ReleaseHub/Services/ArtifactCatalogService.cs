@@ -24,9 +24,11 @@ public sealed partial class ArtifactCatalogService
         _dbFactory = dbFactory;
     }
 
+    public string PublicBaseUrl => _publicBaseUrl;
+
     public async Task<AltStoreSourceDto> BuildAltStoreSourceAsync(CancellationToken ct = default)
     {
-        var versions = await GetVersionsForAppAsync("ipa", "eggman-companion", ct);
+        var companionVersions = await GetVersionsForAppAsync("ipa", "eggman-companion", ct);
         var apps = new List<AltStoreAppDto>
         {
             new(
@@ -37,8 +39,36 @@ public sealed partial class ArtifactCatalogService
                 LocalizedDescription: "Official signed iOS release distributed exclusively via Eggman ReleaseHub with SHA-256 verification.",
                 IconUrl: $"{_publicBaseUrl}/assets/companion-icon.png",
                 TintColor: "#0F766E",
-                Versions: versions)
+                Versions: companionVersions)
         };
+
+        await using var db = await _dbFactory.CreateDbContextAsync(ct);
+        var extraIpaApps = await db.ReleaseArtifacts
+            .AsNoTracking()
+            .Where(x => x.Kind == "ipa" && x.Slug != "eggman-companion")
+            .OrderByDescending(x => x.ReleasedAtUtc)
+            .ToListAsync(ct);
+
+        foreach (var group in extraIpaApps.GroupBy(x => x.Slug, StringComparer.Ordinal))
+        {
+            var versions = group.Select(x => new AltStoreVersionDto(
+                x.Version,
+                x.ReleasedAtUtc.ToString("yyyy-MM-dd"),
+                x.SizeBytes,
+                $"{_publicBaseUrl}/api/v1/releases/ipa/{x.FileName}",
+                x.Description,
+                x.Sha256)).ToList();
+
+            apps.Add(new AltStoreAppDto(
+                Name: group.Key,
+                BundleIdentifier: $"me.eggmanstudios.{group.Key.Replace("-", string.Empty, StringComparison.Ordinal)}",
+                DeveloperName: "Eggman Studios",
+                Subtitle: "Verified Eggman Studios iOS release",
+                LocalizedDescription: group.First().Description,
+                IconUrl: $"{_publicBaseUrl}/assets/eggman-icon.png",
+                TintColor: "#0F766E",
+                Versions: versions));
+        }
 
         return new AltStoreSourceDto(
             Name: "Eggman Studios AltStore",
@@ -100,7 +130,7 @@ public sealed partial class ArtifactCatalogService
             list.Add(new GameBuildDto(
                 entry.Slug,
                 entry.Slug,
-                "Cross-Platform",
+                string.IsNullOrWhiteSpace(entry.Platform) ? "Cross-Platform" : entry.Platform,
                 entry.Version,
                 entry.FileName,
                 entry.Sha256,
@@ -111,10 +141,17 @@ public sealed partial class ArtifactCatalogService
         return list;
     }
 
-    public async Task<ReleaseArtifactEntity> RegisterReleaseAsync(PublishReleaseRequest req, CancellationToken ct = default)
+    public Task<ReleaseArtifactEntity> RegisterReleaseAsync(PublishReleaseRequest req, CancellationToken ct = default)
+        => RegisterReleaseAsync(req, "Cross-Platform", null, ct);
+
+    public async Task<ReleaseArtifactEntity> RegisterReleaseAsync(
+        PublishReleaseRequest req,
+        string platform,
+        long? verifiedSizeBytes,
+        CancellationToken ct = default)
     {
         var path = ResolveArtifactPath(req.Kind, req.FileName);
-        long size = path is not null && File.Exists(path) ? new FileInfo(path).Length : 0;
+        long size = verifiedSizeBytes ?? (path is not null && File.Exists(path) ? new FileInfo(path).Length : 0);
 
         await using var db = await _dbFactory.CreateDbContextAsync(ct);
         var existing = await db.ReleaseArtifacts
@@ -126,6 +163,7 @@ public sealed partial class ArtifactCatalogService
             {
                 Kind = req.Kind,
                 Slug = req.Slug,
+                Platform = platform,
                 Version = req.Version,
                 FileName = req.FileName,
                 Sha256 = req.Sha256.ToLowerInvariant(),
@@ -137,6 +175,8 @@ public sealed partial class ArtifactCatalogService
         }
         else
         {
+            existing.Slug = req.Slug;
+            existing.Platform = platform;
             existing.Version = req.Version;
             existing.Sha256 = req.Sha256.ToLowerInvariant();
             existing.SizeBytes = size;
